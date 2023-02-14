@@ -1,11 +1,11 @@
-
-
 #define F_CPU 8000000UL
 #include "Light.hpp"
 
 #include <avr/delay.h>
 
+Light *Light::instance = nullptr;
+
 int main() {
-    Light::init();
-    Light::setLight(Color::GREEN);
+    Light light;
+    light.init(&DDRA, 6, 7);
 }

@@ -3,25 +3,40 @@
 enum class Color { RED, GREEN, OFF };
 
 class Light {
+private:
+    volatile uint8_t* regis;
+    uint8_t first;
+    uint8_t second;
+
 public:
-    static void init() {
-        // Initialisation des sorties pour les lumières.
-        DDRA |= (1 << PORTA0) | (1 << PORTA1); // On veut set XXXX XX11
+    static Light* instance;
+    static Light* getInstance() {
+        return instance;
     }
 
-    static void setLight(Color color) {
+    template <typename... Args>
+    void init(volatile uint8_t* regis, uint8_t first, uint8_t second) {
+        instance = this;
+        this->regis = regis;
+        this->first = first;
+        this->second = second;
+        *regis |= (1 << first) | (1 << second); // On veut set XXXX XX11
+    }
+
+    void setLight(Color color) {
+
         switch (color)
         {
         case Color::GREEN:
-            PORTA |= (1 << PORTA0);
-            PORTA &= ~(1 << PORTA1);
+            *this->regis |= (1 << this->first);
+            *this->regis &= ~(1 << this->second);
             break;
         case Color::RED:
-            PORTA &= ~(1 << PORTA0);
-            PORTA |= (1 << PORTA1);
+            *this->regis &= ~(1 << this->first);
+            *this->regis |= (1 << this->second);
             break;
         case Color::OFF:
-            PORTA &= ~(1 << PORTA0) | (1 << PORTA1); 
+            *this->regis &= ~(1 << this->first) | (1 << this->second); 
             break;
         default:
             break;
