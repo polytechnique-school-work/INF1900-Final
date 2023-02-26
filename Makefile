@@ -29,7 +29,7 @@ PROJECTNAME=test
 # Utilisez le suffixe .cpp pour les fichiers C++
 # Listez tous les fichiers a compiler, separes par
 # un espace. exemple: 'tp1.c tp2.cpp':
-PRJSRC= main.cpp LightManager.cpp
+PRJSRC= main.cpp Light/LightManager.cpp PWM/Pwm.cpp Wheel/WheelManager.cpp
 
 # Inclusions additionnels (ex: -I/path/to/mydir)
 INC=
@@ -138,10 +138,10 @@ $(TRG): $(OBJDEPS)
 # Production des fichiers object
 # De C a objet
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< -o $@
 # De C++ a objet
 %.o: %.cpp
-	$(CC) $(CFLAGS) $(CXXFLAGS) -c $<
+	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@
 
 # Verification des dependances (header dependencies)
 -include *.d
@@ -165,6 +165,7 @@ install: $(HEXROMTRG)
 # lors de la compilation
 clean:
 	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) *.d
+	find . -name '*.d' -type f -delete
 
 # Pour plus d'information sur les phony target, consulter:
 # http://bit.ly/1WBQe61

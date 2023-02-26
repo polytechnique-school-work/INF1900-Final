@@ -4,11 +4,11 @@
 <hr>
 
 
-| Couleur | Code à écrire |
-|---------|---------------|
-| Ambre   | Color::AMBER  |
-| Rouge   | Color::RED    |
-| Vert    | Color::GREEN  |
+| Couleur | Code           |
+|---------|----------------|
+| Ambre   | `Color::AMBER` |
+| Rouge   | `Color::RED`   |
+| Vert    | `Color::GREEN` |
 
 Concernant la couleur ambre, celle-ci est seulement effective un certain temps et si elle n'est pas dans une boucle, elle changera de couleur et sera rouge.
 

@@ -13,12 +13,12 @@ void Pwm::update() {
     TCCR1C = 0;
 }
 
-void Pwm::editValue(PwmValues pwmValues, int value, bool update = true) {
+void Pwm::editValue(PwmValues pwmValues, uint8_t value, bool update) {
     pwmValues == PwmValues::FIRST ? this->firstPwm = value : this->secondPwm = value;
     if (update) this->update();
 }
 
-void Pwm::editValues(int first, int second) {
+void Pwm::editValues(uint8_t first, uint8_t second) {
     Pwm::editValue(PwmValues::FIRST, first, false);
     Pwm::editValue(PwmValues::SECOND, second, false);
     this->update();
