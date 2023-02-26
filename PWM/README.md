@@ -7,6 +7,7 @@ Dans la grande majorité des cas, ce module ne sera pas directement utilisé.
 En effet, il sera majoritairement utilisé par le système de roue (WheelManager).
 <hr>
 <h2>Exemple d'utilisation</h2>
+
 ```c++
 #include "Pwm.hpp"
 
