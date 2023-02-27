@@ -1,5 +1,4 @@
 <h1>Gestion des roues</h1>
-<hr>
 
 Système de gestion des roues. Il permet de faire avancer les roues, de les faire reculer, de faire en sorte que le robot
 se dirige vers la droite ou vers la gauche.
