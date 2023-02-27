@@ -5,11 +5,17 @@
 #include "PWM/Pwm.hpp"
 #include <util/delay.h>
 
+LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
+
 int main() {
-    TimerManager::runTimer(50); // Durée en 0.1 seconde * temps inscrit.
+
+    DDRA = 0xFF;
+    DDRD = 0xFF;
+    TimerManager::runTimer(50);
+
     while(true) {
         if(TimerManager::isDone()) {
-           // Faire action
+           lm.setLight(Color::GREEN);
         }
     }
 }

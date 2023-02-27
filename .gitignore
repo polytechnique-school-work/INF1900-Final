@@ -1,2 +1,8 @@
 .vscode
 .idea
+*.d
+*.o
+*.a
+*.hex
+*.elf.map
+*.elf
