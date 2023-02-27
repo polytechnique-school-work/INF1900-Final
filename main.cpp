@@ -9,7 +9,7 @@ int main() {
     TimerManager::runTimer(50); // Durée en 0.1 seconde * temps inscrit.
     while(true) {
         if(TimerManager::isDone()) {
-           // Faire action
+           // Faire action e
         }
     }
 }
