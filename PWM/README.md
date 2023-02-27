@@ -1,5 +1,4 @@
 <h1>Gestion de la PWM</h1>
-<hr>
 
 Ce module est plutôt simple, il permet de gérer facilement la PWM à l'aide d'une valeur qui doit être située entre 0 et 100.
 

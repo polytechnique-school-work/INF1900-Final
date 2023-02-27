@@ -1,7 +1,6 @@
 <h1>Gestion des lumières</h1>
 
 <h2>Différentes couleurs possibles</h2>
-<hr>
 
 
 | Couleur | Code           |
