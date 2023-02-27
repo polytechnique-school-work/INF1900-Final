@@ -1,6 +1,6 @@
 #pragma once
 #include <avr/io.h> 
-enum class PwmValues {
+enum class PwmValue {
     FIRST, SECOND
 };
 
@@ -17,7 +17,7 @@ public:
     // Le booléen permet d'indiquer si l'edit value fait l'update ou non,
     // permet surtout d'éviter un écrasement des données fait en double
     // avec le editValues().
-    void editValue(PwmValues pwmValues, uint8_t value, bool update = true);
+    void editValue(PwmValue pwmValue, uint8_t value, bool update = true);
 
     // Permet d'update plusieurs valeurs
     void editValues(uint8_t first, uint8_t second);

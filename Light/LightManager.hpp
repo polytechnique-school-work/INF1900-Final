@@ -8,9 +8,9 @@ private:
     static const uint8_t DelayGREEN = 15;
     static const uint8_t DelayRED = 5;
     volatile uint8_t* regis;
-    volatile uint8_t* port;
     uint8_t firstPin;
     uint8_t secondPin;
+    volatile uint8_t* port;
 
 public:
     LightManager(volatile uint8_t* registre, volatile uint8_t* port, uint8_t pinFirst, uint8_t pinSecond);
