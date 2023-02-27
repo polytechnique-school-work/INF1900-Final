@@ -6,7 +6,7 @@
 #include <util/delay.h>
 
 int main() {
-    TimerManager::runTimer(50);
+    TimerManager::runTimer(50); // Durée en 0.1 seconde * temps inscrit.
     while(true) {
         if(TimerManager::isDone()) {
            // Faire action
