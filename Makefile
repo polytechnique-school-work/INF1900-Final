@@ -180,6 +180,6 @@ clean:
 
 #####                    EOF                   #####
 
-debug: install
+debug: clean install
 	serieViaUSB -l
 	@echo "Mode de débuggage activé!"
