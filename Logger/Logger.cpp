@@ -23,10 +23,11 @@ void Logger::transmitMessage(const char* message) {
     }
 }
 
-void Logger::log(Priority priority, const char* message) {
+void Logger::log(Priority priority, const char* message, bool skipLine) {
     const char* prefix = priority == Priority::ERROR ? "[E]: " : "[I]: ";
     char fullMessage[strlen(prefix) + strlen(message) + 1];
     strcpy(fullMessage, prefix);
     strcat(fullMessage, message);
+    if(skipLine) strcat(fullMessage, "\n");
     Logger::transmitMessage(fullMessage);
 }

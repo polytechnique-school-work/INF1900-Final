@@ -9,5 +9,5 @@ private:
     static void transmitMessage(const char* message);
 public:
     static void init();
-    static void log(Priority priority, const char* message);
+    static void log(Priority priority, const char* message, bool skipLine=true);
 };

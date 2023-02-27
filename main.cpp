@@ -10,19 +10,7 @@ LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
 
 int main() {
 
-    // DDRA = 0xFF;
-    // DDRD = 0xFF;
-    // TimerManager::runTimer(50);
-
-    // while(true) {
-    //     if(TimerManager::isDone()) {
-    //        lm.setLight(Color::GREEN);
-    //     }
-    // }
-
     Logger::init();
-    while(true) {
-        Logger::log(Priority::INFO, "Coucou les potes");
-    }
-
+    _delay_ms(5000);
+    Logger::log(Priority::INFO, "Coucou les potes");
 }
