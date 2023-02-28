@@ -1,6 +1,6 @@
 #include "ExternInterrupt.hpp"
-volatile uint8_t interruptCount = 0;
-static const uint8_t DEBOUNCE_DELAY = 30;
+static volatile uint8_t interruptCount = 0;
+static constexpr uint8_t DEBOUNCE_DELAY = 30;
 static bool lastClick = true;
 static ClickType lastClickType = ClickType::NONE;
 
@@ -63,8 +63,6 @@ const char* ExternInterrupt::convertClickTypeToString(ClickType clickType) {
             return "";
         }
 }
-
-
 
 ISR (INT0_vect) {
     bool actualClick = !(PIND & (1 << PORTD2));
