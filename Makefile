@@ -29,7 +29,7 @@ PROJECTNAME=test
 # Utilisez le suffixe .cpp pour les fichiers C++
 # Listez tous les fichiers a compiler, separes par
 # un espace. exemple: 'tp1.c tp2.cpp':
-PRJSRC= main.cpp Light/LightManager.cpp PWM/Pwm.cpp Wheel/WheelManager.cpp Timer/TimerManager.cpp Logger/Logger.cpp
+PRJSRC= main.cpp Light/LightManager.cpp PWM/Pwm.cpp Wheel/WheelManager.cpp Timer/TimerManager.cpp Logger/Logger.cpp ExternInterrupt/ExternInterrupt.cpp
 
 # Inclusions additionnels (ex: -I/path/to/mydir)
 INC=
@@ -182,4 +182,3 @@ clean:
 
 debug: clean install
 	serieViaUSB -l
-	@echo "Mode de débuggage activé!"
