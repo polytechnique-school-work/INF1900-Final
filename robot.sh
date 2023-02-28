@@ -1,20 +1,19 @@
 #!/bin/bash
 
-echo $1
-if [$1 = "debug"]; then
-    echo "Exécution du script en mode débugage"
+if [ "$1" = "debug" ]; then
+    echo "Exécution du script en mode débugage."
     cd library
     make build
     cd ../project
     make debug
-elif [$1 = "clean"]; then
+elif [ "$1" = "clean" ]; then
     cd library
     make clean
     cd ../project
     make clean
-    echo "Suppression de l'ensemble des fichiers inutiles"
+    echo -e "\e[32mSuppression de l'ensemble des fichiers inutiles.\e[0m"
 else 
-    echo "Argument invalide : utilisez 'debug' ou 'clean'"
+    echo -e "\e[31mArgument invalide : utilisez 'debug' ou 'clean'.\e[0m"
     exit 1
 fi
 
