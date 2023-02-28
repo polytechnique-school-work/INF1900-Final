@@ -1,5 +1,6 @@
 # inf1900-tools
 
+## Version de la librairie : `1.0`
 
 Bibliothèque contenant tous les ajouts qui seront utiles à notre robot pour le projet final de INF1900.
 

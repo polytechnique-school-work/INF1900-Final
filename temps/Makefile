@@ -23,13 +23,14 @@ MCU=atmega324pa
 
 # Nom de votre projet
 # (utilisez un seul mot, exemple: 'monprojet')
-PROJECTNAME=test
+PROJECTNAME=zucchinis-lib
+
 
 # Fichiers sources
 # Utilisez le suffixe .cpp pour les fichiers C++
 # Listez tous les fichiers a compiler, separes par
 # un espace. exemple: 'tp1.c tp2.cpp':
-PRJSRC= main.cpp Light/LightManager.cpp PWM/Pwm.cpp Wheel/WheelManager.cpp Timer/TimerManager.cpp Logger/Logger.cpp ExternInterrupt/ExternInterrupt.cpp
+PRJSRC= $(wildcard *.cpp)
 
 # Inclusions additionnels (ex: -I/path/to/mydir)
 INC=
@@ -62,6 +63,11 @@ AVRDUDE_PROGRAMMERID=usbasp
 
 #compilateur utilise
 CC=avr-gcc
+
+# On remplace le avr-gcc de la compilation
+# pour utiliser avr-ar qui est la commande
+# pour la création d'une librairie
+AR= avr-ar
 #pour copier le contenu d'un fichier objet vers un autre
 OBJCOPY=avr-objcopy
 #pour permettre le transfert vers le microcontroleur
@@ -80,6 +86,8 @@ CFLAGS=-I. -I/usr/include/simavr  -MMD $(INC) -g -mmcu=$(MCU) -O$(OPTLEVEL) \
 	-std=c++14 -fpack-struct -fshort-enums             \
 	-funsigned-bitfields -funsigned-char    \
 	-Wall                                        
+# Flags pour le compilateur en AR
+ARFLAGS=-crs
 
 # Flags pour le compilateur en C++
 CXXFLAGS=-fno-exceptions     
@@ -96,6 +104,7 @@ TRG=$(PROJECTNAME).elf
 HEXROMTRG=$(PROJECTNAME).hex
 HEXTRG=$(HEXROMTRG) $(PROJECTNAME).ee.hex
 
+LIBTRG=$(PROJECTNAME).a
 
 
 ####### Definition de tout les fichiers objets #######
@@ -124,7 +133,7 @@ OBJDEPS=$(CFILES:.c=.o) \
 # En plus de la commande make qui permet de compiler
 # votre projet, vous pouvez utilisez les commandes
 # make all, make install et make clean
-.PHONY: all install clean 
+.PHONY: all install clean debug
 
 # Make all permet simplement de compiler le projet
 #
@@ -134,6 +143,10 @@ all: $(TRG) $(HEXROMTRG)
 $(TRG): $(OBJDEPS)
 	$(CC) $(LDFLAGS) -o $(TRG) $(OBJDEPS) \
 	-lm $(LIBS)
+
+$(LIBTRG): $(OBJDEPS)
+	$(AR) $(ARFLAGS) $(LIBTRG) $(OBJDEPS)
+#Un *.o fonctionnerait peut être mieux?
 
 # Production des fichiers object
 # De C a objet
