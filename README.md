@@ -7,8 +7,9 @@ Le programme serieViaUSB doit être installé à l'emplacement `/usr/bin` pour q
 
 Plusieurs commandes sont disponibles pour simplifier l'utilisation.
 
-### 🪲 Debug
-Permet de compiler la librairie et le projet de façon propre. Ensuite, installe le programme dans le robot. Finalement, démarre le programme `serieViaUSB` pour ainsi recevoir les informations provenant du robot.
+### 🐞 Debug
+Permet de compiler la librairie et le projet de façon propre. Ensuite, installe le programme dans le robot. 
+Finalement, démarre le programme `serieViaUSB` pour ainsi recevoir les informations provenant du robot.
 ```sh
 ./robot.sh debug
 ```
@@ -37,7 +38,8 @@ Documentation : [Cliquez](/library/Light/README.md)
 ### 🗒️ Logger
 
 ```
-Module permettant d'écrire simplement des logs dans le programme. Elles seront envoyés à l'ordinateur à l'aide du programme serieViaUSB
+Module permettant d'écrire simplement des logs dans le programme. 
+Elles seront envoyés à l'ordinateur à l'aide du programme serieViaUSB
 ```
 Documentation : [Cliquez](/library/Logger/README.md)
 ### 📝 Memory
