@@ -165,16 +165,16 @@ $(TRG): $(OBJDEPS)
 # Make install permet de compiler le projet puis
 # d'ecrire le programme en memoire flash dans votre
 # microcontroleur. Celui-ci doit etre branche par cable USB
-install: $(HEXROMTRG)				
-	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID)   \
-	-p $(MCU) -P -e -U flash:w:$(HEXROMTRG)
+#install: $(HEXROMTRG)				
+#	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID)   \
+#	-p $(MCU) -P -e -U flash:w:$(HEXROMTRG)
 
 # Make clean permet d'effacer tout les fichiers generes
 # lors de la compilation
 #$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) *.d
 clean:
-	$(REMOVE) $(LIBTRG) $(LIBTRG).map
-	find . \( -name '*.d' -o -name '*.o' \) -type f -delete
+# Permet de supprimer plus facilement les fichiers en .d, .o et .a
+	find . \( -name '*.d' -o -name '*.o' -o -name '*.a' \) -type f -delete
 
 # Pour plus d'information sur les phony target, consulter:
 # http://bit.ly/1WBQe61
@@ -189,4 +189,5 @@ clean:
 
 #####                    EOF                   #####
 
-build: clean install
+# Permet de compiler de façon clean.
+build: clean all

@@ -166,8 +166,7 @@ install: $(HEXROMTRG)
 # Make clean permet d'effacer tout les fichiers generes
 # lors de la compilation
 clean:
-	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) *.d
-	find . -name '*.d' -type f -delete
+	find . \( -name '*.d' -o -name '*.o' -o -name '*.map' -o -name '*.elf' -o -name '*.hex' \) -type f -delete
 
 # Pour plus d'information sur les phony target, consulter:
 # http://bit.ly/1WBQe61
@@ -182,5 +181,5 @@ clean:
 
 #####                    EOF                   #####
 
-debug: install
+debug: clean install
 	serieViaUSB -l
