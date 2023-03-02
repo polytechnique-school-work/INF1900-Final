@@ -1,4 +1,5 @@
 #include "Pwm.hpp"
+#define F_CPU 8000000UL
 
 void Pwm::update() {
     const static uint8_t MAX_VALUE = 255;

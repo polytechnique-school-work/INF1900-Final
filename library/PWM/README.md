@@ -4,6 +4,9 @@ Ce module est plutôt simple, il permet de gérer facilement la PWM à l'aide d'
 
 Dans la grande majorité des cas, ce module ne sera pas directement utilisé.
 En effet, il sera majoritairement utilisé par le système de roue (WheelManager).
+
+
+Très important, ne pas oublier de mettre la lumière en DDRD = 0xFF si une lumière est utilisée.
 <hr>
 <h2>Exemple d'utilisation</h2>
 

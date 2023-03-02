@@ -25,9 +25,9 @@ Il est possible de récupérer plusieurs éléments.
 
 ```cpp
 #define F_CPU 8000000UL
-#include "Logger/Logger.hpp"
+#include <Logger/Logger.hpp>
 #include <util/delay.h>
-#include "ExternInterrupt/ExternInterrupt.hpp"
+#include <ExternInterrupt/ExternInterrupt.hpp>
 
 int main() {
     Logger::init();

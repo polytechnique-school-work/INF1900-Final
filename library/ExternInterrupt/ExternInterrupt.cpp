@@ -72,6 +72,7 @@ ISR (INT0_vect) {
             actualClick ? lastClickType = ClickType::CLICK : lastClickType = ClickType::UNCLICK;
             lastClick = actualClick;
             ++interruptCount;
+            _delay_ms(DEBOUNCE_DELAY);
         }
     }
 }

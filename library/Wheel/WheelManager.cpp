@@ -1,5 +1,6 @@
 #include "WheelManager.hpp"
 #include "../PWM/Pwm.hpp"
+#include <avr/io.h> 
 
 void WheelManager::update() {
     Pwm pwm;
@@ -43,9 +44,11 @@ void WheelManager::setWheel(Wheel wheel, Direction direction) {
             switch (direction) {
                 case Direction::FORWARD:
                     // TODO Mettre les bonnes variables à set.
+                    PORTD |= (1 << PORTD7);
                     break;
                 case Direction::BACKWARD:
                     // TODO Mettre les bonnes variables à set.
+                    PORTD &= ~(1 << PORTD7);
                     break;
                 default:
                     break;
@@ -55,8 +58,10 @@ void WheelManager::setWheel(Wheel wheel, Direction direction) {
             switch (direction) {
                 case Direction::FORWARD:
                     // TODO Mettre les bonnes variables à set.
+                    PORTD |= (1 << PORTD7);
                     break;
                 case Direction::BACKWARD:
+                    PORTD &= ~(1 << PORTD7);
                     // TODO Mettre les bonnes variables à set.
                     break;
                 default:

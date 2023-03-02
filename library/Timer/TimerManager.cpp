@@ -1,9 +1,15 @@
 
 #include "TimerManager.hpp"
+#include "Logger/Logger.hpp"
 
-volatile bool isTimerDone = false;
+volatile bool isTimerDone = true;
 
 void TimerManager::runTimer(uint16_t duration) {
+    if(isTimerDone == false) {
+        Logger::init();
+        Logger::log(Priority::ERROR, "Un timer a essayé d'être lancé, alors qu'un autre n'est pas terminé.");
+        return;
+    } 
     sei(); // Accepter de recevoir des intéruptions
     // mode CTC du timer 1 avec horloge divisée par 1024
     // interruption après la durée spécifiée
