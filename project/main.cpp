@@ -1,15 +1,16 @@
-#define F_CPU 8000000UL
-#include "Light/LightManager.hpp"
-#include <PWM/Pwm.hpp>
-#include <util/delay.h>
+#include <avr/io.h>
 #include <Wheel/WheelManager.hpp>
 
-LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
-
 int main() {
-    DDRD = 0xFF;
-    WheelManager wheels;
+    // Déterminer les ports utilisés par les roues.
+    // Les ports de PWM sont obligés d'être PORTD5 et PORTD6.
+    WheelManager wheels(&DDRD, &PORTD, PORTD6, PORTD7);
+
     wheels.setDirection(Direction::RIGHT);
-    wheels.setSpeed(100);
+    wheels.setSpeed(100); //👈️ Entre 0 et 100
+
+    // Update très important, il permet de sauvegarder les
+    // informations et de les envoyer vers le robot.
+    // 🔍️ Il fait l'écriture dans les registres.
     wheels.update();
 }

@@ -4,21 +4,31 @@ Système de gestion des roues. Il permet de faire avancer les roues, de les fair
 se dirige vers la droite ou vers la gauche.
 <hr>
 
+## Différentes méthodes
+
+`setDirection()` : Permet de changer la direction (RIGHT, LEFT, FORWARD, BACKWARD).
+
+`setSpeed()` : Permet de changer la vitesse, obligatoire entre 0 et 100.
+
+`update()` : Permet de sauvegarder les informations dans les registres.
+
 <h2>Exemple d'utilisation</h2>
 
 ```cpp
-#include "WheelManager.hpp"
+#include <avr/io.h>
+#include <Wheel/WheelManager.hpp>
 
 int main() {
-    
-    // WheelManager ne devrait être initialisé qu'une
-    // seule fois.
-    WheelManager wheelManager;
-    wheelManager.setSpeed(55); //👈️ Entre 0 et 100
-    wheelManager.setDirection(Direction::LEFT);
-    
-    // Il est important d'update, puisque ça permet
-    // à la modification d'être active pour le robot.
-    wheelManager.update();
+    // Déterminer les ports utilisés par les roues.
+    // Les ports de PWM sont obligés d'être PORTD5 et PORTD6.
+    WheelManager wheels(&DDRD, &PORTD, PORTD6, PORTD7);
+
+    wheels.setDirection(Direction::RIGHT);
+    wheels.setSpeed(100); //👈️ Entre 0 et 100
+
+    // Update très important, il permet de sauvegarder les
+    // informations et de les envoyer vers le robot.
+    // 🔍️ Il fait l'écriture dans les registres.
+    wheels.update();
 }
 ```
