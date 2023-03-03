@@ -2,6 +2,13 @@
 #include "../PWM/Pwm.hpp"
 #include <avr/io.h> 
 
+
+WheelManager::WheelManager(volatile uint8_t* registre, volatile uint8_t* port, uint8_t pinLeft, uint8_t pinRight) : 
+registre(registre), port(port), pinLeft(pinLeft), pinRight(pinRight)
+{
+    *this->registre |= (1 << pinRight) | (1 << pinLeft);
+}
+
 void WheelManager::update() {
     Pwm pwm;
     pwm.editValues(this->speed, this->speed);
@@ -43,12 +50,9 @@ void WheelManager::setWheel(Wheel wheel, Direction direction) {
         case Wheel::RIGHT:
             switch (direction) {
                 case Direction::FORWARD:
-                    // TODO Mettre les bonnes variables à set.
-                    PORTD |= (1 << PORTD7);
+                    *this->port |= (1 << this->pinRight);
                     break;
-                case Direction::BACKWARD:
-                    // TODO Mettre les bonnes variables à set.
-                    PORTD &= ~(1 << PORTD7);
+                    *this->port &= ~(1 << this->pinRight);
                     break;
                 default:
                     break;
@@ -57,12 +61,10 @@ void WheelManager::setWheel(Wheel wheel, Direction direction) {
         case Wheel::LEFT:
             switch (direction) {
                 case Direction::FORWARD:
-                    // TODO Mettre les bonnes variables à set.
-                    PORTD |= (1 << PORTD7);
+                    *this->port |= (1 << this->pinLeft);
                     break;
                 case Direction::BACKWARD:
-                    PORTD &= ~(1 << PORTD7);
-                    // TODO Mettre les bonnes variables à set.
+                    *this->port &= ~(1 << this->pinLeft);
                     break;
                 default:
                     break;
