@@ -16,7 +16,7 @@ Concernant la couleur ambre, celle-ci est seulement effective un certain temps e
 
 ```cpp
 #define F_CPU 8000000UL
-#include "LightManager.hpp"
+#include <Light/LightManager.hpp>
 #include <util/delay.h>
 
 // Il est important d'initialiser le LightManager de
