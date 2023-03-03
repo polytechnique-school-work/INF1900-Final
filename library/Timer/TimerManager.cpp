@@ -1,8 +1,8 @@
-
 #include "TimerManager.hpp"
 #include "Logger/Logger.hpp"
 
 volatile bool isTimerDone = true;
+bool TimerManager::isAlreadyChecked = false;
 
 void TimerManager::runTimer(uint16_t duration) {
     if(isTimerDone == false) {
@@ -20,10 +20,21 @@ void TimerManager::runTimer(uint16_t duration) {
     TCCR1C = 0;
     TIMSK1 = (1 << OCIE1A);
     isTimerDone = false;
+    isAlreadyChecked = false;
 }
 
 bool TimerManager::isDone(){
     return isTimerDone;
+}
+
+bool TimerManager::isChecked() {
+    if(isTimerDone == true) {
+        if(TimerManager::isAlreadyChecked == false) {
+            TimerManager::isAlreadyChecked = true;
+            return false;
+        }
+    }
+    return isAlreadyChecked;
 }
 
 ISR(TIMER1_COMPA_vect) {

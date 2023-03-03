@@ -1,16 +1,16 @@
-#include <avr/io.h>
-#include <Wheel/WheelManager.hpp>
+#include <Timer/TimerManager.hpp>
+#include <Logger/Logger.hpp>
 
 int main() {
-    // Déterminer les ports utilisés par les roues.
-    // Les ports de PWM sont obligés d'être PORTD5 et PORTD6.
-    WheelManager wheels(&DDRD, &PORTD, PORTD6, PORTD7);
+    // Permet de générer un timer de 0.1 * 50 secondes (donc 5 secondes).
+    TimerManager::runTimer(50);
 
-    wheels.setDirection(Direction::RIGHT);
-    wheels.setSpeed(100); //👈️ Entre 0 et 100
-
-    // Update très important, il permet de sauvegarder les
-    // informations et de les envoyer vers le robot.
-    // 🔍️ Il fait l'écriture dans les registres.
-    wheels.update();
+    Logger::init();
+    while(true) {
+    // On regarde si le timer est terminé ET si la vérification
+    // a déjà été effectuée (pour éviter de log plusieurs fois).
+    if(TimerManager::isDone() && !TimerManager::isChecked()) {
+        Logger::log(Priority::INFO,"Le timer est terminé.");
+    }
+   }
 }
