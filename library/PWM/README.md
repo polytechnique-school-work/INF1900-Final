@@ -5,13 +5,19 @@ Ce module est plutôt simple, il permet de gérer facilement la PWM à l'aide d'
 Dans la grande majorité des cas, ce module ne sera pas directement utilisé.
 En effet, il sera majoritairement utilisé par le système de roue (WheelManager).
 
-
 Très important, ne pas oublier de mettre la lumière en DDRD = 0xFF si une lumière est utilisée.
 <hr>
+
+## Différentes méthodes
+
+`editValue()` : Permet de changer une seule valeur de PWM.
+
+`editValues()` : Permet de changer les deux valeurs de PWM.
+
 <h2>Exemple d'utilisation</h2>
 
 ```c++
-#include "Pwm.hpp"
+#include <Pwm/Pwm.hpp>
 
 int main() {
     Pwm pwm;
