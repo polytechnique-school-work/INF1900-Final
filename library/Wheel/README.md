@@ -1,14 +1,13 @@
 <h1>Gestion des roues</h1>
 
-Système de gestion des roues. Il permet de faire avancer les roues, de les faire reculer, de faire en sorte que le robot
-se dirige vers la droite ou vers la gauche.
+Système de gestion des roues. Il permet de faire avancer les roues, de les faire reculer, de faire en sorte que le robot se dirige vers la droite ou vers la gauche.
 <hr>
 
 ## Différentes méthodes
 
 `setDirection()` : Permet de changer la direction (RIGHT, LEFT, FORWARD, BACKWARD).
 
-`setSpeed()` : Permet de changer la vitesse, obligatoire entre 0 et 100.
+`setSpeed()` : Permet de changer la vitesse, obligatoirement entre 0 et 100.
 
 `update()` : Permet de sauvegarder les informations dans les registres.
 
