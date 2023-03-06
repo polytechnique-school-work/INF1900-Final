@@ -8,12 +8,12 @@ ainsi qu'un cavalier sur MemEN sur la carte mère pour l'échange des données.
 ## Méthodes importantes
 `lecture(const uint16_t adresse, uint8_t *donnee)` : Permet la lecture de données à une certaine adresse une donnée à la fois
 
-`uint8_t lecture(const uint16_t adresse, uint8_t *donnee, const uint8_t longueur)` : Permet la lecture de données à une certaine adresse par bloc de données. ATTENTION: la longueur doit être de 127 ou moins!!!
+`lecture(const uint16_t adresse, uint8_t *donnee, const uint8_t longueur)` : Permet la lecture de données à une certaine adresse par bloc de données. ATTENTION: la longueur doit être de 127 ou moins!!!
 
 
-`uint8_t ecriture(const uint16_t adresse, const uint8_t donnee)` : Permet l'écriture de données vers une certaine adresse une donnée à la fois
+`ecriture(const uint16_t adresse, const uint8_t donnee)` : Permet l'écriture de données vers une certaine adresse une donnée à la fois
 
-`uint8_t ecriture(const uint16_t adresse, uint8_t *donnee, const uint8_t longueur)`: Permet l'écriture de données vers une certaine adresse par bloc de données. ATTENTION: la longueur doit être de 127 ou moins!!!
+`ecriture(const uint16_t adresse, uint8_t *donnee, const uint8_t longueur)`: Permet l'écriture de données vers une certaine adresse par bloc de données. ATTENTION: la longueur doit être de 127 ou moins!!!
 
 <h2>Exemple d'utilisation</h2>
 
