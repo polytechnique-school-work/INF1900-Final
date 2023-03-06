@@ -41,9 +41,6 @@ LIBS=
 # Utilisez s (size opt), 1, 2, 3 ou 0 (off)
 OPTLEVEL=s
 
-# Programmer ID - Ne pas changer 
-# Liste complete des IDs disponible avec avrdude
-AVRDUDE_PROGRAMMERID=usbasp
 
 
 
@@ -65,12 +62,8 @@ CC=avr-gcc
 AR=avr-ar
 #pour copier le contenu d'un fichier objet vers un autre
 OBJCOPY=avr-objcopy
-#pour permettre le transfert vers le microcontroleur
-AVRDUDE=avrdude
 #pour supprimer les fichiers lorsque l'on appel make clean
 REMOVE=rm -f
-# HEXFORMAT -- format pour les fichiers produient .hex
-HEXFORMAT=ihex
 
 
 
@@ -87,18 +80,9 @@ ARFLAGS=-crs
 # Flags pour le compilateur en C++
 CXXFLAGS=-fno-exceptions     
 
-# Linker pour lier les librairies utilisees
-LDFLAGS=-Wl,-Map,$(TRG).map -mmcu=$(MCU)
-
-
-
 ####### Cible (Target) #######
 
 #Nom des cibles par defaut
-TRG=$(PROJECTNAME).elf
-HEXROMTRG=$(PROJECTNAME).hex
-HEXTRG=$(HEXROMTRG) $(PROJECTNAME).ee.hex
-
 LIBTRG=$(PROJECTNAME).a
 
 
@@ -129,7 +113,7 @@ OBJDEPS=$(CFILES:.c=.o) \
 # En plus de la commande make qui permet de compiler
 # votre projet, vous pouvez utilisez les commandes
 # make all, make install et make clean
-.PHONY: all install clean 
+.PHONY: all clean build
 
 # Make all permet simplement de compiler le projet
 #
@@ -138,10 +122,6 @@ all: $(LIBTRG)
 $(LIBTRG): $(OBJDEPS)
 	$(AR) $(ARFLAGS) $(LIBTRG) $(OBJDEPS)
 
-# Implementation de la cible
-$(TRG): $(OBJDEPS)
-	$(CC) $(LDFLAGS) -o $(TRG) $(OBJDEPS) \
-	-lm $(LIBS)
 
 # Production des fichiers object
 # De C a objet
@@ -157,10 +137,6 @@ $(TRG): $(OBJDEPS)
 # Pour plus d'information sur cette section, consulter:
 # http://bit.ly/2580FU8
 
-# Production des fichiers hex a partir des fichiers elf
-%.hex: %.elf
-	$(OBJCOPY) -j .text -j .data \
-		-O $(HEXFORMAT) $< $@
 
 # Make install permet de compiler le projet puis
 # d'ecrire le programme en memoire flash dans votre

@@ -1,16 +1,19 @@
-#include <Timer/TimerManager.hpp>
+#define F_CPU 8000000UL
 #include <Logger/Logger.hpp>
+#include <util/delay.h>
+#include <ExternInterrupt/ExternInterrupt.hpp>
+
+static const uint16_t STARTUP_DELAY = 2000;
+
+// Met en place les systèmes utiles.
+void init() {
+    Logger::init();
+    _delay_ms(STARTUP_DELAY);
+    Logger::log(Priority::INFO, "Le programme est lancé.");
+}
+
 
 int main() {
-    // Permet de générer un timer de 0.1 * 50 secondes (donc 5 secondes).
-    TimerManager::runTimer(50);
+    DEBUG_PRINT((5));
 
-    Logger::init();
-    while(true) {
-    // On regarde si le timer est terminé ET si la vérification
-    // a déjà été effectuée (pour éviter de log plusieurs fois).
-    if(TimerManager::isDone() && !TimerManager::isChecked()) {
-        Logger::log(Priority::INFO,"Le timer est terminé.");
-    }
-   }
 }

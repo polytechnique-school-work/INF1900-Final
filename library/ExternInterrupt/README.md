@@ -20,6 +20,11 @@ Il est possible de récupérer plusieurs éléments.
 
 `resetInterruptCount()` : Permet de remettre à 0 le compte d'intéruptions.
 
+
+## Limitation
+
+Malheureusement, en utilisant le système en ANY, lorsqu'on clique et relâche très rapidement le bouton, celui-ci détecte seulement 2x un unclick. Je n'arrive pas à trouver pourquoi.
+
 <hr>
 <h2>Exemple d'utilisation</h2>
 
