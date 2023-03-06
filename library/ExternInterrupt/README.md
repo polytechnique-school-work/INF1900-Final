@@ -1,24 +1,24 @@
-<h1>Gestion des intéruptions externes</h1>
+<h1>Gestion des interruptions externes</h1>
 
-Ce module permet de détecter des intéruptions qui sont effecutée
+Ce module permet de détecter des interruptions qui sont effecutées
 sur le port `D2`.
 
 Il est possible de récupérer plusieurs éléments.
 
 `getLastClickType()` : Permet de récupérer le type du dernier click.
-'None' dans le cas où aucun clique n'a été effectué.
+'None' dans le cas où aucun click n'a été effectué.
 
 `getClickType()` : Permet de récupérer le click actuel. En fait, c'est juste l'inverse du `getLastClickType()`. Dans le cas où c'est 'None', ce sera le type **Click**.
 
 `convertClickTypeToString()` : Permet de convertir un type en __*const char**__.
 
-`getInterruptCount()` : Permet de récupérer le compte du nombre d'intéruption effectué depuis le début (ou depuis le dernier reset). Ce compte d'intéruption augmente de 1 à chaque intéraction.
+`getInterruptCount()` : Permet de récupérer le compte du nombre d'interruption effectuées depuis le début (ou depuis le dernier reset). Ce compte d'interruption augmente de 1 à chaque intéraction.
 
 <h2>Les différentes méthodes</h2>
 
-`init()` : Permet d'initialiser la gestion des intéruptions selon plusieurs modes décrit dans la page 68 de la documentation [**AVRLibC**](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8272-8-bit-AVR-microcontroller-ATmega164A_PA-324A_PA-644A_PA-1284_P_datasheet.pdf).
+`init()` : Permet d'initialiser la gestion des interruptions selon plusieurs modes décrit dans la page 68 de la documentation [**AVRLibC**](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8272-8-bit-AVR-microcontroller-ATmega164A_PA-324A_PA-644A_PA-1284_P_datasheet.pdf).
 
-`resetInterruptCount()` : Permet de remettre à 0 le compte d'intéruptions.
+`resetInterruptCount()` : Permet de remettre à 0 le compte d'interruptions.
 
 <hr>
 <h2>Exemple d'utilisation</h2>

@@ -1,4 +1,4 @@
-<h1>Gestion de la mémoire</h1>
+<h1>Gestion de la mémoire externe</h1>
 
 Ce module permet la gestion de la mémoire externe PC de la carte mère. La classe Memoire24CXXX
 gère toutes les opérations mémoire (protocole I^2C).

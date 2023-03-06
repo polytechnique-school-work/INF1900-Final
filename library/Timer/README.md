@@ -1,6 +1,6 @@
 <h1>Gestion de la minuterie</h1>
 
-Ce module permet de gérer une minuterie de type CTC de façon très simplifié.
+Ce module permet de gérer une minuterie de type CTC de façon très simplifiée.
 <hr>
 
 ## Différentes méthodes
