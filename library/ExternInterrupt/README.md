@@ -12,7 +12,7 @@ Il est possible de récupérer plusieurs éléments.
 
 `convertClickTypeToString()` : Permet de convertir un type en __*const char**__.
 
-`getInterruptCount()` : Permet de récupérer le compte du nombre d'interruption effectuées depuis le début (ou depuis le dernier reset). Ce compte d'interruption augmente de 1 à chaque intéraction.
+`getInterruptCount()` : Permet de récupérer le compte du nombre d'interruptions effectuées depuis le début (ou depuis le dernier reset). Ce compte d'interruptions augmente de 1 à chaque intéraction.
 
 <h2>Les différentes méthodes</h2>
 
