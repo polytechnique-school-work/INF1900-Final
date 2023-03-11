@@ -13,6 +13,5 @@ public:
     static volatile uint8_t getInterruptCount();
     static void resetInterruptCount();
     static ClickType getLastClickType();
-    static ClickType getClickType();
     static const char* convertClickTypeToString(ClickType clickType);
 };

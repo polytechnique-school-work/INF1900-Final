@@ -19,11 +19,10 @@ public:
 };
 
 #ifdef DEBUG
-# define DEBUG_PRINT(x) Logger::init(); \
-                        Logger::log(Priority::INFO, x) // ou par RS-232
+# define DEBUG_PRINT(x) Logger::log(Priority::INFO, x)
 
 #else
 
-# define DEBUG_PRINT(x) do {} while (0) // code mort
+# define DEBUG_PRINT(x) do {} while (0)
 
 #endif
