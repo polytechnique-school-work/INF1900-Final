@@ -34,17 +34,20 @@ Malheureusement, en utilisant le système en ANY, lorsqu'on clique et relâche t
 #include <util/delay.h>
 #include <ExternInterrupt/ExternInterrupt.hpp>
 
-int main() {
-    Logger::init();
-    _delay_ms(5000);
+void init() {
+    _delay_ms(STARTUP_DELAY);
     Logger::log(Priority::INFO, "Le programme est lancé.");
+}
+
+int main() {
+    init();
     ExternInterrupt::init(InterruptType::ANY);
     uint8_t value = 0;
     while(true){
         if(ExternInterrupt::getInterruptCount() > value) {
             value = ExternInterrupt::getInterruptCount();
             Logger::log(Priority::INFO, "Interruption détectée");
-            ClickType clickType = ExternInterrupt::getClickType();
+            ClickType clickType = ExternInterrupt::getLastClickType();
             const char* type = ExternInterrupt::convertClickTypeToString(clickType);
             Logger::log(Priority::INFO, type);
         }

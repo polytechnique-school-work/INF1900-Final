@@ -11,8 +11,6 @@ void init() {
     Logger::log(Priority::INFO, "Le programme est lancé.");
 }
 
-
-
 int main() {
     init();
     ExternInterrupt::init(InterruptType::ANY);
