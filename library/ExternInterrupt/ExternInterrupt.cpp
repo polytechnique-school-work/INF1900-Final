@@ -66,7 +66,6 @@ const char* ExternInterrupt::convertClickTypeToString(ClickType clickType) {
 }
 
 ISR (INT0_vect) {
-
     // Permet de recalculer à chaque fois
     auto actual = []() { return (PIND & (1 << PORTD2)); };
 
