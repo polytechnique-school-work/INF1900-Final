@@ -17,13 +17,15 @@ Système de gestion des roues. Il permet de faire avancer les roues, de les fair
 #include <avr/io.h>
 #include <Wheel/WheelManager.hpp>
 
-int main() {
+int main()
+{
     // Déterminer les ports utilisés par les roues.
     // Les ports de PWM sont obligés d'être PORTD5 et PORTD6.
-    WheelManager wheels(&DDRD, &PORTD, PORTD6, PORTD7);
+
+    WheelManager wheels(&DDRD, &PORTD, PORTD4, PORTD5);
 
     wheels.setDirection(Direction::RIGHT);
-    wheels.setSpeed(100); //👈️ Entre 0 et 100
+    wheels.setSpeed(100); // 👈️ Entre 0 et 100
 
     // Update très important, il permet de sauvegarder les
     // informations et de les envoyer vers le robot.
