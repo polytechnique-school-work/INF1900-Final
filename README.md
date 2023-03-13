@@ -7,6 +7,12 @@ Le programme serieViaUSB doit être installé à l'emplacement `/usr/bin` pour q
 
 Plusieurs commandes sont disponibles pour simplifier l'utilisation.
 
+### 🐧 Install
+Permet de compiler la librairie et le projet de façon propre. Ensuite, installe le programme dans le robot.
+```sh
+./robot.sh install
+```
+
 ### 🐞 Debug
 Permet de compiler la librairie et le projet de façon propre. Ensuite, installe le programme dans le robot. 
 Finalement, démarre le programme `serieViaUSB` pour ainsi recevoir les informations provenant du robot.
@@ -66,3 +72,10 @@ Documentation : [Cliquez](/library/Timer/README.md)
 Module permettant de gérer les roues du robot.
 ```
 Documentation : [Cliquez](/library/Wheel/README.md)
+
+### 🥫 Can
+
+```
+Module permettant de convertir des données analogiques en données numériques.
+```
+Documentation : [Cliquez](/library/Can/README.md)
