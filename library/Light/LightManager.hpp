@@ -1,7 +1,7 @@
 #pragma once
 #include <avr/io.h> 
 
-enum class Color { RED, GREEN, AMBER, OFF };
+enum class Color {OFF, GREEN, RED, AMBER};
 
 class LightManager {
 private:
