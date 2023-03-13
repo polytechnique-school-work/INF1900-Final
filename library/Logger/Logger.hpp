@@ -1,3 +1,11 @@
+/*
+ * Utilité : Ce module permet de logger des informations en console.
+ * Autheurs : Équipe 020304
+ * Date de création : 4 mars 2023
+ * Ports utilisés:
+ *  Entrée:
+ *  Sortie:
+ * */
 #pragma once
 #include <avr/io.h>
 #include "string.h"

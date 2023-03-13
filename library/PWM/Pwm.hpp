@@ -1,3 +1,11 @@
+/*
+ * Utilité : Ce module permet de générer de la PWM.
+ * Autheurs : Équipe 020304
+ * Date de création : 4 mars 2023
+ * Ports utilisés:
+ *  Entrée:
+ *  Sortie: PORTD6, PORTD7
+ * */
 #pragma once
 #include <avr/io.h> 
 enum class PwmValue {
@@ -6,7 +14,7 @@ enum class PwmValue {
 
 class Pwm {
 private:
-    // Correspondent respectivement aux pins d5 et d6
+    // Correspondent respectivement aux PORTD6 et PORTD7
     uint8_t firstPwm = 0;
     uint8_t secondPwm = 0;
     // Permet d'update les valeurs de PWM
