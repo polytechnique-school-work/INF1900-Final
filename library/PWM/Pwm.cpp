@@ -6,12 +6,11 @@ void Pwm::update() {
 
     // Permet mettre la valeur supposée entre 0 et 100 pour
     // qu'elle soit exprimée entre 0 et 255.
-    OCR1A = uint8_t(MAX_VALUE * (float(this->firstPwm) / 100));
-    OCR1B = uint8_t(MAX_VALUE * (float(this->secondPwm) / 100));
+    OCR2A = uint8_t(MAX_VALUE * (float(this->firstPwm) / 100));
+    OCR2B = uint8_t(MAX_VALUE * (float(this->secondPwm) / 100));
 
-    TCCR1A = (1 << COM1A1) | (1 << COM1B1) | (1 << WGM10);
-    TCCR1B = (1 << CS11);
-    TCCR1C = 0;
+    TCCR2A = (1 << COM2A1) | (1 << COM2B1) | (1 << WGM20);
+    TCCR2B = (1 << CS21);
 }
 
 void Pwm::editValue(PwmValue pwmValue, uint8_t value, bool update) {

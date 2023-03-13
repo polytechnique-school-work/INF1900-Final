@@ -6,7 +6,7 @@
 WheelManager::WheelManager(volatile uint8_t* registre, volatile uint8_t* port, uint8_t pinLeft, uint8_t pinRight) : 
 registre(registre), port(port), pinLeft(pinLeft), pinRight(pinRight)
 {
-    *this->registre |= (1 << PORTD4) | (1 << PORTD5) | (1 << pinLeft) | (1 << pinRight);
+    *this->registre |= (1 << PORTD6) | (1 << PORTD7) | (1 << pinLeft) | (1 << pinRight);
 }
 
 void WheelManager::update() {
