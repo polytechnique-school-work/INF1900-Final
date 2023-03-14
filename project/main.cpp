@@ -13,7 +13,6 @@
 
 static const uint16_t STARTUP_DELAY = 2000;
 
-// Met en place les systèmes utiles.
 void init() {
     _delay_ms(STARTUP_DELAY);
     Logger::log(Priority::INFO, "Le programme est lancé.");
