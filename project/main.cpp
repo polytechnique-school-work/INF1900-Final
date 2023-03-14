@@ -30,4 +30,31 @@ int main() {
     uint16_t croche        = 250;
     uint16_t noirePointe   = 375;
     uint16_t double_croche = 125;
+
+    soundPlayer.playSound(1703,noire);
+    soundPlayer.playSound(1432,noire);
+    soundPlayer.playSound(1703,noirePointe);
+    soundPlayer.playSound(1703,double_croche);
+    soundPlayer.playSound(1276,noire);
+    soundPlayer.playSound(1703,croche);
+    soundPlayer.playSound(1911,croche);
+
+    soundPlayer.playSound(1703,noire);
+    soundPlayer.playSound(1136,noire);
+    soundPlayer.playSound(1703,noirePointe);
+    soundPlayer.playSound(1703,double_croche);
+    soundPlayer.playSound(1073,noire);
+    soundPlayer.playSound(1136,croche);
+    soundPlayer.playSound(1432,croche);
+
+    soundPlayer.playSound(1703,croche);
+    soundPlayer.playSound(1136,croche);
+    soundPlayer.playSound(851,croche);
+    soundPlayer.playSound(1517,croche);
+    soundPlayer.playSound(1911,noirePointe);
+    soundPlayer.playSound(1911,double_croche);
+    soundPlayer.playSound(2273,croche);
+    soundPlayer.playSound(1517,croche);
+    soundPlayer.playSound(1703,noire);
+
 }
