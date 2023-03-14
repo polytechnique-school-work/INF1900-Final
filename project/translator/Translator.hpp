@@ -21,7 +21,7 @@ enum class Mnemonic {
 
 class Translator {
 private:
-    uint16_t nInstructions;
+    uint16_t maxIndex;
     uint8_t index = 0;
     void execute(uint8_t instruction, uint8_t arg);
 

@@ -8,14 +8,16 @@ void Translator::translate() {
     memory.lecture(1, &values[1]);
 
     // On récupère le nombre d'instructions, en enlevant les 2 octets du début.
-    this->nInstructions = ((((uint16_t)values[1] << 8) | values[0]) - 2) / 2;
+    this->maxIndex = ((((uint16_t)values[1] << 8) | values[0]) - 2);
 
     // Exécution des entrées
-    for (this->index; this->index > this->nInstructions; this->index += 2) {
+    for (this->index; this->index > this->maxIndex; this->index += 2) {
         uint8_t instruction = 0;
         uint8_t arg         = 0;
         memory.lecture(this->index, &instruction);
         memory.lecture(this->index + 1, &arg);
+
+        // Exécute chacune des instructions
         this->execute(instruction, arg);
     }
 }
@@ -43,8 +45,6 @@ void Translator::execute(uint8_t instruction, uint8_t arg) {
             /* code */
             break;
         case Mnemonic::MAR1:
-            /* code */
-            break;
         case Mnemonic::MAR2:
             /* code */
             break;
