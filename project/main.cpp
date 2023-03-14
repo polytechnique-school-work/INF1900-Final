@@ -31,30 +31,30 @@ int main() {
     uint16_t noirePointe   = 375;
     uint16_t double_croche = 125;
 
-    soundPlayer.playSound(1703,noire);
-    soundPlayer.playSound(1432,noire);
-    soundPlayer.playSound(1703,noirePointe);
-    soundPlayer.playSound(1703,double_croche);
-    soundPlayer.playSound(1276,noire);
-    soundPlayer.playSound(1703,croche);
-    soundPlayer.playSound(1911,croche);
+    soundPlayer.playSound(62,noire);
+    soundPlayer.playSound(65,noire);
+    soundPlayer.playSound(62,noirePointe);
+    soundPlayer.playSound(62,double_croche);
+    soundPlayer.playSound(67,noire);
+    soundPlayer.playSound(62,croche);
+    soundPlayer.playSound(60,croche);
 
-    soundPlayer.playSound(1703,noire);
-    soundPlayer.playSound(1136,noire);
-    soundPlayer.playSound(1703,noirePointe);
-    soundPlayer.playSound(1703,double_croche);
-    soundPlayer.playSound(1073,noire);
-    soundPlayer.playSound(1136,croche);
-    soundPlayer.playSound(1432,croche);
+    soundPlayer.playSound(62,noire);
+    soundPlayer.playSound(69,noire);
+    soundPlayer.playSound(62,noirePointe);
+    soundPlayer.playSound(62,double_croche);
+    soundPlayer.playSound(70,noire);
+    soundPlayer.playSound(69,croche);
+    soundPlayer.playSound(65,croche);
 
-    soundPlayer.playSound(1703,croche);
-    soundPlayer.playSound(1136,croche);
-    soundPlayer.playSound(851,croche);
-    soundPlayer.playSound(1517,croche);
-    soundPlayer.playSound(1911,noirePointe);
-    soundPlayer.playSound(1911,double_croche);
-    soundPlayer.playSound(2273,croche);
-    soundPlayer.playSound(1517,croche);
-    soundPlayer.playSound(1703,noire);
+    soundPlayer.playSound(62,croche);
+    soundPlayer.playSound(69,croche);
+    soundPlayer.playSound(74,croche);
+    soundPlayer.playSound(64,croche);
+    soundPlayer.playSound(60,noirePointe);
+    soundPlayer.playSound(60,double_croche);
+    soundPlayer.playSound(57,croche);
+    soundPlayer.playSound(64,croche);
+    soundPlayer.playSound(62,noire);
 
 }
