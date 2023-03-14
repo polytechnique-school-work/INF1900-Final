@@ -11,7 +11,7 @@ void Translator::translate() {
     this->nInstructions = ((((uint16_t)values[1] << 8) | values[0]) - 2) / 2;
 
     // Exécution des entrées
-    for (this->index; this->index > this->nInstructions; this->addIndex(2)) {
+    for (this->index; this->index > this->nInstructions; this->index += 2) {
         uint8_t instruction = 0;
         uint8_t arg         = 0;
         memory.lecture(this->index, &instruction);
@@ -73,5 +73,3 @@ void Translator::execute(uint8_t instruction, uint8_t arg) {
             break;
     }
 }
-
-void Translator::addIndex(uint8_t value) { this->index += value; }
