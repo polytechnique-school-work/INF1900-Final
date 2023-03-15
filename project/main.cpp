@@ -9,10 +9,14 @@
 #define F_CPU 8000000UL
 #include "SoundPlayer/SoundPlayer.hpp"
 #include "Translator/Translator.hpp"
+#include <Light/LightManager.hpp>
 #include <Logger/Logger.hpp>
-#include <util/delay.h>
 
 static const uint16_t STARTUP_DELAY = 2000;
+
+WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+LightManager light = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
+Color color = Color::OFF;
 
 void init() {
     _delay_ms(STARTUP_DELAY);
@@ -21,8 +25,8 @@ void init() {
 
 int main() {
     init();
-    // Translator translator;
-    // translator.translate();
+    Translator translator;
+    translator.translate(wheels, light, color);
     // DDRB = 0xff;
     SoundPlayer soundPlayer;
     soundPlayer.init();
@@ -56,5 +60,4 @@ int main() {
     soundPlayer.playSound(57,croche);
     soundPlayer.playSound(64,croche);
     soundPlayer.playSound(62,noire);
-
 }
