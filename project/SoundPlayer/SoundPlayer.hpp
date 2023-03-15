@@ -1,5 +1,7 @@
 #pragma once
 #include <avr/io.h>
+#define F_CPU 8000000UL
+#include <util/delay.h>
 
 // Utilise le timer 0 afin de pouvoir utiliser la PWM des roues ET une minuterie en même temps.
 

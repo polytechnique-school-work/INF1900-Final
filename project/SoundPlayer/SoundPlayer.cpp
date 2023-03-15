@@ -18,3 +18,8 @@ void SoundPlayer::playSound(uint8_t note) {
     TCCR1A = (1 << COM1A0);
     TCCR1B = (1 << WGM12) | (1 << CS11); //| (1 << CS00);
 }
+
+void SoundPlayer::playSound(uint8_t note, uint8_t duration) {
+    this->playSound(note);
+    _delay_ms(duration);
+}

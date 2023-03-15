@@ -26,7 +26,8 @@ int main() {
     // DDRB = 0xff;
     SoundPlayer soundPlayer;
     soundPlayer.init();
-    soundPlayer.playSound(5);
-    _delay_ms(10000);
-    soundPlayer.reset();
+    uint16_t noire         = 500;
+    uint16_t croche        = 250;
+    uint16_t noirePointe   = 375;
+    uint16_t double_croche = 125;
 }
