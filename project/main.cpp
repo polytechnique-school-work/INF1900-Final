@@ -28,10 +28,36 @@ int main() {
     Translator translator;
     translator.translate(wheels, light, color);
     // DDRB = 0xff;
-    //SoundPlayer soundPlayer;
-    //soundPlayer.init();
-    //uint16_t noire         = 500;
-    //uint16_t croche        = 250;
-    //uint16_t noirePointe   = 375;
-    //uint16_t double_croche = 125;
+    SoundPlayer soundPlayer;
+    soundPlayer.init();
+    uint16_t noire         = 500;
+    uint16_t croche        = 250;
+    uint16_t noirePointe   = 375;
+    uint16_t double_croche = 125;
+
+    soundPlayer.playSound(62,noire);
+    soundPlayer.playSound(65,noire);
+    soundPlayer.playSound(62,noirePointe);
+    soundPlayer.playSound(62,double_croche);
+    soundPlayer.playSound(67,noire);
+    soundPlayer.playSound(62,croche);
+    soundPlayer.playSound(60,croche);
+
+    soundPlayer.playSound(62,noire);
+    soundPlayer.playSound(69,noire);
+    soundPlayer.playSound(62,noirePointe);
+    soundPlayer.playSound(62,double_croche);
+    soundPlayer.playSound(70,noire);
+    soundPlayer.playSound(69,croche);
+    soundPlayer.playSound(65,croche);
+
+    soundPlayer.playSound(62,croche);
+    soundPlayer.playSound(69,croche);
+    soundPlayer.playSound(74,croche);
+    soundPlayer.playSound(64,croche);
+    soundPlayer.playSound(60,noirePointe);
+    soundPlayer.playSound(60,double_croche);
+    soundPlayer.playSound(57,croche);
+    soundPlayer.playSound(64,croche);
+    soundPlayer.playSound(62,noire);
 }
