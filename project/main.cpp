@@ -7,7 +7,8 @@
  *  Sortie:
  * */
 #define F_CPU 8000000UL
-#include "translator/Translator.hpp"
+#include "SoundPlayer/SoundPlayer.hpp"
+#include "Translator/Translator.hpp"
 #include <Logger/Logger.hpp>
 #include <util/delay.h>
 
@@ -22,4 +23,9 @@ int main() {
     init();
     // Translator translator;
     // translator.translate();
+    SoundPlayer soundPlayer;
+    soundPlayer.init();
+    soundPlayer.playSound(Note::DO, 5, 5);
+    _delay_ms(10000);
+    soundPlayer.reset();
 }
