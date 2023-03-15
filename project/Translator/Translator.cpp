@@ -24,50 +24,55 @@ void Translator::translate() {
 
 void Translator::execute(uint8_t instruction, uint8_t arg) {
 
+    bool isActive = false;
+
     Mnemonic mnemonic = static_cast<Mnemonic>(instruction);
+
+    if (isActive != true && mnemonic != Mnemonic::DBT) return;
+
     switch (mnemonic) {
-        case Mnemonic::DBT:
+        case Mnemonic::DBT: // Début
+            isActive = true;
+            break;
+        case Mnemonic::ATT: // Attendre
             /* code */
             break;
-        case Mnemonic::ATT:
+        case Mnemonic::DAL: // Allumer la del
             /* code */
             break;
-        case Mnemonic::DAL:
+        case Mnemonic::DET: // Éteindre la del
             /* code */
             break;
-        case Mnemonic::DET:
+        case Mnemonic::SGO: // Jouer une sonorité
             /* code */
             break;
-        case Mnemonic::SGO:
+        case Mnemonic::SAR: // Arrêter de jouer la sonorité
             /* code */
             break;
-        case Mnemonic::SAR:
+        case Mnemonic::MAR1: // Arrêter les moteurs 1
+        case Mnemonic::MAR2: // Arrêter les moteurs 2
             /* code */
             break;
-        case Mnemonic::MAR1:
-        case Mnemonic::MAR2:
+        case Mnemonic::MAV: // Avancer
             /* code */
             break;
-        case Mnemonic::MAV:
+        case Mnemonic::MRE: // Reculer
             /* code */
             break;
-        case Mnemonic::MRE:
+        case Mnemonic::TRD: // Tourner à droite
             /* code */
             break;
-        case Mnemonic::TRD:
+        case Mnemonic::TRG: // Tourner à gauche
             /* code */
             break;
-        case Mnemonic::TRG:
+        case Mnemonic::DBC: // Début de boucle
             /* code */
             break;
-        case Mnemonic::DBC:
+        case Mnemonic::FBC: // Fin de la boucle
             /* code */
             break;
-        case Mnemonic::FBC:
-            /* code */
-            break;
-        case Mnemonic::FIN:
-            /* code */
+        case Mnemonic::FIN: // Fin
+            isActive = false;
             return;
         default:
             break;
