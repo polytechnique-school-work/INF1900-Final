@@ -23,9 +23,10 @@ int main() {
     init();
     // Translator translator;
     // translator.translate();
+    // DDRB = 0xff;
     SoundPlayer soundPlayer;
     soundPlayer.init();
-    soundPlayer.playSound(Note::DO, 5, 5);
+    soundPlayer.playSound(5);
     _delay_ms(10000);
     soundPlayer.reset();
 }
