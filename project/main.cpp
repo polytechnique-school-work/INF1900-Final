@@ -20,6 +20,6 @@ void init() {
 
 int main() {
     init();
-    Translator translator;
-    translator.translate();
+    // Translator translator;
+    // translator.translate();
 }
