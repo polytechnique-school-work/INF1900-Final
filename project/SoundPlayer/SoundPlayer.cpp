@@ -12,7 +12,7 @@ void SoundPlayer::reset() {
 }
 
 void SoundPlayer::playSound(uint8_t note) {
-    OCR1A = 4545 /*Fréquence calculée*/;
+    OCR1A = notes[note - 45] /*Fréquence calculée*/;
     // OCR2B; J'imagine qu'on en a pas besoin, on souhaite juste faire une seule fréquence, on
     // a pas 2 instruments en même temps non?
     TCCR1A = (1 << COM1A0);

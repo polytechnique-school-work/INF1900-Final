@@ -8,5 +8,6 @@ private:
 public:
     void init();
     void playSound(uint8_t note);
+    void playSound(uint8_t note, uint8_t duration);
     void reset();
 };
