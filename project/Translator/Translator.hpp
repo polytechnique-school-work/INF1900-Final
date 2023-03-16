@@ -1,9 +1,9 @@
 #pragma once
 #define F_CPU 8000000UL
-#include <Memory/memoire_24.h>
-#include <avr/io.h>
 #include <Light/LightManager.hpp>
+#include <Memory/memoire_24.h>
 #include <Wheel/WheelManager.hpp>
+#include <avr/io.h>
 #include <util/delay.h>
 
 enum class Mnemonic {
@@ -27,11 +27,13 @@ enum class Mnemonic {
 class Translator {
 private:
     uint16_t maxIndex;
-    uint8_t index = 0;
-    uint16_t loopIndex = 0;
+    uint8_t index        = 0;
+    uint16_t loopIndex   = 0;
     uint16_t loopCounter = 0;
-    void execute(uint8_t instruction, uint8_t arg, WheelManager& roues, LightManager& lumiere, Color& couleur);
+    WheelManager& wheels;
+    LightManager& light;
+    void execute(uint8_t instruction, uint8_t arg);
 
 public:
-    void translate(WheelManager& roues, LightManager& lumiere, Color& couleur);
+    void translate(WheelManager& roues, LightManager& lumiere);
 };

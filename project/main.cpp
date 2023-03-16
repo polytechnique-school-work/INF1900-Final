@@ -26,10 +26,11 @@ void init() {
 int main() {
     init();
     Translator translator;
-    translator.translate(wheels, light, color);
-    // DDRB = 0xff;
+    translator.translate(wheels, light);
+
     SoundPlayer soundPlayer;
     soundPlayer.init();
+
     uint16_t noire         = 750;
     uint16_t croche        = 187;
     uint16_t noirePointe   = 281;

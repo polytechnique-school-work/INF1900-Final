@@ -1,6 +1,9 @@
 #include "Translator.hpp"
 
-void Translator::translate(WheelManager& wheels, LightManager& light, Color& color) {
+void Translator::translate(WheelManager& wheels, LightManager& light) {
+    this->wheels = wheels;
+    this->light  = light;
+
     // Lecture des valeurs
     Memoire24CXXX memory;
     uint8_t values[2];
@@ -18,11 +21,11 @@ void Translator::translate(WheelManager& wheels, LightManager& light, Color& col
         memory.lecture(this->index + 1, &arg);
 
         // Exécute chacune des instructions
-        this->execute(instruction, arg, wheels, light, color);
+        this->execute(instruction, arg, wheels, light);
     }
 }
 
-void Translator::execute(uint8_t instruction, uint8_t arg, WheelManager& wheels, LightManager& light, Color& color) {
+void Translator::execute(uint8_t instruction, uint8_t arg) {
     bool isActive = false;
 
     Mnemonic mnemonic = static_cast<Mnemonic>(instruction);
@@ -35,13 +38,13 @@ void Translator::execute(uint8_t instruction, uint8_t arg, WheelManager& wheels,
             break;
 
         case Mnemonic::ATT: // Attendre
-            for(uint8_t i = 0; i < arg ;i++)
+            for (uint8_t i = 0; i < arg; i++)
                 _delay_ms(25);
             break;
 
         case Mnemonic::DAL: // Allumer la del
-            switch (arg)
-            {
+            Color color = Color::OFF;
+            switch (arg) {
                 case 1:
                     color = Color::GREEN;
                     break;
@@ -52,13 +55,12 @@ void Translator::execute(uint8_t instruction, uint8_t arg, WheelManager& wheels,
 
                 default:
                     break;
-
             }
-            light.setLight(color);
+            this->light.setLight(color);
             break;
 
         case Mnemonic::DET: // Éteindre la del
-            light.setLight(Color::OFF);
+            this->light.setLight(Color::OFF);
             break;
 
         case Mnemonic::SGO: // Jouer une sonorité
@@ -71,41 +73,41 @@ void Translator::execute(uint8_t instruction, uint8_t arg, WheelManager& wheels,
 
         case Mnemonic::MAR1: // Arrêter les moteurs 1
         case Mnemonic::MAR2: // Arrêter les moteurs 2
-            wheels.setSpeed(0);
+            this->wheels.setSpeed(0);
             break;
 
         case Mnemonic::MAV: // Avancer
-            wheels.setDirection(Direction::FORWARD);
-            wheels.setSpeed(arg*100/255);
+            this->wheels.setDirection(Direction::FORWARD);
+            this->wheels.setSpeed(arg * 100 / 255);
             break;
 
         case Mnemonic::MRE: // Reculer
-            wheels.setDirection(Direction::BACKWARD);
-            wheels.setSpeed(arg*100/255);
+            this->wheels.setDirection(Direction::BACKWARD);
+            this->wheels.setSpeed(arg * 100 / 255);
             break;
 
         case Mnemonic::TRD: // Tourner à droite
-            wheels.setDirection(Direction::RIGHT);
-            wheels.setSpeed(arg*100/255);
+            this->wheels.setDirection(Direction::RIGHT);
+            this->wheels.setSpeed(arg * 100 / 255);
             break;
 
         case Mnemonic::TRG: // Tourner à gauche
-            wheels.setDirection(Direction::LEFT);
-            wheels.setSpeed(arg*100/255);
+            this->wheels.setDirection(Direction::LEFT);
+            this->wheels.setSpeed(arg * 100 / 255);
             break;
 
         case Mnemonic::DBC: // Début de boucle
-            this->loopIndex = this->index+4;
+            this->loopIndex   = this->index + 4;
             this->loopCounter = arg;
             break;
 
         case Mnemonic::FBC: // Fin de la boucle
-            if (this->loopCounter > 0){
-                    this->loopCounter --;
-                    this->index = this->loopIndex;
-                }
+            if (this->loopCounter > 0) {
+                this->loopCounter--;
+                this->index = this->loopIndex;
+            }
             break;
-            
+
         case Mnemonic::FIN: // Fin
             isActive = false;
             return;
