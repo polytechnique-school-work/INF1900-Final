@@ -2,7 +2,8 @@
 
 void Logger::transmitUSART(uint8_t data) {
     /* Wait for empty transmit buffer */
-    while ( !( UCSR0A & (1 << UDRE0)) );
+    while (!(UCSR0A & (1 << UDRE0)))
+        ;
     /* Put data into buffer, sends the data */
     UDR0 = data;
 }
@@ -10,7 +11,7 @@ bool Logger::isInit = false;
 void Logger::init() {
     // 2400 bauds
     // Format des trames: 8 bits, 1 stop bits, sans parité
-    if(Logger::isInit) return;
+    if (Logger::isInit) return;
     UBRR0H = 0;
     UBRR0L = 0xCF;
     UCSR0B |= (1 << RXEN0) | (1 << TXEN0);
@@ -19,8 +20,7 @@ void Logger::init() {
 }
 
 void Logger::transmitMessage(const char* message) {
-    for (const char* ptr = message; *ptr != '\0'; ++ptr)
-    {
+    for (const char* ptr = message; *ptr != '\0'; ++ptr) {
         Logger::transmitUSART(*ptr);
     }
 }
@@ -42,6 +42,6 @@ void Logger::format(Priority priority, const char* message, bool skipLine) {
     char fullMessage[strlen(prefix) + strlen(message) + 1];
     strcpy(fullMessage, prefix);
     strcat(fullMessage, message);
-    if(skipLine) strcat(fullMessage, "\n");
+    if (skipLine) strcat(fullMessage, "\n");
     Logger::transmitMessage(fullMessage);
 }
