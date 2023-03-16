@@ -19,11 +19,23 @@ elif [ "$1" = "music" ]; then
     elif [[ ! -e "$2.txt" ]]; then
         echo -e "\e[31mLe fichier $2.txt n'existe pas dans le dossier "music".\e[0m"
     else
-        progmem -o "$2" "$2.txt"
+        progmem -o "$2.ignore" "$2.txt"
+        if [ $? -ne 0 ]; then
+            echo -e "\e[31mUne erreur est survenue lors de l'exécution de progmem, code d'erreur: $?\e[0m"
+            exit 1
+        fi
         cd ../writer
         make install
+        if [ $? -ne 0 ]; then
+            echo -e "\e[31mUne erreur est survenue lors de l'exécution de make, code d'erreur: $?\e[0m"
+            exit 1
+        fi
         cd ../music
-        serieViaUSB -e -f $2
+        serieViaUSB -e -f "$2.ignore"
+        if [ $? -ne 0 ]; then
+            echo -e "\e[31mUne erreur est survenue lors de l'exécution de serieViaUSB, code d'erreur: $?\e[0m"
+            exit 1
+        fi
         echo -e "\e[32mToutes les commandes ont été exécuté avec succès.\e[0m"
     fi
 elif [ "$1" = "clean" ]; then

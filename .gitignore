@@ -6,3 +6,5 @@
 *.hex
 *.elf.map
 *.elf
+# Ignorer les fichiers sans extensions
+*.ignore
