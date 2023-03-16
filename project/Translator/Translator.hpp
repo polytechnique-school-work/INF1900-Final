@@ -30,8 +30,8 @@ private:
     uint8_t index        = 0;
     uint16_t loopIndex   = 0;
     uint16_t loopCounter = 0;
-    WheelManager& wheels;
-    LightManager& light;
+    WheelManager* wheels = nullptr;
+    LightManager* light  = nullptr;
     void execute(uint8_t instruction, uint8_t arg);
 
 public:

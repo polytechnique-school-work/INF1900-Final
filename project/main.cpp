@@ -16,7 +16,6 @@ static const uint16_t STARTUP_DELAY = 2000;
 
 WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
 LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
-Color color         = Color::OFF;
 
 void init() {
     _delay_ms(STARTUP_DELAY);
@@ -25,7 +24,7 @@ void init() {
 
 int main() {
     init();
-    Translator translator;
+    Translator translator = Translator();
     translator.translate(wheels, light);
 
     SoundPlayer soundPlayer;
