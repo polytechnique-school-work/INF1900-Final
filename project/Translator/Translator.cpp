@@ -1,5 +1,9 @@
 #include "Translator.hpp"
 
+void addToValue(uint8_t& value, uint8_t toAdd) {
+    value += toAdd;
+}
+
 void Translator::translate(WheelManager& wheels, LightManager& light) {
     this->wheels = &wheels;
     this->light  = &light;
@@ -9,39 +13,29 @@ void Translator::translate(WheelManager& wheels, LightManager& light) {
     uint8_t values[2];
     memory.lecture(0, &values[0]);
     memory.lecture(1, &values[1]);
-    DEBUG_PRINT((values[0]));
-    DEBUG_PRINT((values[1]));
     // On récupère le nombre d'instructions, en enlevant les 2 octets du début.
     //(((static_cast<uint16_t>(values[1] << 8)) | values[0]) - 2);
 
-    //uint8_t instructionCount = (values[0] << 8) | values[1];
-    //DEBUG_PRINT((instructionCount));
-
-    maxIndex = 0;
-    maxIndex = (values[0] << 8) | values[1];
-
-    DEBUG_PRINT(("MAX_INDEX"));
-    DEBUG_PRINT((maxIndex));
-    DEBUG_PRINT(("INDEX"));
-    //DEBUG_PRINT((cinq));
+    uint8_t indexLimit = (values[0] << 8) | values[1];
 
     // Exécution des entrées
-    // for (; this->index < this->maxIndex; this->index += 2) {
-    //     DEBUG_PRINT(("INDEX"));
-    //     DEBUG_PRINT((this->index));
-    //     DEBUG_PRINT(("MAX_INDEX"));
-    //     DEBUG_PRINT((this->maxIndex));
-    //     uint8_t instruction = 0;
-    //     uint8_t arg         = 0;
-    //     memory.lecture(this->index, &instruction);
-    //     memory.lecture(this->index + 1, &arg);
+    for (uint8_t index = 2; index < indexLimit; addToValue(index, 2)) {
 
-    //     // Exécute chacune des instructions
-    //     this->execute(instruction, arg);
-    // }
+        DEBUG_PRINT((index));
+
+        uint8_t instruction = 0;
+        uint8_t arg         = 0;
+        memory.lecture(index, &instruction);
+        memory.lecture(index + 1, &arg);
+
+        // Exécute chacune des instructions
+        this->execute(instruction, arg, index);
+    }
 }
 
-void Translator::execute(uint8_t instruction, uint8_t arg) {
+
+
+void Translator::execute(uint8_t instruction, uint8_t arg, uint8_t& index) {
     bool isActive = false;
 
     Mnemonic mnemonic = static_cast<Mnemonic>(instruction);
@@ -114,14 +108,14 @@ void Translator::execute(uint8_t instruction, uint8_t arg) {
             break;
 
         case Mnemonic::DBC: // Début de boucle
-            this->loopIndex   = this->index + 2;
+            this->loopIndex   = index + 2;
             this->loopCounter = arg;
             break;
 
         case Mnemonic::FBC: // Fin de la boucle
             if (this->loopCounter > 0) {
                 this->loopCounter--;
-                this->index = this->loopIndex;
+                index = this->loopIndex;
             }
             break;
 
