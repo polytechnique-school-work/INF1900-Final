@@ -9,20 +9,36 @@ void Translator::translate(WheelManager& wheels, LightManager& light) {
     uint8_t values[2];
     memory.lecture(0, &values[0]);
     memory.lecture(1, &values[1]);
-
+    DEBUG_PRINT((values[0]));
+    DEBUG_PRINT((values[1]));
     // On récupère le nombre d'instructions, en enlevant les 2 octets du début.
-    this->maxIndex = (((static_cast<uint16_t>(values[1] << 8)) | values[0]) - 2);
+    //(((static_cast<uint16_t>(values[1] << 8)) | values[0]) - 2);
+
+    //uint8_t instructionCount = (values[0] << 8) | values[1];
+    //DEBUG_PRINT((instructionCount));
+
+    maxIndex = 0;
+    maxIndex = (values[0] << 8) | values[1];
+
+    DEBUG_PRINT(("MAX_INDEX"));
+    DEBUG_PRINT((maxIndex));
+    DEBUG_PRINT(("INDEX"));
+    //DEBUG_PRINT((cinq));
 
     // Exécution des entrées
-    for (; this->index > this->maxIndex; this->index += 2) {
-        uint8_t instruction = 0;
-        uint8_t arg         = 0;
-        memory.lecture(this->index, &instruction);
-        memory.lecture(this->index + 1, &arg);
+    // for (; this->index < this->maxIndex; this->index += 2) {
+    //     DEBUG_PRINT(("INDEX"));
+    //     DEBUG_PRINT((this->index));
+    //     DEBUG_PRINT(("MAX_INDEX"));
+    //     DEBUG_PRINT((this->maxIndex));
+    //     uint8_t instruction = 0;
+    //     uint8_t arg         = 0;
+    //     memory.lecture(this->index, &instruction);
+    //     memory.lecture(this->index + 1, &arg);
 
-        // Exécute chacune des instructions
-        this->execute(instruction, arg);
-    }
+    //     // Exécute chacune des instructions
+    //     this->execute(instruction, arg);
+    // }
 }
 
 void Translator::execute(uint8_t instruction, uint8_t arg) {
@@ -34,6 +50,7 @@ void Translator::execute(uint8_t instruction, uint8_t arg) {
 
     switch (mnemonic) {
         case Mnemonic::DBT: // Début
+            DEBUG_PRINT(("DEBUT"));
             isActive = true;
             break;
 
@@ -43,6 +60,7 @@ void Translator::execute(uint8_t instruction, uint8_t arg) {
             break;
 
         case Mnemonic::DAL: // Allumer la del
+            DEBUG_PRINT(("LIGHT"));
             Color color;
             switch (arg) {
                 case 1:

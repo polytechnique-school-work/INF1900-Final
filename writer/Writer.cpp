@@ -49,7 +49,7 @@ void Writer::receive() {
 
     DEBUG_PRINT(("Premiers octets reçu"));
 
-    uint16_t size = ((static_cast<uint16_t>(data[1] << 8)) | data[0]);
+    uint8_t size = (data[0] << 8) | data[1]; //((static_cast<uint16_t>(data[1] << 8)) | data[0]);
 
     for (uint8_t i = 2; i < size; i++) {
         data[i] = this->receiveUSART();

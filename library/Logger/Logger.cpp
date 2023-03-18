@@ -29,7 +29,7 @@ void Logger::log(Priority priority, const char* message, bool skipLine) {
     Logger::format(priority, message, skipLine);
 }
 
-void Logger::log(Priority priority, const int number, bool skipLine) {
+void Logger::log(Priority priority, const uint8_t number, bool skipLine) {
     char message[5];
     sprintf(message, "%d", number);
     Logger::format(priority, message, skipLine);

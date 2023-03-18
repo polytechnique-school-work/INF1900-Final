@@ -1,6 +1,7 @@
 #pragma once
 #define F_CPU 8000000UL
 #include <Light/LightManager.hpp>
+#include <Logger/Logger.hpp>
 #include <Memory/memoire_24.h>
 #include <Wheel/WheelManager.hpp>
 #include <avr/io.h>
@@ -26,10 +27,10 @@ enum class Mnemonic {
 
 class Translator {
 private:
-    uint16_t maxIndex;
-    uint8_t index        = 0;
-    uint16_t loopIndex   = 0;
-    uint16_t loopCounter = 0;
+    uint8_t maxIndex;
+    uint8_t index;
+    uint8_t loopIndex;
+    uint8_t loopCounter;
     WheelManager* wheels = nullptr;
     LightManager* light  = nullptr;
     void execute(uint8_t instruction, uint8_t arg);

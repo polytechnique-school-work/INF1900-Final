@@ -27,41 +27,45 @@ int main() {
     Translator translator = Translator();
     translator.translate(wheels, light);
 
-    SoundPlayer soundPlayer;
-    soundPlayer.init();
+    // Éviter que ça se relance en boucle.
+    while (true)
+        ;
 
-    uint16_t noire         = 750;
-    uint16_t croche        = 187;
-    uint16_t noirePointe   = 281;
-    uint16_t double_croche = 94;
+    // SoundPlayer soundPlayer;
+    // soundPlayer.init();
 
-    soundPlayer.playSound(62, noirePointe);
-    soundPlayer.playSound(65, noirePointe);
-    soundPlayer.playSound(62, noirePointe, 110);
-    soundPlayer.playSound(62, double_croche);
-    soundPlayer.playSound(67, croche);
-    soundPlayer.playSound(62, croche);
-    soundPlayer.playSound(60, croche);
+    // uint16_t noire         = 750;
+    // uint16_t croche        = 187;
+    // uint16_t noirePointe   = 281;
+    // uint16_t double_croche = 94;
 
-    soundPlayer.playSound(62, noirePointe);
-    soundPlayer.playSound(69, noirePointe);
-    soundPlayer.playSound(62, noirePointe, 110);
-    soundPlayer.playSound(62, double_croche);
-    soundPlayer.playSound(70, croche);
-    soundPlayer.playSound(69, croche);
-    soundPlayer.playSound(65, croche);
+    // soundPlayer.playSound(62, noirePointe);
+    // soundPlayer.playSound(65, noirePointe);
+    // soundPlayer.playSound(62, noirePointe, 110);
+    // soundPlayer.playSound(62, double_croche);
+    // soundPlayer.playSound(67, croche);
+    // soundPlayer.playSound(62, croche);
+    // soundPlayer.playSound(60, croche);
 
-    soundPlayer.playSound(62, croche);
-    soundPlayer.playSound(69, croche);
-    soundPlayer.playSound(74, croche);
-    soundPlayer.playSound(62, croche);
-    soundPlayer.playSound(60, noirePointe, 110);
-    soundPlayer.playSound(60, double_croche);
-    soundPlayer.playSound(57, noirePointe);
-    soundPlayer.playSound(64, double_croche);
-    soundPlayer.playSound(62, noire, 120);
+    // soundPlayer.playSound(62, noirePointe);
+    // soundPlayer.playSound(69, noirePointe);
+    // soundPlayer.playSound(62, noirePointe, 110);
+    // soundPlayer.playSound(62, double_croche);
+    // soundPlayer.playSound(70, croche);
+    // soundPlayer.playSound(69, croche);
+    // soundPlayer.playSound(65, croche);
 
-    soundPlayer.playSound(62, noirePointe);
-    soundPlayer.playSound(62, noirePointe);
-    soundPlayer.reset();
+    // soundPlayer.playSound(62, croche);
+    // soundPlayer.playSound(69, croche);
+    // soundPlayer.playSound(74, croche);
+    // soundPlayer.playSound(62, croche);
+    // soundPlayer.playSound(60, noirePointe, 110);
+    // soundPlayer.playSound(60, double_croche);
+    // soundPlayer.playSound(57, noirePointe);
+    // soundPlayer.playSound(64, double_croche);
+    // soundPlayer.playSound(62, noire, 120);
+
+    // soundPlayer.playSound(62, noirePointe);
+    // soundPlayer.playSound(62, noirePointe);
+    // soundPlayer.reset();
 }
