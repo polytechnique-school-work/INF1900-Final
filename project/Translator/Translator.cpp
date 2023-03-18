@@ -96,7 +96,7 @@ void Translator::execute(uint8_t instruction, uint8_t arg) {
             break;
 
         case Mnemonic::DBC: // Début de boucle
-            this->loopIndex   = this->index + 4;
+            this->loopIndex   = this->index + 2;
             this->loopCounter = arg;
             break;
 
