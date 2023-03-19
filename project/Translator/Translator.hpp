@@ -28,7 +28,7 @@ enum class Mnemonic {
 class Translator {
 private:
     uint8_t index        = 0U;
-    uint8_t maxIndex     = 0U;
+    uint16_t maxIndex    = 0U;
     uint8_t loopIndex    = 0U;
     uint8_t loopCounter  = 0U;
     WheelManager* wheels = nullptr;
