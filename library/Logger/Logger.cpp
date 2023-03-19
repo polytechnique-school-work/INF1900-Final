@@ -15,7 +15,7 @@ void Logger::init() {
     UBRR0H = 0;
     UBRR0L = 0xCF;
     UCSR0B |= (1 << RXEN0) | (1 << TXEN0); // Receiver enable RXEN0 : 1
-    UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);
+    //UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);
     Logger::isInit = true;
 }
 
@@ -31,7 +31,7 @@ void Logger::log(Priority priority, const char* message, bool skipLine) {
 
 void Logger::log(Priority priority, const uint8_t number, bool skipLine) {
     char message[5];
-    sprintf(message, "%d", number);
+    sprintf(message, "%u", number);
     Logger::format(priority, message, skipLine);
 }
 

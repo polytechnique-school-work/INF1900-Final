@@ -3,9 +3,10 @@
 #include <Logger/Logger.hpp>
 #include <util/delay.h>
 int main() {
-    _delay_ms(2000);
     DEBUG_PRINT(("Lancé"));
+    _delay_ms(5000);
 
+    DEBUG_PRINT(("COUCOU"));
     Writer writer;
     writer.receive();
 }

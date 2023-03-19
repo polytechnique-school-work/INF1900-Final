@@ -47,17 +47,16 @@ void Writer::receive() {
     data[0] = this->receiveUSART();
     data[1] = this->receiveUSART();
 
-    DEBUG_PRINT(("Premiers octets reçu"));
-
-    uint8_t size = (data[0] << 8) | data[1]; //((static_cast<uint16_t>(data[1] << 8)) | data[0]);
+    uint8_t size = (data[0] << 8) | data[1];
 
     for (uint8_t i = 2; i < size; i++) {
         data[i] = this->receiveUSART();
-        DEBUG_PRINT(data[i]);
+        _delay_ms(5);
     }
 
     for (uint8_t i = 0; i < size; i++) {
         memoire24CXXX.ecriture(i, data[i]);
+        DEBUG_PRINT(data[i]);
         _delay_ms(5);
     }
 }

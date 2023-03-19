@@ -1,41 +1,39 @@
 #include "Translator.hpp"
+void Translator::translate(WheelManager& roues, LightManager& lumiere) {
+    this->wheels = wheels;
+    this->light  = light;
 
-void addToValue(uint8_t& value, uint8_t toAdd) {
-    value += toAdd;
-}
-
-void Translator::translate(WheelManager& wheels, LightManager& light) {
-    this->wheels = &wheels;
-    this->light  = &light;
-
-    // Lecture des valeurs
     Memoire24CXXX memory;
     uint8_t values[2];
     memory.lecture(0, &values[0]);
     memory.lecture(1, &values[1]);
-    // On récupère le nombre d'instructions, en enlevant les 2 octets du début.
-    //(((static_cast<uint16_t>(values[1] << 8)) | values[0]) - 2);
 
-    uint8_t indexLimit = (values[0] << 8) | values[1];
+    this->maxIndex = (values[0] << 8U) | values[1];
 
-    // Exécution des entrées
-    for (uint8_t index = 2; index < indexLimit; addToValue(index, 2)) {
+    uint8_t instruction = 0U;
+    uint8_t arg         = 0U;
 
-        DEBUG_PRINT((index));
-
-        uint8_t instruction = 0;
-        uint8_t arg         = 0;
-        memory.lecture(index, &instruction);
-        memory.lecture(index + 1, &arg);
-
+    for (this->index = 2; this->index < this->maxIndex; this->index += 2U) {
+        DEBUG_PRINT(("INDEX"));
+        DEBUG_PRINT((this->index));
+        // DEBUG_PRINT((this->index));
+        memory.lecture(this->index, &instruction);
+        _delay_ms(100);
+        memory.lecture(this->index + 1U, &arg);
+        _delay_ms(100);
         // Exécute chacune des instructions
-        this->execute(instruction, arg, index);
+        DEBUG_PRINT(("INSTRUCTION"));
+        DEBUG_PRINT((instruction));
+        DEBUG_PRINT(("ARGUMENT"));
+        DEBUG_PRINT((arg));
+        //  this->execute(instruction, arg);
     }
+
+    // DEBUG_PRINT((this->index));
+    // DEBUG_PRINT((this->maxIndex));
 }
 
-
-
-void Translator::execute(uint8_t instruction, uint8_t arg, uint8_t& index) {
+void Translator::execute(uint8_t instruction, uint8_t arg) {
     bool isActive = false;
 
     Mnemonic mnemonic = static_cast<Mnemonic>(instruction);
