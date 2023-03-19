@@ -1,19 +1,31 @@
 #include "Translator/Translator.hpp"
 void Translator::translate(WheelManager& roues, LightManager& lumiere) {
+
+    this->wheels = wheels;
+    this->light = light;
+
     Memoire24CXXX memory;
     uint8_t values[2];
     memory.lecture(0, &values[0]);
     memory.lecture(1, &values[1]);
-    
-    DEBUG_PRINT((values[0])); // Vaut 5
+
+    DEBUG_PRINT((values[0])); // Vaut 0
     DEBUG_PRINT((values[1])); // Vaut 8
 
-    this->maxIndex = (uint16_t(values[0]) << 8U) | values[1];
-    DEBUG_PRINT((this->maxIndex));
+    this->maxIndex = (uint16_t(values[0]) << 8U) | values[1]; // OK
 
+    uint8_t instruction = 0;
+    uint8_t arg         = 0;
+
+    for (this->index = 2; this->index < this->maxIndex; this->index += 2) {
+        memory.lecture(this->index, &instruction);
+        memory.lecture(this->index + 1, &arg);
+
+        DEBUG_PRINT((instruction));
+        this->execute(instruction, arg);
+    }
 
 }
-
 
 // #include "Translator.hpp"
 // void Translator::translate(WheelManager& roues, LightManager& lumiere) {
@@ -50,95 +62,99 @@ void Translator::translate(WheelManager& roues, LightManager& lumiere) {
 //     // DEBUG_PRINT((this->maxIndex));
 // }
 
-// void Translator::execute(uint8_t instruction, uint8_t arg) {
-//     bool isActive = false;
+void Translator::execute(uint16_t instruction, uint16_t arg) {
 
-//     Mnemonic mnemonic = static_cast<Mnemonic>(instruction);
+    //DEBUG_PRINT(("Exécution de l'instruction "));
 
-//     if (isActive != true && mnemonic != Mnemonic::DBT) return;
+    bool isActive = false;
 
-//     switch (mnemonic) {
-//         case Mnemonic::DBT: // Début
-//             DEBUG_PRINT(("DEBUT"));
-//             isActive = true;
-//             break;
+    Mnemonic mnemonic = static_cast<Mnemonic>(instruction);
+    light->setLight(Color::GREEN);
 
-//         case Mnemonic::ATT: // Attendre
-//             for (uint8_t i = 0; i < arg; i++)
-//                 _delay_ms(25);
-//             break;
+    if (isActive != true && mnemonic != Mnemonic::DBT) return;
 
-//         case Mnemonic::DAL: // Allumer la del
-//             DEBUG_PRINT(("LIGHT"));
-//             Color color;
-//             switch (arg) {
-//                 case 1:
-//                     color = Color::GREEN;
-//                     break;
+    switch (mnemonic) {
+        case Mnemonic::DBT: // Début
+            DEBUG_PRINT(("DEBUT"));
+            isActive = true;
+            break;
 
-//                 case 2:
-//                     color = Color::RED;
-//                     break;
+        case Mnemonic::ATT: // Attendre
+            for (uint8_t i = 0; i < arg; i++)
+                _delay_ms(25);
+            break;
 
-//                 default:
-//                     break;
-//             }
-//             this->light->setLight(color);
-//             break;
-//         case Mnemonic::DET: // Éteindre la del
-//             this->light->setLight(Color::OFF);
-//             break;
+        case Mnemonic::DAL: // Allumer la del
+            DEBUG_PRINT(("LIGHT"));
+            Color color;
+            switch (arg) {
+                case 1:
+                    color = Color::GREEN;
+                    break;
 
-//         case Mnemonic::SGO: // Jouer une sonorité
-//             /* code */
-//             break;
+                case 2:
+                    color = Color::RED;
+                    break;
 
-//         case Mnemonic::SAR: // Arrêter de jouer la sonorité
-//             /* code */
-//             break;
+                default:
+                    break;
+            }
+            this->light->setLight(color);
+            break;
+        case Mnemonic::DET: // Éteindre la del
+            this->light->setLight(Color::OFF);
+            break;
 
-//         case Mnemonic::MAR1: // Arrêter les moteurs 1
-//         case Mnemonic::MAR2: // Arrêter les moteurs 2
-//             this->wheels->setSpeed(0);
-//             break;
+        case Mnemonic::SGO: // Jouer une sonorité
+            /* code */
+            break;
 
-//         case Mnemonic::MAV: // Avancer
-//             this->wheels->setDirection(Direction::FORWARD);
-//             this->wheels->setSpeed(arg * 100 / 255);
-//             break;
+        case Mnemonic::SAR: // Arrêter de jouer la sonorité
+            /* code */
+            break;
 
-//         case Mnemonic::MRE: // Reculer
-//             this->wheels->setDirection(Direction::BACKWARD);
-//             this->wheels->setSpeed(arg * 100 / 255);
-//             break;
+        case Mnemonic::MAR1: // Arrêter les moteurs 1
+        case Mnemonic::MAR2: // Arrêter les moteurs 2
+            this->wheels->setSpeed(0);
+            break;
 
-//         case Mnemonic::TRD: // Tourner à droite
-//             this->wheels->setDirection(Direction::RIGHT);
-//             this->wheels->setSpeed(arg * 100 / 255);
-//             break;
+        case Mnemonic::MAV: // Avancer
+            this->wheels->setDirection(Direction::FORWARD);
+            this->wheels->setSpeed(arg * 100 / 255);
+            break;
 
-//         case Mnemonic::TRG: // Tourner à gauche
-//             this->wheels->setDirection(Direction::LEFT);
-//             this->wheels->setSpeed(arg * 100 / 255);
-//             break;
+        case Mnemonic::MRE: // Reculer
+            this->wheels->setDirection(Direction::BACKWARD);
+            this->wheels->setSpeed(arg * 100 / 255);
+            break;
 
-//         case Mnemonic::DBC: // Début de boucle
-//             this->loopIndex   = index + 2;
-//             this->loopCounter = arg;
-//             break;
+        case Mnemonic::TRD: // Tourner à droite
+            this->wheels->setDirection(Direction::RIGHT);
+            this->wheels->setSpeed(arg * 100 / 255);
+            break;
 
-//         case Mnemonic::FBC: // Fin de la boucle
-//             if (this->loopCounter > 0) {
-//                 this->loopCounter--;
-//                 index = this->loopIndex;
-//             }
-//             break;
+        case Mnemonic::TRG: // Tourner à gauche
+            this->wheels->setDirection(Direction::LEFT);
+            this->wheels->setSpeed(arg * 100 / 255);
+            break;
 
-//         case Mnemonic::FIN: // Fin
-//             isActive = false;
-//             return;
+        case Mnemonic::DBC: // Début de boucle
+            this->loopIndex   = index + 2;
+            this->loopCounter = arg;
+            break;
 
-//         default:
-//             break;
-//     }
-// }
+        case Mnemonic::FBC: // Fin de la boucle
+            if (this->loopCounter > 0) {
+                this->loopCounter--;
+                index = this->loopIndex;
+            }
+            break;
+
+        case Mnemonic::FIN: // Fin
+            isActive = false;
+            return;
+
+        default:
+            break;
+    }
+}

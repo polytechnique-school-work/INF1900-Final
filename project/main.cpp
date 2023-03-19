@@ -14,8 +14,6 @@
 
 static const uint16_t STARTUP_DELAY = 2000;
 
-WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
-LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
 
 // void init() {
 //     _delay_ms(STARTUP_DELAY);
@@ -23,6 +21,11 @@ LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
 // }
 
 int main() {
+    WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+    LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
+
+    light.setLight(Color::GREEN);
+
     _delay_ms(2000);
     Translator translator = Translator();
     translator.translate(wheels, light);

@@ -27,13 +27,13 @@ enum class Mnemonic {
 
 class Translator {
 private:
-    uint8_t index        = 0U;
+    uint16_t index       = 0U;
     uint16_t maxIndex    = 0U;
     uint8_t loopIndex    = 0U;
     uint8_t loopCounter  = 0U;
     WheelManager* wheels = nullptr;
     LightManager* light  = nullptr;
-    void execute(uint8_t instruction, uint8_t arg);
+    void execute(uint16_t instruction, uint16_t arg);
 
 public:
     void translate(WheelManager& roues, LightManager& lumiere);
