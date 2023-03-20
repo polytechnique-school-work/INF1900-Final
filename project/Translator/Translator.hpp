@@ -32,8 +32,8 @@ private:
     uint8_t loopIndex    = 0U;
     uint8_t loopCounter  = 0U;
     bool isActive = false;
-    WheelManager wheels;
-    LightManager light;
+    WheelManager* wheels = nullptr;
+    LightManager* light = nullptr;
     void execute(uint16_t instruction, uint16_t arg);
 
 public:
