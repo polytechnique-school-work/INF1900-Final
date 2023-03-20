@@ -23,16 +23,17 @@ void init() {
 }
 
 int main() {
+    light.setLight(Color::GREEN);
     init();
-
-
     light.setLight(Color::RED);
+
+
 
     // Translator translator = Translator();
     // translator.translate(wheels, light);
    
-    DEBUG_PRINT(("Hello"));
+    //DEBUG_PRINT(("Hello"));
 
-    light.setLight(Color::GREEN);
+    //light.setLight(Color::GREEN);
     return 0;
 }
