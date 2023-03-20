@@ -37,9 +37,5 @@ private:
     void execute(uint16_t instruction, uint16_t arg);
 
 public:
-    Translator();
     void translate(WheelManager& wheels, LightManager& light);
-    // void setIndex(uint8_t value);
-    //Translator() : index(0), loopIndex(0), loopCounter(0), maxIndex(0){};
-    // uint8_t getIndex() const;
 };
