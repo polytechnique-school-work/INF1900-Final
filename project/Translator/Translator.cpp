@@ -1,4 +1,6 @@
 #include "Translator/Translator.hpp"
+Translator::Translator() : index(0), loopIndex(0), loopCounter(0), maxIndex(0){}
+
 void Translator::translate(WheelManager& wheels, LightManager& light) {
 
     this->wheels = &wheels;
@@ -8,9 +10,6 @@ void Translator::translate(WheelManager& wheels, LightManager& light) {
     uint8_t values[2];
     memory.lecture(0, &values[0]);
     memory.lecture(1, &values[1]);
-
-    DEBUG_PRINT((values[0]));
-    DEBUG_PRINT((values[1]));
 
     this->maxIndex = (uint16_t(values[0]) << 8) | values[1]; // OK
 
@@ -25,9 +24,41 @@ void Translator::translate(WheelManager& wheels, LightManager& light) {
 
         DEBUG_PRINT(("INSTRUCTION"));
         DEBUG_PRINT((instruction));
-        // DEBUG_PRINT(("LOOP")); 
+        //DEBUG_PRINT(("LOOP")); 
         //this->execute(instruction, arg);
     }
+    //////////////////////////////////////////////////////////////////////
+    // this->wheels = &wheels;
+    // this->light = &light;
+
+    // Memoire24CXXX memory;
+    // uint8_t values[2];
+    // memory.lecture(0, &values[0]);
+    // memory.lecture(1, &values[1]);
+
+    // DEBUG_PRINT((values[0]));
+    // DEBUG_PRINT((values[1]));
+
+    // this->maxIndex = (uint16_t(values[0]) << 8) | values[1]; // OK
+
+    // uint8_t instruction = 0;
+    // uint8_t arg         = 0;
+
+    // for (this->index = 2; this->index < this->maxIndex; this->index += 2) {
+    //     memory.lecture(this->index, &instruction);
+    //     _delay_ms(100);
+    //     memory.lecture(this->index + 1, &arg);
+    //     _delay_ms(100);
+
+    //     //transmitUSART(instruction);
+
+    //     DEBUG_PRINT((instruction));
+    //     //DEBUG_PRINT(("INSTRUCTION"));
+    //     //DEBUG_PRINT((instruction));
+    //     // DEBUG_PRINT(("LOOP")); 
+    //     this->execute(instruction, arg);
+    // }
+    
 }
 
 void Translator::execute(uint16_t instruction, uint16_t arg) {

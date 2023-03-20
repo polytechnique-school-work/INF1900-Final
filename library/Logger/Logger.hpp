@@ -26,7 +26,7 @@ public:
     static void log(Priority priority, const char* message, bool skipLine = true);
     static void log(Priority priority, const uint16_t number, bool skipLine = true);
 };
-
+#define DEBUG
 #ifdef DEBUG
 #define DEBUG_PRINT(x) Logger::log(Priority::INFO, x)
 

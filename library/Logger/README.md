@@ -7,6 +7,8 @@ des informations à la console.
 doit être activé.
 Normalement, avec le make debug, il est démarré automatiquement.
 
+NOMBRE DE CARACTÈRES MAXIMUM : 128 (VALEUR ÉCRITE EN BRUT, POSSIBLE DE CHANGER!).
+
 <hr>
 <h2>Exemple d'utilisation</h2>
 

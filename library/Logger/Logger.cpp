@@ -39,9 +39,7 @@ void Logger::format(Priority priority, const char* message, bool skipLine) {
     // S'assurer que le logger est init.
     Logger::init();
     const char* prefix = priority == Priority::ERROR ? "[E]: " : "[I]: ";
-    char fullMessage[strlen(prefix) + strlen(message) + 1];
-    strcpy(fullMessage, prefix);
-    strcat(fullMessage, message);
-    if (skipLine) strcat(fullMessage, "\n");
+    char fullMessage[128];
+    sprintf(fullMessage, "%s %s%s", prefix, message, skipLine ? "\n" : "");
     Logger::transmitMessage(fullMessage);
 }
