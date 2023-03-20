@@ -23,4 +23,5 @@ private:
 public:
     LightManager(volatile uint8_t* registre, volatile uint8_t* port, uint8_t pinFirst, uint8_t pinSecond);
     void setLight(Color color);
+    // LightManager() {}
 };

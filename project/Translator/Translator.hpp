@@ -31,12 +31,13 @@ private:
     uint16_t maxIndex    = 0U;
     uint8_t loopIndex    = 0U;
     uint8_t loopCounter  = 0U;
-    WheelManager* wheels = nullptr;
-    LightManager* light  = nullptr;
+    bool isActive = false;
+    WheelManager wheels;
+    LightManager light;
     void execute(uint16_t instruction, uint16_t arg);
 
 public:
-    void translate(WheelManager& roues, LightManager& lumiere);
+    void translate(WheelManager& wheels, LightManager& light);
     // void setIndex(uint8_t value);
     // //Translator() : index(0), loopIndex(0), loopCounter(0), maxIndex(0){};
     // uint8_t getIndex() const;

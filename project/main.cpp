@@ -12,26 +12,27 @@
 #include <Light/LightManager.hpp>
 #include <Logger/Logger.hpp>
 
+//WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
 static const uint16_t STARTUP_DELAY = 2000;
 
 
-// void init() {
-//     _delay_ms(STARTUP_DELAY);
-//     Logger::log(Priority::INFO, "Le programme est lancé.");
-// }
+void init() {
+    _delay_ms(STARTUP_DELAY);
+    Logger::log(Priority::INFO, "Le programme est lancé.");
+}
 
 int main() {
-    WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
-    LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
+    init();
 
-    light.setLight(Color::GREEN);
 
-    _delay_ms(2000);
-    Translator translator = Translator();
-    translator.translate(wheels, light);
-    // init();
+    light.setLight(Color::RED);
+
     // Translator translator = Translator();
     // translator.translate(wheels, light);
    
+    DEBUG_PRINT(("Hello"));
+
+    light.setLight(Color::GREEN);
     return 0;
 }

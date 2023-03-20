@@ -30,5 +30,6 @@ public:
     WheelManager(volatile uint8_t* registre, volatile uint8_t* port, uint8_t pinLeft, uint8_t pinRight);
     WheelManager setDirection(Direction direction);
     WheelManager setSpeed(uint8_t speed);
+    // WheelManager(){};
     void update();
 };
