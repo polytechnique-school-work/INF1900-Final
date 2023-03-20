@@ -10,7 +10,6 @@ private:
 public:
     void init();
     void playSound(uint8_t note);
-    // void playSound(uint8_t note, uint8_t duration);
     void playSound(uint8_t note, uint16_t duration, uint16_t delayAfter = 120);
     void reset();
 };

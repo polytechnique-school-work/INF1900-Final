@@ -1,5 +1,6 @@
 #pragma once
 #define F_CPU 8000000UL
+#include "SoundPlayer/SoundPlayer.hpp"
 #include <Light/LightManager.hpp>
 #include <Logger/Logger.hpp>
 #include <Memory/memoire_24.h>
@@ -31,9 +32,10 @@ private:
     uint16_t maxIndex    = 0U;
     uint8_t loopIndex    = 0U;
     uint8_t loopCounter  = 0U;
-    bool isActive = false;
+    bool isActive        = false;
     WheelManager* wheels = nullptr;
-    LightManager* light = nullptr;
+    LightManager* light  = nullptr;
+    SoundPlayer soundPlayer;
     void execute(uint16_t instruction, uint16_t arg);
 
 public:

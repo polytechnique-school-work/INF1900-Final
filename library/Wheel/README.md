@@ -22,7 +22,7 @@ int main()
     // Déterminer les ports utilisés par les roues.
     // Les ports de PWM sont obligés d'être PORTD5 et PORTD6.
 
-    WheelManager wheels(&DDRD, &PORTD, PORTD4, PORTD5);
+    WheelManager wheels(&DDRB, &PORTB, PORTB2, PORTB3);
 
     wheels.setDirection(Direction::RIGHT);
     wheels.setSpeed(100); // 👈️ Entre 0 et 100

@@ -45,14 +45,19 @@ WheelManager WheelManager::setSpeed(uint8_t speed) {
     return *this;
 }
 
+Direction WheelManager::getDirection() const {
+    return this->direction;
+}
+
 void WheelManager::setWheel(Wheel wheel, Direction direction) {
     switch (wheel) {
         case Wheel::RIGHT:
             switch (direction) {
                 case Direction::FORWARD:
-                    *this->port |= (1 << this->pinRight);
-                    break;
                     *this->port &= ~(1 << this->pinRight);
+                    break;
+                case Direction::BACKWARD:
+                    *this->port |= (1 << this->pinRight);
                     break;
                 default:
                     break;
@@ -61,10 +66,10 @@ void WheelManager::setWheel(Wheel wheel, Direction direction) {
         case Wheel::LEFT:
             switch (direction) {
                 case Direction::FORWARD:
-                    *this->port |= (1 << this->pinLeft);
+                    *this->port &= ~(1 << this->pinLeft);
                     break;
                 case Direction::BACKWARD:
-                    *this->port &= ~(1 << this->pinLeft);
+                    *this->port |= (1 << this->pinLeft);
                     break;
                 default:
                     break;

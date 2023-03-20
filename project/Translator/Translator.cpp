@@ -1,9 +1,14 @@
 #include "Translator/Translator.hpp"
+#include "Utils.hpp"
+
+static const uint16_t TURNING_TIME = 550;
+static const uint16_t DELAY        = 500;
 
 void Translator::translate(WheelManager& wheels, LightManager& light) {
+    this->soundPlayer.init();
 
     this->wheels = &wheels;
-    this->light = &light;
+    this->light  = &light;
 
     Memoire24CXXX memory;
     uint8_t values[2];
@@ -22,16 +27,16 @@ void Translator::translate(WheelManager& wheels, LightManager& light) {
         DEBUG_PRINT(("Instruction"));
         DEBUG_PRINT((instruction));
         this->execute(instruction, arg);
-    } 
+    }
 }
 
 void Translator::execute(uint16_t instruction, uint16_t arg) {
-
     Mnemonic mnemonic = static_cast<Mnemonic>(instruction);
 
-    this->light->setLight(Color::GREEN);
-
     if (isActive != true && mnemonic != Mnemonic::DBT) return;
+    uint8_t speed;
+    uint16_t pourcentagePWM;
+    Direction direction;
 
     switch (mnemonic) {
         case Mnemonic::DBT: // Début
@@ -56,8 +61,8 @@ void Translator::execute(uint16_t instruction, uint16_t arg) {
                 case 2:
                     color = Color::RED;
                     break;
-
                 default:
+                    // ne fait rien
                     break;
             }
             this->light->setLight(color);
@@ -69,47 +74,74 @@ void Translator::execute(uint16_t instruction, uint16_t arg) {
 
         case Mnemonic::SGO: // Jouer une sonorité
             DEBUG_PRINT(("PLAY SOUND"));
-            /* code */
+            this->soundPlayer.playSound(arg);
             break;
 
         case Mnemonic::SAR: // Arrêter de jouer la sonorité
             DEBUG_PRINT(("STOP SOUND"));
-            /* code */
+            this->soundPlayer.reset();
             break;
 
         case Mnemonic::MAR1: // Arrêter les moteurs 1
         case Mnemonic::MAR2: // Arrêter les moteurs 2
             DEBUG_PRINT(("STOP MOTORS"));
             this->wheels->setSpeed(0);
+            this->wheels->update();
             break;
 
         case Mnemonic::MAV: // Avancer
             DEBUG_PRINT(("MOVE FORWARD"));
             this->wheels->setDirection(Direction::FORWARD);
             this->wheels->setSpeed(arg * 100 / 255);
+            this->wheels->update();
             break;
 
         case Mnemonic::MRE: // Reculer
             DEBUG_PRINT(("MOVE BACKWARD"));
             this->wheels->setDirection(Direction::BACKWARD);
             this->wheels->setSpeed(arg * 100 / 255);
+            this->wheels->update();
             break;
 
-        case Mnemonic::TRD: // Tourner à droite
+        case Mnemonic::TRD:         // Tourner à droite
+            speed          = OCR2A; // Sur 255
+            pourcentagePWM = speed / 255 * 100;
+            direction      = this->wheels->getDirection();
+            this->wheels->setSpeed(0);
+            Utils::wait(DELAY);
             DEBUG_PRINT(("TURN RIGHT"));
             this->wheels->setDirection(Direction::RIGHT);
-            this->wheels->setSpeed(arg * 100 / 255);
+            this->wheels->setSpeed(speed * 100 / 255);
+            this->wheels->update();
+            Utils::wait(TURNING_TIME / pourcentagePWM / 100);
+            this->wheels->setSpeed(speed * 100 / 255);
+            this->wheels->setDirection(direction);
+            this->wheels->update();
             break;
-
         case Mnemonic::TRG: // Tourner à gauche
             DEBUG_PRINT(("TURN LEFT"));
+
+            speed          = OCR2A; // Sur 255
+            pourcentagePWM = speed / 255 * 100;
+
+            direction = this->wheels->getDirection();
+
             this->wheels->setDirection(Direction::LEFT);
-            this->wheels->setSpeed(arg * 100 / 255);
+            this->wheels->setSpeed(speed * 100 / 255);
+            this->wheels->update();
+
+            // Attente pour permettre une rotation de 90 degrés
+            Utils::wait(TURNING_TIME / pourcentagePWM / 100);
+
+            // Garder la même trajectoire précédente
+            this->wheels->setSpeed(speed * 100 / 255);
+            this->wheels->setDirection(direction);
+            this->wheels->update();
             break;
 
         case Mnemonic::DBC: // Début de boucle
             DEBUG_PRINT(("START LOOP"));
-            this->loopIndex   = index + 2;
+            this->loopIndex   = index;
             this->loopCounter = arg;
             break;
 
@@ -123,6 +155,9 @@ void Translator::execute(uint16_t instruction, uint16_t arg) {
 
         case Mnemonic::FIN: // Fin
             DEBUG_PRINT(("END"));
+            wheels->setSpeed(0);
+            wheels->update();
+            light->setLight(Color::OFF);
             isActive = false;
             return;
 

@@ -10,7 +10,7 @@ void Pwm::update() {
     OCR2B = uint8_t(MAX_VALUE * (float(this->secondPwm) / 100));
 
     TCCR2A = (1 << COM2A1) | (1 << COM2B1) | (1 << WGM20);
-    TCCR2B = (1 << CS21);
+    TCCR2B = (1 << CS22) | (1 << CS20);
 }
 
 void Pwm::editValue(PwmValue pwmValue, uint8_t value, bool update) {
