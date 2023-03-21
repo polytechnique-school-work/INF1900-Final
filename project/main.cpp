@@ -28,31 +28,5 @@ int main() {
     init();
     Translator translator = Translator();
     translator.translate(wheels, light);
-
-    // wheels.setDirection(Direction::LEFT);
-    // wheels.setSpeed(100); // 550 pour 100 et 1100 pour 50
-    // wheels.update();
-    // _delay_ms(550);
-    // wheels.setSpeed(0);
-    // wheels.update();
     return 0;
 }
-
-// #include <avr/io.h>
-// #include <Wheel/WheelManager.hpp>
-
-// int main()
-// {
-//     // Déterminer les ports utilisés par les roues.
-//     // Les ports de PWM sont obligés d'être PORTD5 et PORTD6.
-
-//     WheelManager wheels(&DDRD, &PORTD, PORTD5, PORTD4);
-
-//     wheels.setDirection(Direction::RIGHT);
-//     wheels.setSpeed(100); // 👈️ Entre 0 et 100
-
-//     // Update très important, il permet de sauvegarder les
-//     // informations et de les envoyer vers le robot.
-//     // 🔍️ Il fait l'écriture dans les registres.
-//     wheels.update();
-// }
