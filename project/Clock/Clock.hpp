@@ -15,5 +15,5 @@
 class Clock {
     public:
         static void init();
-        static volatile uint32_t& getTimestamp();
+        static volatile uint32_t getTimestamp();
 };

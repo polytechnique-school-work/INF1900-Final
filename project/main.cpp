@@ -27,7 +27,7 @@ void init() {
 }
 
 int main() {
-    init();
+    //init();
     // Translator translator = Translator();
     // translator.translate(wheels, light);
     // return 0;
