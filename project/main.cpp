@@ -14,6 +14,7 @@
 #include <Memory/memoire_24.h>
 #include <Wheel/WheelManager.hpp>
 #include <util/delay.h>
+#include "Clock/Clock.hpp"
 
 LightManager light                  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
 WheelManager wheels                 = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
@@ -30,15 +31,28 @@ int main() {
     // Translator translator = Translator();
     // translator.translate(wheels, light);
     // return 0;
-    while (true) {
-        Can can;
-        uint8_t value = uint8_t(can.lecture(2) >> 2);
-        DEBUG_PRINT((1200/(value-20))); // 600 = 80cm
-                                        // 10 = 10cm
-                                        // 15 = 15cm
-                                        // 1 d'espacement = 35/40.
-        _delay_ms(50);
+
+    Clock clock;
+    clock.init();
+
+
+    while(true) {
+        DEBUG_PRINT((clock.getTimestamp()));
     }
+    
+
+
+
+
+    // while (true) {
+    //     Can can;
+    //     uint8_t value = uint8_t(can.lecture(2) >> 2);
+    //     DEBUG_PRINT((1200/(value-20))); // 600 = 80cm
+    //                                     // 10 = 10cm
+    //                                     // 15 = 15cm
+    //                                     // 1 d'espacement = 35/40.
+    //     _delay_ms(50);
+    // }
 
     return 0;
 }
