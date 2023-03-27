@@ -1,0 +1,42 @@
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1152 576">
+  <rect x="96" y="48" width="960" height="480" stroke="black" stroke-width="1" fill="white"/>
+  <text x="96" y="36" font-family="arial" font-size="20" fill="blue">INF1900</text>
+  <!--
+  <line x1="5" y1="5" x2="250" y2="95" stroke="red" />
+  -->
+  <rect x="188" y="120" width="7" height="7" stroke="red" stroke-width="1" fill="red"/>
+  <rect x="298" y="120" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="408" y="120" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="518" y="120" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="628" y="120" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="738" y="120" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="848" y="120" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="958" y="120" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+
+  <rect x="188" y="230" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="298" y="230" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="408" y="230" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="518" y="230" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="628" y="230" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="738" y="230" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="848" y="230" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="958" y="230" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+
+  <rect x="188" y="340" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="298" y="340" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="408" y="340" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="518" y="340" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="628" y="340" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="738" y="340" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="848" y="340" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="958" y="340" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+
+  <rect x="188" y="450" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="298" y="450" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="408" y="450" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="518" y="450" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="628" y="450" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="738" y="450" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="848" y="450" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+  <rect x="958" y="450" width="7" height="7" stroke="black" stroke-width="1" fill="black"/>
+</svg>
