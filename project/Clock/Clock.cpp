@@ -15,7 +15,8 @@ void Clock::init() {
     TIMSK1 = (1 << OCIE1A);
 }
 
-volatile uint32_t Clock::getTimestamp() { return timestamp * 1.001602564; }
+// Retourne des environs secondes.
+uint32_t Clock::getTimestamp() { return timestamp * 1.0016; } // 1.001602564
 
 ISR(TIMER1_COMPA_vect) {
     timestamp += 1;
