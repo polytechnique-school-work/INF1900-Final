@@ -20,7 +20,7 @@
 LightManager light                  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
 WheelManager wheels                 = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
 static const uint16_t STARTUP_DELAY = 2000;
-const uint8_t SPEED = 50;
+const uint8_t SPEED                 = 50;
 
 void init() {
     _delay_ms(STARTUP_DELAY);
@@ -30,80 +30,83 @@ void init() {
 
 int main() {
 
-    init();
-
+    // init();
     Clock clock;
     clock.init();
 
-
-    uint32_t timestamp = 0;
-    uint16_t lowestValue = 65535;
-    uint32_t FULL_CIRCLE = 300;
-
-    uint32_t initialTimestamp = clock.getTimestamp();
-
-    wheels.setDirection(Direction::RIGHT);
-    wheels.setSpeed(SPEED);
-    wheels.update();
-
-    DEBUG_PRINT(("Test"));
-
-    Sensor sensor;
-
-    /*
-        Vérification pour faire le 360 degrés
-    */
-
     while (true) {
-        uint16_t value = sensor.readValue();
-        uint32_t nowTimestamp = clock.getTimestamp();
-        if(value < lowestValue) {
-            lowestValue = value;
-            timestamp = nowTimestamp;
-        }
-
-        if(initialTimestamp + FULL_CIRCLE < nowTimestamp) {
-            DEBUG_PRINT(("STOPED"));
-            break;
-        }
+        DEBUG_PRINT(clock.getTimestamp());
     }
 
-    wheels.setSpeed(0);
-    wheels.update();
+    // init();
 
-    uint32_t deplacementNeeded = timestamp - initialTimestamp;
+    // uint32_t timestamp = 0;
+    // uint16_t lowestValue = 65535;
+    // uint32_t FULL_CIRCLE = 500;
 
-    _delay_ms(500);
+    // uint32_t initialTimestamp = clock.getTimestamp();
 
-    /*
-        Tourner pour voir le bloc
-    */
+    // wheels.setDirection(Direction::RIGHT);
+    // wheels.setSpeed(SPEED);
+    // wheels.update();
 
-    uint32_t turnTime = clock.getTimestamp();
+    // DEBUG_PRINT(("Test"));
 
-    wheels.setSpeed(SPEED);
-    wheels.setDirection(Direction::LEFT);
-    wheels.update();
+    // Sensor sensor;
 
-    while(true) {
-        if(clock.getTimestamp() > turnTime + deplacementNeeded) break;
-    }
+    // /*
+    //     Vérification pour faire le 360 degrés
+    // */
 
-    wheels.setSpeed(0);
-    wheels.update();
-    _delay_ms(500);
+    // while (true) {
+    //     uint16_t value = sensor.readValue();
+    //     uint32_t nowTimestamp = clock.getTimestamp();
+    //     if(value < lowestValue) {
+    //         lowestValue = value;
+    //         timestamp = nowTimestamp;
+    //     }
 
-    wheels.setSpeed(SPEED);
-    wheels.setDirection(Direction::FORWARD);
-    wheels.update();
+    //     if(initialTimestamp + FULL_CIRCLE < nowTimestamp) {
+    //         DEBUG_PRINT(("STOPED"));
+    //         break;
+    //     }
+    // }
 
+    // wheels.setSpeed(0);
+    // wheels.update();
 
-    while(true) {
-        if(sensor.readValue() < 15) break;
-    }
+    // uint32_t deplacementNeeded = timestamp - initialTimestamp;
 
-    wheels.setSpeed(0);
-    wheels.update();
+    // _delay_ms(500);
 
-    return 0;
+    // /*
+    //     Tourner pour voir le bloc
+    // */
+
+    // uint32_t turnTime = clock.getTimestamp();
+
+    // wheels.setSpeed(SPEED);
+    // wheels.setDirection(Direction::LEFT);
+    // wheels.update();
+
+    // while(true) {
+    //     if(clock.getTimestamp() > turnTime + deplacementNeeded) break;
+    // }
+
+    // wheels.setSpeed(0);
+    // wheels.update();
+    // _delay_ms(500);
+
+    // wheels.setSpeed(SPEED);
+    // wheels.setDirection(Direction::FORWARD);
+    // wheels.update();
+
+    // while(true) {
+    //     if(sensor.readValue() < 15) break;
+    // }
+
+    // wheels.setSpeed(0);
+    // wheels.update();
+
+    // return 0;
 }
