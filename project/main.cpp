@@ -10,6 +10,7 @@
 
 #include "Clock/Clock.hpp"
 #include "Sensor/Sensor.hpp"
+#include "robot/Robot.hpp"
 #include <Can/Can.hpp>
 #include <Light/LightManager.hpp>
 #include <Logger/Logger.hpp>
@@ -30,12 +31,17 @@ void init() {
 
 int main() {
 
-    // init();
-    Clock clock;
-    clock.init();
+    init();
+    // Initialisation du robot, donc les roues, etc.
+
+    LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
+    WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+    Sensor sensor       = Sensor();
+
+    Robot robot = Robot(wheels, light, sensor);
 
     while (true) {
-        DEBUG_PRINT(clock.getTimestamp());
+        DEBUG_PRINT(robot.getClock().getTimestamp());
     }
 
     // init();
