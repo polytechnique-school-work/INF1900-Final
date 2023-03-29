@@ -49,9 +49,9 @@ void flashAmber()
     while(true)
     {
         lm.setLight(Color::AMBER);
-        _delay_ms(500);
+        _delay_ms(250);
         lm.setLight(Color::OFF);
-        delay_ms(500);
+        delay_ms(250);
     }
 }
 
