@@ -2,6 +2,8 @@
 #include <Wheel/WheelManager.hpp>
 class MagicalWheels {
 
+    enum Direction { RIGHT, LEFT };
+
     /*
         En gros, cette classe doit permettre de calculer le temps qui s'est passé
         entre le début du déplacement des roues et la fin. Il doit aussi permettre
@@ -20,8 +22,33 @@ class MagicalWheels {
         Une méthode pour faire avancer le robot, pas besoin de faire de méthode pour reculer.
     */
 
+    /*
+        Permet de se diriger vers l'avant.
+    */
+    void moveForward();
+
+    /*
+        Permet d'arrêter l'ensemble des déplacements.
+    */
+    void stopMoves();
+
+    /*
+        Permet de changer la direction selon le turn.
+    */
+    void changeDirection(Direction direction);
+
+    /*
+        Permet de faire un déplacement de 45 degrés.
+        - Arrête tous les mouvements x temps.
+        - Fait son déplacement
+        - Arrête tous les mouvements x temps.
+        - Change la direction (incrémente ou décrémente).
+    */
+    void turn(Direction direction);
+
 private:
-    uint32_t moveTimestamp; // Timestamp qui sera changé à chaque déplacement.
+    // Timestamp qui sera changé à chaque déplacement. Et set à 0 si pas en train de se déplacer.
+    uint32_t moveTimestamp;
     Robot robot;
 
 public:

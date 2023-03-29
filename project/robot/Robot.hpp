@@ -27,6 +27,9 @@ public:
 
     SoundPlayer& getSoundPlayer();
 
+    /*
+        On aura peut être pas besoin de ces elements.
+    */
     uint16_t getX();
     uint16_t getY();
     void setX(uint16_t value);
