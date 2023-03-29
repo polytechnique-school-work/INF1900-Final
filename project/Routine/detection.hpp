@@ -16,11 +16,12 @@ class RoutineDetection
 {
 public:
     void executeRoutine();
+    void sonGrave();
 
 private:
     void flashAmber();
     void flashRed();
     void loopSound();
-    void sonGrave();
+    //void sonGrave();
     
 };

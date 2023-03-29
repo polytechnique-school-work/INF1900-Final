@@ -32,6 +32,9 @@
 // détectés. Dès qu’il arrive à cette conclusion, le robot arrête de bouger et émet un son grave pendant 2 secondes. 
 // Il fait ensuite clignoter sa DEL en rouge à 2 Hz.
 
+LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1); 
+
+
 void RoutineDetection::loopSound()
 {
     SoundPlayer sp;
@@ -51,15 +54,13 @@ void RoutineDetection::sonGrave()
     SoundPlayer sp;
     sp.init();
 
-    sp.playSound(10);
-    delay(2000);
+    sp.playSound(50);
+    _delay_ms(2000);
     sp.reset();
 }
 
 void RoutineDetection::flashRed()
 {
-    LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1); 
-
     while(true)
     {
         lm.setLight(Color::AMBER);
@@ -71,7 +72,6 @@ void RoutineDetection::flashRed()
 
 void RoutineDetection::flashAmber()
 {
-    LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
 
     while(true)
     {
@@ -95,6 +95,7 @@ void RoutineDetection::executeRoutine()
             {
             lm.setLight(Color::AMBER);
             }
+            break;
 
             //2.Checker si l'orientation est haut ou droite
 
@@ -102,26 +103,32 @@ void RoutineDetection::executeRoutine()
         case RoutineSteps::INT_CLICKED:
             //orienté vers le haut
             lm.setLight(Color::GREEN);
+            break;
 
         case RoutineSteps::WHITE_CLICKED:
             //orienté vers la droite
             lm.setLight(Color::RED);
+            break;
 
         case RoutineSteps::FIND_STICK:
             //fonction de Gab
+            break;
 
         case RoutineSteps::FOUND_STICK:
             //5. 3 sons aigus: son (300 ms), pause(300ms) 3x
             loopSound();
             //se dirige vers
+            break;
 
         case RoutineSteps::WAIT:
             //6.clignoter led ambrée à 2Hz -> 2 tours par seconde
             flashAmber();
             //Jusqu'à temps qu'on pèse sur interrupt
+            break;
 
         case RoutineSteps::NO_STICK:
             sonGrave();
             flashRed();
+            break;
     }
 }
