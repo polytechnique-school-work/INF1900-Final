@@ -25,15 +25,18 @@
 // nouvel emplacement du poteau.
 
 // // De 5 à 8 poteaux seront ainsi présentés au robot pour être détectés. Lorsqu’il aura jugé que c’est suffisant, 
-// l’évaluateur gardera le poteau dans ses mains avant d’appuyer sur le bouton Interrupt. Ensuite, dans sa procédure 
+// l’évaluateur gardera le poteau dans ses mains avant d’appuyer sur le bouton Interrupt. 
+
+//Ensuite, dans sa procédure 
 // de détection de poteau, le robot devra pouvoir déterminer qu’il n’y a plus de poteau sur la table pouvant être 
 // détectés. Dès qu’il arrive à cette conclusion, le robot arrête de bouger et émet un son grave pendant 2 secondes. 
 // Il fait ensuite clignoter sa DEL en rouge à 2 Hz.
-LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
-SoundPlayer sp;
 
 void RoutineDetection::loopSound()
 {
+    SoundPlayer sp;
+    sp.init();
+
     for (int i = 0; i<3; i++)
     {
         sp.playSound(45);
@@ -43,9 +46,35 @@ void RoutineDetection::loopSound()
     }
 }
 
+void RoutineDetection::sonGrave()
+{
+    SoundPlayer sp;
+    sp.init();
+
+    sp.playSound(10);
+    delay(2000);
+    sp.reset();
+}
+
+void RoutineDetection::flashRed()
+{
+    LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1); 
+
+    while(true)
+    {
+        lm.setLight(Color::AMBER);
+        _delay_ms(250);
+        lm.setLight(Color::OFF);
+        _delay_ms(250);
+    }
+}
+
 void RoutineDetection::flashAmber()
 {
-    for (int i = 0; i < 2; i++) {
+    LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
+
+    while(true)
+    {
         for (int k = 0; k <12; k ++) {
         lm.setLight(Color::AMBER);
         }
@@ -56,46 +85,43 @@ void RoutineDetection::flashAmber()
 
 void RoutineDetection::executeRoutine()
 {
-    while (true) {
-    //1.Light Amber
-    sp.init();
+    RoutineSteps routineSteps;
 
-    while (true)
-    lm.setLight(Color::AMBER);
-
-    //TODO
-    //2.Checker si l'orientation est haut ou droite
-    //Bouton blanc (Port X): droite
-    //Bouton Interrupt: haut
-
-    if //interrupt is clicked)
+    switch(routineSteps)
     {
-        lm.setLight(Color::GREEN);
+        case RoutineSteps::START:
+            //1.Light Amber
+            while (true)
+            {
+            lm.setLight(Color::AMBER);
+            }
 
+            //2.Checker si l'orientation est haut ou droite
+
+
+        case RoutineSteps::INT_CLICKED:
+            //orienté vers le haut
+            lm.setLight(Color::GREEN);
+
+        case RoutineSteps::WHITE_CLICKED:
+            //orienté vers la droite
+            lm.setLight(Color::RED);
+
+        case RoutineSteps::FIND_STICK:
+            //fonction de Gab
+
+        case RoutineSteps::FOUND_STICK:
+            //5. 3 sons aigus: son (300 ms), pause(300ms) 3x
+            loopSound();
+            //se dirige vers
+
+        case RoutineSteps::WAIT:
+            //6.clignoter led ambrée à 2Hz -> 2 tours par seconde
+            flashAmber();
+            //Jusqu'à temps qu'on pèse sur interrupt
+
+        case RoutineSteps::NO_STICK:
+            sonGrave();
+            flashRed();
     }
-
-    if //White is clicked
-    {
-        lm.setLight(Color::RED);
-    }
-
-    // Ça prend un ISR avec le bouton blanc aussi
-
-
-    //3.Pour trouver le poteau, le robot tourne 360
-    //4.Trouve le poteau et se dirige (fonction de gab)
-
-    //5. 3 sons aigus: son (300 ms), pause(300ms) 3x
-    loopSound();
-
-    //6.clignoter led ambrée à 2Hz -> 2 tours par seconde
-    flashAmber();
-
-    //7.(est-ce un case??)Le robot est déplacé et ORIENTÉ VERS LE HAUT
-
-    //8.Click sur Interrupt
-
-    //Robot stop DEL et cherche prochain poteau, on revient au case 3
-    }
-
 }

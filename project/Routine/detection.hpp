@@ -10,7 +10,8 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-enum class RoutineSteps {START, INT_CLICKED, WHITE_CLICKED, FIND_STICK, FOUND_STICK, WAIT, RESET }
+enum class RoutineSteps {START, INT_CLICKED, WHITE_CLICKED, FIND_STICK, FOUND_STICK, WAIT, NO_STICK };
+
 class RoutineDetection
 {
 public:
@@ -18,6 +19,8 @@ public:
 
 private:
     void flashAmber();
+    void flashRed();
     void loopSound();
+    void sonGrave();
     
 };
