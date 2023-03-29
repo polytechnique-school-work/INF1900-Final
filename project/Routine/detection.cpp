@@ -60,38 +60,36 @@ void RoutineDetection::executeRoutine()
     //1.Light Amber
     sp.init();
 
-    //flashAmber();
+    while (true)
+    lm.setLight(Color::AMBER);
 
     //TODO
     //2.Checker si l'orientation est haut ou droite
     //Bouton blanc (Port X): droite
     //Bouton Interrupt: haut
 
-    // if //interrupt is clicked)
-    // {
-    //     lm.setLight(Color::GREEN);
+    if //interrupt is clicked)
+    {
+        lm.setLight(Color::GREEN);
 
-    // }
+    }
 
-    // if //White is clicked
-    // {
-    //     lm.setLight(Color::RED);
-    // }
+    if //White is clicked
+    {
+        lm.setLight(Color::RED);
+    }
 
     // Ça prend un ISR avec le bouton blanc aussi
 
 
     //3.Pour trouver le poteau, le robot tourne 360
-
-    //4.Trouve le poteau et se dirige
-    // lm.setLight(Color::OFF);
-    // _delay_ms(5000);
+    //4.Trouve le poteau et se dirige (fonction de gab)
 
     //5. 3 sons aigus: son (300 ms), pause(300ms) 3x
     loopSound();
 
     //6.clignoter led ambrée à 2Hz -> 2 tours par seconde
-    //flashAmber(/*Combien de temps??*/)
+    flashAmber();
 
     //7.(est-ce un case??)Le robot est déplacé et ORIENTÉ VERS LE HAUT
 
