@@ -48,8 +48,9 @@ void flashAmber()
     //ou while true si on l'arrête pas
 
     for (int i = 0; i < 2; i++) {
-        lm.setLight(Color::RED);
-        _delay_ms(250);
+        for (int k = 0; k <12; k ++) {
+        lm.setLight(Color::AMBER);
+        }
         lm.setLight(Color::OFF);
         _delay_ms(250);
     }
