@@ -54,7 +54,7 @@ void RoutineDetection::sonGrave()
     SoundPlayer sp;
     sp.init();
 
-    sp.playSound(50);
+    sp.playSound(50); // 50 = grave, 80 = high
     _delay_ms(2000);
     sp.reset();
 }
