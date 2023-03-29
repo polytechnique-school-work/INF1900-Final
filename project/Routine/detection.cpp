@@ -32,7 +32,7 @@
 LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
 SoundPlayer sp;
 
-void loopSound()
+void RoutineDetection::loopSound()
 {
     for (int i = 0; i<3; i++)
     {

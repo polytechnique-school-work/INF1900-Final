@@ -17,5 +17,6 @@ public:
 
 private:
     void flashAmber();
+    void loopSound();
     
 };
