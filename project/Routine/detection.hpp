@@ -1,5 +1,5 @@
 #pragma once
-#define F_CPU 8000000UL
+// #define F_CPU 8000000UL
 #include <ExternInterrupt/ExternInterrupt.hpp>
 #include <Light/LightManager.hpp>
 #include <Logger/Logger.hpp>
@@ -13,8 +13,8 @@
 class RoutineDetection
 {
 public:
-    void executeRoutine()
+    void executeRoutine();
 
 private:
     
-}
+};

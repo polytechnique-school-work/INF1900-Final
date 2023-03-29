@@ -57,6 +57,7 @@ void flashAmber()
 
 void RoutineDetection::executeRoutine()
 {
+    while (true) {
     //1.Light Amber
     sp.init();
 
@@ -84,10 +85,11 @@ void RoutineDetection::executeRoutine()
     //3.Pour trouver le poteau, le robot tourne 360
 
     //4.Trouve le poteau et se dirige
-    lm.setLight(Color::OFF);
+    // lm.setLight(Color::OFF);
+    // _delay_ms(5000);
 
     //5. 3 sons aigus: son (300 ms), pause(300ms) 3x
-    loopSound();
+    //loopSound();
 
     //6.clignoter led ambrée à 2Hz -> 2 tours par seconde
     //flashAmber(/*Combien de temps??*/)
