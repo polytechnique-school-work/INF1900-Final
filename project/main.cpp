@@ -6,6 +6,7 @@
  *  Entrée:
  *  Sortie:
  * */
+
 #define F_CPU 8000000UL
 
 #include "Clock/Clock.hpp"

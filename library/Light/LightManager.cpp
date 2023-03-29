@@ -1,6 +1,7 @@
 #define F_CPU 8000000UL
 #include <util/delay.h>
 #include "Light/LightManager.hpp"
+
 LightManager::LightManager(volatile uint8_t* registre, volatile uint8_t* port, uint8_t pinFirst, uint8_t pinSecond):
     regis(registre),
     firstPin(pinFirst),
