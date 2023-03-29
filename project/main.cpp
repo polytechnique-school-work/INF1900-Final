@@ -18,8 +18,6 @@
 #include <Wheel/WheelManager.hpp>
 #include <util/delay.h>
 
-LightManager light                  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
-WheelManager wheels                 = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
 static const uint16_t STARTUP_DELAY = 2000;
 const uint8_t SPEED                 = 50;
 
@@ -36,9 +34,10 @@ int main() {
 
     LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
     WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+    SoundPlayer sound   = SoundPlayer();
     Sensor sensor       = Sensor();
 
-    Robot robot = Robot(wheels, light, sensor);
+    Robot robot = Robot(wheels, light, sensor, sound);
 
     // while (true) {
     //     DEBUG_PRINT(robot.getClock().getTimestamp());
