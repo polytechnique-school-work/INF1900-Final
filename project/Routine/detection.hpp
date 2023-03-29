@@ -10,6 +10,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+enum class RoutineSteps {START, INT_CLICKED, WHITE_CLICKED, FIND_STICK, FOUND_STICK, WAIT, RESET }
 class RoutineDetection
 {
 public:
