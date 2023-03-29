@@ -29,37 +29,37 @@
 // de détection de poteau, le robot devra pouvoir déterminer qu’il n’y a plus de poteau sur la table pouvant être 
 // détectés. Dès qu’il arrive à cette conclusion, le robot arrête de bouger et émet un son grave pendant 2 secondes. 
 // Il fait ensuite clignoter sa DEL en rouge à 2 Hz.
+LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
+SoundPlayer sp;
 
 void loopSound()
 {
-    for (i = 0, i<3, i++)
+    for (int i = 0; i<3; i++)
     {
         sp.playSound(45);
-        loop(300)
-        sp.reset()
-        loop(300)
+        _delay_ms(300);
+        sp.reset();
+        _delay_ms(300);
     }
 }
 
-void flashAmber(/*Combien de temps??*/)
+void flashAmber()
 {
     //ou while true si on l'arrête pas
-    for (i = 0, i<, i++)
+    while(true)
     {
         lm.setLight(Color::AMBER);
-        loop(500);
+        _delay_ms(500);
         lm.setLight(Color::OFF);
-        loop(500);
+        delay_ms(500);
     }
 }
+
 void RoutineDetection::executeRoutine()
 {
     //1.Light Amber
-    LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
-    SoundPlayer sp;
-    sp.init;
+    sp.init();
 
-    
     lm.setLight(Color::AMBER);
 
     //TODO
@@ -97,10 +97,6 @@ void RoutineDetection::executeRoutine()
     //8.Click sur Interrupt
 
     //Robot stop DEL et cherche prochain poteau, on revient au case 3
-
-
-    
-
 
 
 }
