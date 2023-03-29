@@ -16,5 +16,6 @@ public:
     void executeRoutine();
 
 private:
+    void flashAmber();
     
 };

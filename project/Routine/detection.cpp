@@ -43,10 +43,8 @@ void loopSound()
     }
 }
 
-void flashAmber()
+void RoutineDetection::flashAmber()
 {
-    //ou while true si on l'arrête pas
-
     for (int i = 0; i < 2; i++) {
         for (int k = 0; k <12; k ++) {
         lm.setLight(Color::AMBER);
@@ -62,7 +60,7 @@ void RoutineDetection::executeRoutine()
     //1.Light Amber
     sp.init();
 
-    flashAmber();
+    //flashAmber();
 
     //TODO
     //2.Checker si l'orientation est haut ou droite
@@ -90,7 +88,7 @@ void RoutineDetection::executeRoutine()
     // _delay_ms(5000);
 
     //5. 3 sons aigus: son (300 ms), pause(300ms) 3x
-    //loopSound();
+    loopSound();
 
     //6.clignoter led ambrée à 2Hz -> 2 tours par seconde
     //flashAmber(/*Combien de temps??*/)
