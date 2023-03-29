@@ -67,16 +67,16 @@ void RoutineDetection::executeRoutine()
     //Bouton blanc (Port X): droite
     //Bouton Interrupt: haut
 
-    if //interrupt is clicked)
-    {
-        lm.setLight(Color::GREEN);
+    // if //interrupt is clicked)
+    // {
+    //     lm.setLight(Color::GREEN);
 
-    }
+    // }
 
-    if //White is clicked
-    {
-        lm.setLight(Color::RED);
-    }
+    // if //White is clicked
+    // {
+    //     lm.setLight(Color::RED);
+    // }
 
     // Ça prend un ISR avec le bouton blanc aussi
 
@@ -90,7 +90,7 @@ void RoutineDetection::executeRoutine()
     loopSound();
 
     //6.clignoter led ambrée à 2Hz -> 2 tours par seconde
-    flashAmber(/*Combien de temps??*/)
+    //flashAmber(/*Combien de temps??*/)
 
     //7.(est-ce un case??)Le robot est déplacé et ORIENTÉ VERS LE HAUT
 
