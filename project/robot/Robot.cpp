@@ -16,4 +16,10 @@ void Robot::setX(uint16_t value) { this->x = value; }
 
 void Robot::setY(uint16_t value) { this->y = value; }
 
-uint8_t Robot::getSpeed() { return this->speed; }
+const uint8_t Robot::getSpeed() { return this->speed; }
+
+const uint16_t Robot::getWaitTurnDuration() { return this->speed; }
+
+HeadDirection Robot::getHeadDirection() { return this->headDirection; }
+
+void Robot::setHeadDirection(HeadDirection head) { this->headDirection = head; }
