@@ -32,7 +32,7 @@ void LightManager::setLight(Color color) {
             _delay_ms(this->DelayRED);
             break;
         case Color::OFF:
-            *port &= ~(1 << this->firstPin) & ~(1 << this->secondPin); 
+            *port &= ~(1 << this->secondPin) & ~(1 << this->firstPin); 
             break;
         default:
             break;
