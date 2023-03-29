@@ -32,6 +32,10 @@ void MagicalWheels::turn(Direction direction) {
 void MagicalWheels::stopMoves() {
     this->robot.getWheelManager().setSpeed(0);
     Utils::wait(this->robot.getWaitTurnDuration());
+
+    // Calculer le déplacement.
+    // Pas certain du truc par contre... ça me parait deg comme façon de faire.
+    this->robot.calculateMove(this->moveTimestamp);
 }
 
 void MagicalWheels::fetch(Direction direction) {
@@ -58,4 +62,9 @@ void MagicalWheels::changeDirection(Direction direction) {
     DEBUG_PRINT(("Changement de la direction"));
 }
 
-void MagicalWheels::moveForward() {}
+void MagicalWheels::moveForward() {
+    this->robot.getWheelManager().setDirection(Direction::FORWARD);
+    this->robot.getWheelManager().setSpeed(this->robot.getSpeed());
+    this->robot.getWheelManager().update();
+    this->moveTimestamp = Clock::getTimestamp();
+}
