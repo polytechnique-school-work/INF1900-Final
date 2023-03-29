@@ -27,6 +27,8 @@ public:
 
     SoundPlayer& getSoundPlayer();
 
+    uint8_t getSpeed();
+
     /*
         On aura peut être pas besoin de ces elements.
     */
@@ -50,4 +52,5 @@ private:
     SoundPlayer soundPlayer;
     uint16_t x;
     uint16_t y;
+    uint8_t speed = 30;
 };

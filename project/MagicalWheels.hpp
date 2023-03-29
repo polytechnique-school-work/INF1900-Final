@@ -1,8 +1,15 @@
 #include "robot/Robot.hpp"
+#include <Logger/Logger.hpp>
 #include <Wheel/WheelManager.hpp>
 class MagicalWheels {
 
-    enum Direction { RIGHT, LEFT };
+private:
+    // Timestamp qui sera changé à chaque déplacement. Et set à 0 si pas en train de se déplacer.
+    uint32_t moveTimestamp;
+    Robot robot;
+
+public:
+    MagicalWheels(Robot r) : robot(r) {}
 
     /*
         En gros, cette classe doit permettre de calculer le temps qui s'est passé
@@ -46,11 +53,8 @@ class MagicalWheels {
     */
     void turn(Direction direction);
 
-private:
-    // Timestamp qui sera changé à chaque déplacement. Et set à 0 si pas en train de se déplacer.
-    uint32_t moveTimestamp;
-    Robot robot;
-
-public:
-    MagicalWheels(Robot r) : robot(r) {}
+    /*
+        Fonction de vérification appelée en boucle lorsqu'il tourne.
+    */
+    void fetch();
 };
