@@ -1,7 +1,7 @@
 #include "Robot.hpp"
 
-LightManager& Robot::getLights() { return this->lights; }
+WheelManager& Robot::getWheelManager() { return wheelManager; }
 
-Sensor& Robot::getSensor() { return this->sensor; }
+LightManager& Robot::getLightManager() { return lightManager; }
 
-WheelManager& Robot::getWheels() { return this->wheels; }
+Sensor& Robot::getSensor() { return sensor; }

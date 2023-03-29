@@ -7,14 +7,17 @@
 
 class Robot {
 public:
-    Robot(WheelManager wheels, LightManager lights, Sensor sensor)
-        : wheels(wheels), lights(lights), sensor(sensor) {}
-    WheelManager& getWheels();
-    LightManager& getLights();
+    Robot(WheelManager wm, LightManager lm, Sensor s)
+        : wheelManager(wm), lightManager(lm), sensor(s) {}
+
+    WheelManager& getWheelManager();
+
+    LightManager& getLightManager();
+
     Sensor& getSensor();
 
 private:
-    WheelManager wheels;
-    LightManager lights;
+    WheelManager wheelManager;
+    LightManager lightManager;
     Sensor sensor;
-}
+};
