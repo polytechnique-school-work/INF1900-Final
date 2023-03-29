@@ -21,7 +21,7 @@ void MagicalWheels::turn(Direction direction) {
     while (Clock::getTimestamp() < stopTime) {
         // Faire en sorte que si le fetch a une certaine valeur de retour, on skip le while (et on
         // effectue pas le change direction).
-        this->fetch();
+        this->fetch(direction);
     }
 
     this->stopMoves();
@@ -34,10 +34,13 @@ void MagicalWheels::stopMoves() {
     Utils::wait(this->robot.getWaitTurnDuration());
 }
 
-void MagicalWheels::fetch() {
+void MagicalWheels::fetch(Direction direction) {
 
     /*
         TODO
+        On doit faire en sorte de vérifier si y'a une valeur en bas d'une certaine valeur à chaque
+       fois. Soit qu'on définie une valeur par défaut et il se dirige vers un bloc en dessous d'une
+       certaine valeur.
     */
 }
 
@@ -54,3 +57,5 @@ void MagicalWheels::changeDirection(Direction direction) {
     this->robot.setHeadDirection(newHeadDirection);
     DEBUG_PRINT(("Changement de la direction"));
 }
+
+void MagicalWheels::moveForward() {}

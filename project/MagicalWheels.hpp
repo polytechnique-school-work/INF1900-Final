@@ -56,5 +56,5 @@ public:
     /*
         Fonction de vérification appelée en boucle lorsqu'il tourne.
     */
-    void fetch();
+    void fetch(Direction direction);
 };
