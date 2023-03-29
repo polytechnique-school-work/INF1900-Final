@@ -46,12 +46,12 @@ void loopSound()
 void flashAmber()
 {
     //ou while true si on l'arrête pas
-    while(true)
-    {
-        lm.setLight(Color::AMBER);
+
+    for (int i = 0; i < 2; i++) {
+        lm.setLight(Color::RED);
         _delay_ms(250);
         lm.setLight(Color::OFF);
-        delay_ms(250);
+        _delay_ms(250);
     }
 }
 
@@ -61,7 +61,7 @@ void RoutineDetection::executeRoutine()
     //1.Light Amber
     sp.init();
 
-    lm.setLight(Color::AMBER);
+    flashAmber();
 
     //TODO
     //2.Checker si l'orientation est haut ou droite
@@ -99,6 +99,6 @@ void RoutineDetection::executeRoutine()
     //8.Click sur Interrupt
 
     //Robot stop DEL et cherche prochain poteau, on revient au case 3
-
+    }
 
 }
