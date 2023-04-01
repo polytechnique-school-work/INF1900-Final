@@ -1,17 +1,18 @@
 #include "MagicalWheels.hpp"
 #include "utils/Utils.hpp"
 
-void MagicalWheels::turn(Direction direction) {
+static const uint32_t TURN_DURATION = 200;
+
+bool MagicalWheels::turn(Direction direction) {
     if (direction != Direction::LEFT || direction != Direction::RIGHT) {
         DEBUG_PRINT(("Impossible de faire tourner le robot avec cette direction."));
-        return;
+        return false;
     }
 
     // On met un arrêt avec un delay pour éviter les problèmes d'inerties.
     stopMoves();
 
-    const uint32_t TURN_DURATION = 200;
-    WheelManager wheelManager    = this->robot.getWheelManager();
+    WheelManager wheelManager = this->robot.getWheelManager();
     wheelManager.setDirection(direction);
     wheelManager.setSpeed(this->robot.getSpeed());
     wheelManager.update();
@@ -21,7 +22,10 @@ void MagicalWheels::turn(Direction direction) {
     while (Clock::getTimestamp() < stopTime) {
         // Faire en sorte que si le fetch a une certaine valeur de retour, on skip le while (et on
         // effectue pas le change direction).
-        this->fetch(direction);
+        bool hasFindSomething = this->fetch(direction);
+        if (hasFindSomething) {
+            return true;
+        }
     }
 
     this->stopMoves();
@@ -38,14 +42,17 @@ void MagicalWheels::stopMoves() {
     this->robot.calculateMove(this->moveTimestamp);
 }
 
-void MagicalWheels::fetch(Direction direction) {
+bool MagicalWheels::fetch(Direction direction) {
 
     /*
         TODO
         On doit faire en sorte de vérifier si y'a une valeur en bas d'une certaine valeur à chaque
        fois. Soit qu'on définie une valeur par défaut et il se dirige vers un bloc en dessous d'une
        certaine valeur.
+       Vérifier que le bloc est pas trop loin.
+       Retourner la distance.
     */
+    return true; // Permettre la compilation.
 }
 
 void MagicalWheels::changeDirection(Direction direction) {
@@ -63,8 +70,8 @@ void MagicalWheels::changeDirection(Direction direction) {
 }
 
 void MagicalWheels::moveForward() {
+    this->stopMoves();
     this->robot.getWheelManager().setDirection(Direction::FORWARD);
     this->robot.getWheelManager().setSpeed(this->robot.getSpeed());
     this->robot.getWheelManager().update();
-    this->moveTimestamp = Clock::getTimestamp();
 }

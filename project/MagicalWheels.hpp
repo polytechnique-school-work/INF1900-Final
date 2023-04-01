@@ -7,6 +7,10 @@ private:
     // Timestamp qui sera changé à chaque déplacement. Et set à 0 si pas en train de se déplacer.
     uint32_t moveTimestamp;
     Robot robot;
+    /*
+        Fonction de vérification appelée en boucle lorsqu'il tourne.
+    */
+    bool fetch(Direction direction);
 
 public:
     MagicalWheels(Robot r) : robot(r) {}
@@ -51,10 +55,5 @@ public:
         - Arrête tous les mouvements x temps.
         - Change la direction (incrémente ou décrémente).
     */
-    void turn(Direction direction);
-
-    /*
-        Fonction de vérification appelée en boucle lorsqu'il tourne.
-    */
-    void fetch(Direction direction);
+    bool turn(Direction direction);
 };

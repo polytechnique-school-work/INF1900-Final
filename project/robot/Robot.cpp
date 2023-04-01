@@ -23,3 +23,8 @@ const uint16_t Robot::getWaitTurnDuration() { return this->speed; }
 HeadDirection Robot::getHeadDirection() { return this->headDirection; }
 
 void Robot::setHeadDirection(HeadDirection head) { this->headDirection = head; }
+
+void Robot::calculateMove(uint32_t timestamp){
+
+    // TODO
+};

@@ -39,6 +39,8 @@ int main() {
 
     Robot robot = Robot(wheels, light, sensor, sound);
 
+    DEBUG_PRINT(("HELLOOO"));
+
     // while (true) {
     //     DEBUG_PRINT(robot.getClock().getTimestamp());
     // }
