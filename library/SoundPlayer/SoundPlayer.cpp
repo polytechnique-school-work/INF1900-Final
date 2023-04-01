@@ -20,6 +20,7 @@
 //     TCCR1B = (1 << WGM12) | (1 << CS11);
 // }
 
+
 // void loop(uint16_t duration) {
 //     for (uint16_t i = 0; i < duration; i++) {
 //         _delay_ms(1);
@@ -47,12 +48,3 @@ void SoundPlayer::playSound(uint8_t note) {
     TCCR0B = (1 << WGM02) | (1 << CS00) | (1 << CS01);
     }
 }
-
-
-/*
-
-vitesse = 8 000 000 / prescaler
-frequence = 1/T
-temps actif = 1/2T
-
-*/
