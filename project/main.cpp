@@ -109,9 +109,9 @@ int main() {
     //     routine.executeRoutine();
     // }
     // routine.executeRoutine();
-    for (uint8_t i = 45; i < 81; i++) {
-        routine.sonGrave(i);
-    }
+    
+    routine.sonGrave(45);
+    
 
     return 0;
 }

@@ -50,12 +50,12 @@ void RoutineDetection::loopSound() {
     }
 }
 
-void RoutineDetection::sonGrave(note) {
+void RoutineDetection::sonGrave(uint8_t note) {
     SoundPlayer sp;
     sp.init();
 
     sp.playSound(note);
-    delay(2000);
+    _delay_ms(500);
     sp.reset();
 }
 
@@ -83,6 +83,7 @@ void RoutineDetection::flashAmber() {
 }
 
 void RoutineDetection::executeRoutine() {
+    LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
     RoutineSteps routineSteps;
 
     switch (routineSteps) {
@@ -94,14 +95,12 @@ void RoutineDetection::executeRoutine() {
                 if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
                     ExternInterrupt::resetInterruptCount(Button::FIRST);
                     routineSteps = RoutineSteps::INT_CLICKED;
-                    cout << ExternInterrupt::getInterruptCount(Button::FIRST);
                     break;
                 }
 
                 else if (ExternInterrupt::getInterruptCount(Button::SECOND) > 0) {
                     ExternInterrupt::resetInterruptCount(Button::SECOND);
                     routineSteps = RoutineSteps::WHITE_CLICKED;
-                    cout << ExternInterrupt::getInterruptCount(Button::SECOND);
                     break;
                 }
             }
@@ -134,7 +133,7 @@ void RoutineDetection::executeRoutine() {
             // Jusqu'à temps qu'on pèse sur interrupt
 
         case RoutineSteps::NO_STICK:
-            sonGrave();
+            sonGrave(10);
             flashRed();
             // fin du switch case
     }
