@@ -108,15 +108,17 @@ void RoutineDetection::executeRoutine() {
 
         case RoutineSteps::INT_CLICKED:
             // orienté vers le haut
-            while (true) {
-                lm.setLight(Color::GREEN);
-            }
+            lm.setLight(Color::GREEN);
+            _delay_ms(2000);
+            // variable différente pour case suivant
+            routineSteps = RoutineSteps::FIND_STICK;
 
         case RoutineSteps::WHITE_CLICKED:
             // orienté vers la droite
-            while (true) {
-                lm.setLight(Color::RED);
-            }
+            lm.setLight(Color::RED);
+            _delay_ms(2000);
+            // variable différente pour case suivant
+            routineSteps = RoutineSteps::FIND_STICK;
 
         case RoutineSteps::FIND_STICK:
             // fonction de Gab
