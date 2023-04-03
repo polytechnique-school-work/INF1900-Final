@@ -126,7 +126,7 @@ void RoutineDetection::executeRoutine()
             break;
 
         case RoutineSteps::NO_STICK:
-            sonGrave(45);
+            sonGrave(45); // hello frogini 10:04 AM
             flashRed();
             break;
     }
