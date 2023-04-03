@@ -97,12 +97,14 @@ void RoutineDetection::executeRoutine()
 
             if (bouton.getInterruptCount(Button::FIRST)>0)
             {
+                Logger::log(Priority::INFO, "Rentré dans le if");
                 bouton.resetInterruptCount(Button::FIRST);
                 routineSteps = RoutineSteps::INT_CLICKED;
             }
 
             else if (bouton.getInterruptCount(Button::SECOND)>0)
             {
+                Logger::log(Priority::INFO, "Rentré dans le else if");
                 bouton.resetInterruptCount(Button::SECOND);
                 routineSteps = RoutineSteps::WHITE_CLICKED;
             }
@@ -111,10 +113,12 @@ void RoutineDetection::executeRoutine()
         case RoutineSteps::INT_CLICKED:
             //orienté vers le haut
             lm.setLight(Color::GREEN);
+            Logger::log(Priority::INFO, "Bouton interrupt");
 
         case RoutineSteps::WHITE_CLICKED:
             //orienté vers la droite
             lm.setLight(Color::RED);
+            Logger::log(Priority::INFO, "Bouton blanc");
 
         case RoutineSteps::FIND_STICK:
             //fonction de Gab
