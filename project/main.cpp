@@ -55,17 +55,17 @@ void lireMemoire(Memoire24CXXX memory, uint16_t tailleTotale){
 void init(uint16_t &adresse, uint16_t &tailleTotale, uint8_t &taille, Memoire24CXXX memory){
 
     _delay_ms(500);
-    char message[] = "<svg width=\"100%\" height=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1152 576\">\n";
+    char message[] = "<svg width=\"100%\" height=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 115 58\">\n";
     ecrireMemoire(adresse, message, taille, memory);
     tailleTotale += taille;
     adresse += taille;
 
-    char messageRect[] = "<rect x = \"96\" y = \"48\" width = \"960\" height = \"480\" stroke = \"black\" stroke-width = \"1\" fill = \"white\" />\n";
+    char messageRect[] = "<rect x = \"10\" y = \"5\" width = \"96\" height = \"48\" stroke = \"black\" stroke-width = \"1\" fill = \"white\" />\n";
     ecrireMemoire(adresse, messageRect, taille, memory);
     tailleTotale += taille;
     adresse += taille;
 
-    char messageRouge[] = "<rect x = \"188\" y = \"450\" width = \"7\" height = \"7\" stroke = \"red\" stroke-width = \"1\" fill = \"red\"/>\n";
+    char messageRouge[] = "<rect x = \"19\" y = \"45\" width = \"1\" height = \"1\" stroke = \"red\" stroke-width = \"1\" fill = \"red\"/>\n";
     ecrireMemoire(adresse, messageRouge, taille, memory);
     tailleTotale += taille;
     adresse += taille;
@@ -78,11 +78,11 @@ void ecrireRectangles(uint16_t &adresse, uint8_t& taille, uint16_t& tailleTotale
             if (i == 3 and j == 0) {
                 continue;
             }
-            uint16_t x = 188 + 110 * j;
-            uint16_t y = 120 + 110 * i;
+            uint16_t x = 19 + 11 * j;
+            uint16_t y = 12 + 11 * i;
             points[nbPoints++] = Point(index+1, x, y);
             char rect[110];
-            sprintf(rect, "<rect x = \"%d\" y = \"%d\" width = \"7\" height = \"7\" stroke = \"black\" stroke-width = \"1\" fill = \"black\"/>\n", x, y);
+            sprintf(rect, "<rect x = \"%d\" y = \"%d\" width = \"1\" height = \"1\" stroke = \"black\" stroke-width = \"1\" fill = \"black\"/>\n", x, y);
             ecrireMemoire(adresse, rect, taille, memory);
             tailleTotale += taille;
             adresse += taille;
@@ -94,16 +94,38 @@ void ecrireRectangles(uint16_t &adresse, uint8_t& taille, uint16_t& tailleTotale
 
 void makeCircles(Point points[], uint8_t& nbPoints, uint16_t& adresse, uint8_t& taille, uint16_t& tailleTotale, Memoire24CXXX memory) {
 
-    for (int i = 0; i < nbPoints; i++) {
+    for (uint8_t i = 0; i < nbPoints; i++) {
         Point point = points[i];
-        int x = point.getX();
-        int y = point.getY();
+        uint16_t x = point.getX();
+        uint16_t y = point.getY();
         char cercle[100];
-        sprintf(cercle, "<circle cx = \"%d\" cy = \"%d\" r = \"10\" stroke = \"black\" stroke-width = \"2\" fill = \"gray\" />\n", x, y);
+        sprintf(cercle, "<circle cx = \"%d\" cy = \"%d\" r = \"1\" stroke = \"black\" stroke-width = \"2\" fill = \"gray\" />\n", x, y);
         ecrireMemoire(adresse, cercle, taille, memory);
         tailleTotale += taille;
         adresse += taille;
     }
+}
+
+void makePolygon(Point points[], int numPoints, uint16_t& adresse, uint8_t& taille, uint16_t& tailleTotale, Memoire24CXXX memory) {
+   
+    char polygone[60];
+    strcat(polygone, "<polygon points= \"");
+    for (uint8_t i = 0; i < numPoints; i++) {
+        Point point = points[i];
+        uint16_t x = point.getX();
+        uint16_t y = point.getY();
+        char coordonnees[10];
+        sprintf(coordonnees, "%d, %d ", x, y);
+        strcat(polygone, coordonnees);
+    }
+    ecrireMemoire(adresse, polygone, taille, memory);
+    tailleTotale += taille;
+    adresse += taille;
+
+    char polyParams[] ="\" fill = \"rgba(0, 255, 0, 0.25)\" stroke = \"black\" stroke-width = \"1\" />";
+    ecrireMemoire(adresse, polyParams, taille, memory);
+    tailleTotale += taille;
+    adresse += taille;
 }
 
 Point trouverPoint(Point points[], int indice) {
@@ -122,7 +144,100 @@ void trouverPointsVisites(uint8_t* indicesVisites, Point points[], Point pointsV
     }
 }
 
+void sortArray(Cosinus cosinus[], Point points[], uint8_t& nCosinus) {
+    for (uint8_t i = 1; i < nCosinus - 1; i++) {
+        for (uint8_t j = 0; j < nCosinus - 1; j++) {
+            if (cosinus[j + 1].getCos() < cosinus[j].getCos()) {
+                Cosinus temp = cosinus[j + 1];
+                cosinus[j + 1] = cosinus[j];
+                cosinus[j] = temp;
+            }
+        }
+    }
+
+    for (uint8_t i = 1; i < nCosinus - 1; i++) {
+        for (uint8_t j = 0; j < nCosinus - 1; j++) {
+            if (cosinus[j + 1].getCos() == cosinus[j].getCos()) {
+                double longueur1 = Vector(points[cosinus[j].getIndex() + 1].getX(), 450 - points[cosinus[j].getIndex() + 1].getY()).getNorme();
+                double longueur2 = Vector(points[cosinus[j + 1].getIndex() + 1].getX(), 450 - points[cosinus[j + 1].getIndex() + 1].getY()).getNorme();
+                if (longueur1 > longueur2) {
+                    Cosinus temp = cosinus[j + 1];
+                    cosinus[j + 1] = cosinus[j];
+                    cosinus[j] = temp;
+                }
+            }
+        }
+    }
+}
+
+void algorithmeGraham(Point pointsVisites[], Point points[], uint8_t& nVisites, Point pointsContour[]) {
+    Point pointMinimum(0, 105, 5);
+    for (uint8_t i = 0; i < nVisites; i++) {
+        Point point = pointsVisites[i];
+        bool plusBas = point.getY() > pointMinimum.getY();
+        bool plusGauche = (point.getY() == pointMinimum.getY()) && (point.getX() < pointMinimum.getX());
+        if (plusBas || plusGauche) {
+            pointMinimum = point;
+        }
+    }
+
+    Cosinus cosinus[8];
+    uint8_t nCosinus = 0;
+
+    Vector vecteurs[8];
+    uint8_t nVecteurs = 0;
+
+    for (uint8_t i = 0; i < nVisites; i++) {
+        Point point = pointsVisites[i];
+        if (point == pointMinimum) {
+            cosinus[nCosinus] = Cosinus(point.getIndex(), 0.0);
+            nCosinus++;
+            vecteurs[nVecteurs] = Vector();
+            nVecteurs++;
+            continue;
+        }
+        Vector vecteur(point.getX() - pointMinimum.getX(), point.getY() - pointMinimum.getY());
+        vecteurs[nVecteurs] = vecteur;
+        nVecteurs++;
+        cosinus[nCosinus] = Cosinus(point.getIndex(), vecteur.getACos());
+        nCosinus++;
+    }
+
+    sortArray(cosinus, points, nCosinus);
+
+
+    int8_t iteration = 2;
+    while (iteration < nCosinus) {
+        int8_t indice1 = cosinus[iteration - 2].getIndex();
+        Point point1 = points[indice1 - 1];
+        int8_t indice2 = cosinus[iteration - 1].getIndex();
+        Point point2 = points[indice2 - 1];
+        int8_t indice3 = cosinus[iteration].getIndex();
+        Point point3 = points[indice3 - 1];
+
+        double direction = (point2.getX() - point1.getX()) * (point1.getY() - point3.getY()) - ((point1.getY() - point2.getY()) * (point3.getX() - point1.getX()));
+        if (direction < 0) {
+            for (uint8_t i = iteration; i < nCosinus; i++) {
+                cosinus[i - 1] = cosinus[i];
+            }
+            nCosinus--;
+            nVisites--;
+            iteration--;
+            continue;
+        }
+        iteration++;
+    }
+
+    for (int i = 0; i < nCosinus; i++) {
+        pointsContour[i] = points[cosinus[i].getIndex() - 1];
+    }
+
+}
+
 int main(){
+    Logger logger;
+    logger.init();
+    initialisationUART();
     uint16_t tailleTotale = 0;
     uint16_t adresse = 0;
     uint8_t taille = 0;
@@ -131,10 +246,10 @@ int main(){
 
     Point points[32];
     Point pointsVisites[8];
-    uint8_t indicesVisites[] = { 32, 20, 6, 4, 13, 19, 22, 12 };
+    uint8_t indicesVisites[] = { 8, 9, 26, 30, 16};
     uint8_t nVisites = sizeof(indicesVisites) / sizeof(uint8_t);
 
-    points[nbPoints++] = Point(1, 188, 450);
+    points[nbPoints++] = Point(1, 19, 45);
 
     init(adresse, tailleTotale, taille, memory);
 
@@ -144,6 +259,12 @@ int main(){
 
     makeCircles(pointsVisites, nVisites, adresse, taille, tailleTotale, memory);
 
+    Point pointsContour[8];
+
+    algorithmeGraham(pointsVisites, points, nVisites, pointsContour);
+
+    makePolygon(pointsContour, nVisites, adresse, taille, tailleTotale, memory);
+
     char messageFin[] = "</svg>";
     ecrireMemoire(adresse, messageFin, taille, memory);
     tailleTotale += taille;
@@ -152,4 +273,5 @@ int main(){
     _delay_ms(1000);
 
     lireMemoire(memory, tailleTotale);
+    return 0;
 }
