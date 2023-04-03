@@ -78,8 +78,8 @@ void ecrireRectangles(uint16_t &adresse, uint8_t& taille, uint16_t& tailleTotale
             if (i == 3 and j == 0) {
                 continue;
             }
-            uint16_t x = 19 + 11 * j;
-            uint16_t y = 12 + 11 * i;
+            uint8_t x = 19 + 11 * j;
+            uint8_t y = 12 + 11 * i;
             points[nbPoints++] = Point(index+1, x, y);
             char rect[110];
             sprintf(rect, "<rect x = \"%d\" y = \"%d\" width = \"1\" height = \"1\" stroke = \"black\" stroke-width = \"1\" fill = \"black\"/>\n", x, y);
@@ -96,8 +96,8 @@ void makeCircles(Point points[], uint8_t& nbPoints, uint16_t& adresse, uint8_t& 
 
     for (uint8_t i = 0; i < nbPoints; i++) {
         Point point = points[i];
-        uint16_t x = point.getX();
-        uint16_t y = point.getY();
+        uint8_t x = point.getX();
+        uint8_t y = point.getY();
         char cercle[100];
         sprintf(cercle, "<circle cx = \"%d\" cy = \"%d\" r = \"1\" stroke = \"black\" stroke-width = \"2\" fill = \"gray\" />\n", x, y);
         ecrireMemoire(adresse, cercle, taille, memory);
@@ -112,8 +112,8 @@ void makePolygon(Point points[], int numPoints, uint16_t& adresse, uint8_t& tail
     strcat(polygone, "<polygon points= \"");
     for (uint8_t i = 0; i < numPoints; i++) {
         Point point = points[i];
-        uint16_t x = point.getX();
-        uint16_t y = point.getY();
+        uint8_t x = point.getX();
+        uint8_t y = point.getY();
         char coordonnees[10];
         sprintf(coordonnees, "%d, %d ", x, y);
         strcat(polygone, coordonnees);
@@ -158,8 +158,8 @@ void sortArray(Cosinus cosinus[], Point points[], uint8_t& nCosinus) {
     for (uint8_t i = 1; i < nCosinus - 1; i++) {
         for (uint8_t j = 0; j < nCosinus - 1; j++) {
             if (cosinus[j + 1].getCos() == cosinus[j].getCos()) {
-                double longueur1 = Vector(points[cosinus[j].getIndex() + 1].getX(), 450 - points[cosinus[j].getIndex() + 1].getY()).getNorme();
-                double longueur2 = Vector(points[cosinus[j + 1].getIndex() + 1].getX(), 450 - points[cosinus[j + 1].getIndex() + 1].getY()).getNorme();
+                float longueur1 = Vector(points[cosinus[j].getIndex() + 1].getX(), 450 - points[cosinus[j].getIndex() + 1].getY()).getNorme();
+                float longueur2 = Vector(points[cosinus[j + 1].getIndex() + 1].getX(), 450 - points[cosinus[j + 1].getIndex() + 1].getY()).getNorme();
                 if (longueur1 > longueur2) {
                     Cosinus temp = cosinus[j + 1];
                     cosinus[j + 1] = cosinus[j];
@@ -215,7 +215,7 @@ void algorithmeGraham(Point pointsVisites[], Point points[], uint8_t& nVisites, 
         int8_t indice3 = cosinus[iteration].getIndex();
         Point point3 = points[indice3 - 1];
 
-        double direction = (point2.getX() - point1.getX()) * (point1.getY() - point3.getY()) - ((point1.getY() - point2.getY()) * (point3.getX() - point1.getX()));
+        float direction = (point2.getX() - point1.getX()) * (point1.getY() - point3.getY()) - ((point1.getY() - point2.getY()) * (point3.getX() - point1.getX()));
         if (direction < 0) {
             for (uint8_t i = iteration; i < nCosinus; i++) {
                 cosinus[i - 1] = cosinus[i];

@@ -3,15 +3,15 @@
 class Point
 {
 public:
-    Point(int index = 0, int x = 0, int y = 0) : index_(index), x_(x), y_(y) {};
+    Point(uint8_t index = 0, uint8_t x = 0, uint8_t y = 0) : index_(index), x_(x), y_(y) {};
 
-    int getIndex() {
+    uint8_t getIndex() {
         return index_;
     }
-    int getX() {
+    uint8_t getX() {
         return x_;
     }
-    int getY() {
+    uint8_t getY() {
         return y_;
     }
 
@@ -21,60 +21,60 @@ public:
         return xEqual && yEqual;
     }
 private:
-    int index_;
-    int x_;
-    int y_;
+    uint8_t index_;
+    uint8_t x_;
+    uint8_t y_;
 };
 
 class Vector
 {
 public:
-	Vector(int x = 0, int y = 1) : x_(x), y_(y) 
+	Vector(int8_t x = 0, int8_t y = 1) : x_(x), y_(y) 
 	{
 		norme_ = sqrt(pow(x_, 2) + pow(y_, 2));
 		cosinus_ = x_ / norme_;
 	}
 
-    int getX() {
+    int8_t getX() {
         return x_;
     }
 
-    int getY() {
+    int8_t getY() {
         return y_;
     }
 
-	double getACos() {
+	float getACos() {
 		return acos(cosinus_);
 	}
 
-    double getNorme() {
+    float getNorme() {
         return norme_;
     }
 
 private:
-	int x_;
-	int y_;
-	double norme_;
-	double cosinus_;
+	int8_t x_;
+	int8_t y_;
+	float norme_;
+	float cosinus_;
 };
 
 class Cosinus
 {
 public:
-    Cosinus(int index = 0, double cos = 0.0) : index_(index), cos_(cos) {
+    Cosinus(int8_t index = 0, float cos = 0.0) : index_(index), cos_(cos) {
 
     }
 
-    int getIndex() {
+    int8_t getIndex() {
         return index_;
     }
 
-    double getCos() {
+    float getCos() {
         return cos_;
     }
 private:
 
-	int index_;
-	double cos_;
+	int8_t index_;
+	float cos_;
 };
 
