@@ -9,6 +9,7 @@
 
 #define F_CPU 8000000UL
 #include "Clock/Clock.hpp"
+#include "Routine/detection.hpp"
 #include "Sensor/Sensor.hpp"
 #include <Can/Can.hpp>
 #include <Light/LightManager.hpp>
@@ -16,22 +17,19 @@
 #include <Memory/memoire_24.h>
 #include <Wheel/WheelManager.hpp>
 #include <util/delay.h>
-#include "Routine/detection.hpp"
 
 // LightManager light                  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
 //  WheelManager wheels                 = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
 //  static const uint16_t STARTUP_DELAY = 2000;
 //  const uint8_t SPEED = 50;
 
-void init()
-{
+void init() {
     _delay_ms(2000);
     DDRA &= ~(1 << PORTA2);
     Logger::log(Priority::INFO, "Le programme est lancé.");
 }
 
-int main()
-{
+int main() {
 
     init();
     RoutineDetection routine;
@@ -106,11 +104,14 @@ int main()
 
     // wheels.setSpeed(0);
     // wheels.update();
-    while (true)
-    {
-        routine.executeRoutine();
-    }
+    // while (true)
+    // {
+    //     routine.executeRoutine();
+    // }
     // routine.executeRoutine();
+    for (uint8_t i = 45; i < 81; i++) {
+        routine.sonGrave(i);
+    }
 
     return 0;
 }

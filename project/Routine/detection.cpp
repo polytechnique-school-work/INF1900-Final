@@ -50,11 +50,11 @@ void RoutineDetection::loopSound() {
     }
 }
 
-void RoutineDetection::sonGrave() {
+void RoutineDetection::sonGrave(note) {
     SoundPlayer sp;
     sp.init();
 
-    sp.playSound(10);
+    sp.playSound(note);
     delay(2000);
     sp.reset();
 }
