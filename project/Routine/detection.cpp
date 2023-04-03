@@ -98,13 +98,13 @@ void RoutineDetection::executeRoutine()
             if (bouton.getInterruptCount(Button::FIRST)>0)
             {
                 bouton.getInterruptCount(Button::FIRST)=0;
-                routineSteps = INT_CLICKED;
+                routineSteps = RoutineSteps::INT_CLICKED;
             }
 
             else if (bouton.getInterruptCount(Button::SECOND)>0)
             {
                 bouton.getInterruptCount(Button::SECOND);
-                routineSteps = WHITE_CLICKED;
+                routineSteps = RoutineSteps::WHITE_CLICKED;
             }
             }
 
