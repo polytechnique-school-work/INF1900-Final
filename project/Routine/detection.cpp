@@ -99,14 +99,12 @@ void RoutineDetection::executeRoutine()
 
             if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0)
             {
-                Logger::log(Priority::INFO, "Rentré dans le if");
                 ExternInterrupt::resetInterruptCount(Button::FIRST);
                 routineSteps = RoutineSteps::INT_CLICKED;
             }
 
             else if (ExternInterrupt::getInterruptCount(Button::SECOND)>0)
             {
-                Logger::log(Priority::INFO, "Rentré dans le else if");
                 ExternInterrupt::resetInterruptCount(Button::SECOND);
                 routineSteps = RoutineSteps::WHITE_CLICKED;
             }
