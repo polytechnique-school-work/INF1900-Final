@@ -1,5 +1,4 @@
 #include "detection.hpp"
-
 // // Dès le début du mode détection, le robot fait prendre la couleur ambrée à sa DEL.
 
 // Il attend ensuite qu’on lui
@@ -93,15 +92,17 @@ void RoutineDetection::executeRoutine() {
                 lm.setLight(Color::AMBER);
 
                 if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
+                    DEBUG_PRINT((ExternInterrupt::getInterruptCount(Button::FIRST)));
                     ExternInterrupt::resetInterruptCount(Button::FIRST);
                     routineSteps = RoutineSteps::INT_CLICKED;
-                    cout << ExternInterrupt::getInterruptCount(Button::FIRST) break;
+                    break;
                 }
 
                 else if (ExternInterrupt::getInterruptCount(Button::SECOND) > 0) {
+                    DEBUG_PRINT((ExternInterrupt::getInterruptCount(Button::SECOND)));
                     ExternInterrupt::resetInterruptCount(Button::SECOND);
                     routineSteps = RoutineSteps::WHITE_CLICKED;
-                    cout << ExternInterrupt::getInterruptCount(Button::SECOND) break;
+                    break;
                 }
             }
 
