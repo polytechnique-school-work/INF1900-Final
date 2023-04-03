@@ -98,7 +98,6 @@ void RoutineDetection::executeRoutine()
 
             //2.Checker si l'orientation est haut ou droite
 
-
         case RoutineSteps::INT_CLICKED:
             //orienté vers le haut
             lm.setLight(Color::GREEN);
