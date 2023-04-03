@@ -111,6 +111,9 @@ int main() {
     // routine.executeRoutine();
     
     routine.sonGrave(45);
+    routine.sonGrave(56);
+    routine.sonGrave(67);
+    routine.sonGrave(78);
     
 
     return 0;
