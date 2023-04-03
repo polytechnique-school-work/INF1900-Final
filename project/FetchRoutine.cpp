@@ -15,25 +15,25 @@ void FetchRoutine::fetchBlock(Robot robot, Direction startDirection) {
     MagicalWheels magicWheels = MagicalWheels(robot);
 
     for (uint8_t i = 0; i < MAX_TURN; i++) {
-        bool hasFind = magicWheels.turn();
-        if (hasFind) {
-            magicWheels.stopMoves();
+        // bool hasFind = magicWheels.turn();
+        // if (hasFind) {
+        //     magicWheels.stopMoves();
 
-            uint16_t distance = robot.getSensor().readValue();
+        //     uint16_t distance = robot.getSensor().readValue();
 
-            magicWheels.moveForward();
-            uint16_t actualDistance = distance;
+        //     magicWheels.moveForward();
+        //     uint16_t actualDistance = distance;
 
-            while (actualDistance > MAXMIMAL_DISTANCE_ACCEPTED) {
-                actualDistance = robot.getSensor().readValue();
-            }
+        //     while (actualDistance > MAXMIMAL_DISTANCE_ACCEPTED) {
+        //         actualDistance = robot.getSensor().readValue();
+        //     }
 
-            magicWheels.stopMoves();
+        //     magicWheels.stopMoves();
 
-            // TODO : Trouver un moyen d'envoyer les coordonnées du bloc trouvé.
+        //     // TODO : Trouver un moyen d'envoyer les coordonnées du bloc trouvé.
 
-            this->findedBlock(robot);
-        }
+        //     this->findedBlock(robot);
+        // }
     }
 }
 
