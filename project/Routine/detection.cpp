@@ -86,7 +86,7 @@ void RoutineDetection::executeRoutine()
 {
     RoutineSteps routineSteps;
 
-    ExternInterrupt::init(InterruptType::FALLING_EDGE, Button::FIRST);
+    ExternInterrupt::init(InterruptType::RISING_EDGE, Button::FIRST);
     ExternInterrupt::init(InterruptType::FALLING_EDGE, Button::SECOND);
 
     switch(routineSteps)
