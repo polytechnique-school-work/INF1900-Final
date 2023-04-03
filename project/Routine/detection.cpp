@@ -123,5 +123,6 @@ void RoutineDetection::executeRoutine()
         case RoutineSteps::NO_STICK:
             sonGrave();
             flashRed();
+            //fin du switch case
     }
 }
