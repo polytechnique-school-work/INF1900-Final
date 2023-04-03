@@ -95,13 +95,15 @@ void RoutineDetection::executeRoutine() {
                 if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
                     ExternInterrupt::resetInterruptCount(Button::FIRST);
                     routineSteps = RoutineSteps::INT_CLICKED;
-                    cout << ExternInterrupt::getInterruptCount(Button::FIRST) break;
+                    cout << ExternInterrupt::getInterruptCount(Button::FIRST);
+                    break;
                 }
 
                 else if (ExternInterrupt::getInterruptCount(Button::SECOND) > 0) {
                     ExternInterrupt::resetInterruptCount(Button::SECOND);
                     routineSteps = RoutineSteps::WHITE_CLICKED;
-                    cout << ExternInterrupt::getInterruptCount(Button::SECOND) break;
+                    cout << ExternInterrupt::getInterruptCount(Button::SECOND);
+                    break;
                 }
             }
 
