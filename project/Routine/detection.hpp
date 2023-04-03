@@ -16,7 +16,7 @@ class RoutineDetection
 {
 public:
     void executeRoutine();
-    void sonGrave();
+    void sonGrave(uint8_t note);
 
 private:
     void flashAmber();

@@ -27,6 +27,10 @@
 //     }
 // }
 
+static uint8_t notes[26] = {0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 
+                        110, 120, 130, 140, 150, 160, 170, 180, 190, 
+                        200, 210, 220, 230, 240, 250};
+
 void SoundPlayer::init() { DDRB |= (1 << PORTB2) | (1 << PORTB3); }
 
 void SoundPlayer::reset() {
@@ -38,13 +42,8 @@ void SoundPlayer::reset() {
 
 void SoundPlayer::playSound(uint8_t note) {
     reset();
+    OCR0A = notes[note - 45]; // note est grave
+    TCCR0A = (1 << WGM01) | (1 << COM0A0);
+    TCCR0B = (1 << CS02);
 
-    if (note == 1) { // note est grave
-    TCCR0A = (1 << COM0A0);
-    TCCR0B = (1 << WGM02) | (1 << CS02);
-    }
-    else if (note == 2) { // note est aigu
-    TCCR0A = (1 << COM0A0);
-    TCCR0B = (1 << WGM02) | (1 << CS00) | (1 << CS01);
-    }
 }

@@ -49,16 +49,11 @@ void RoutineDetection::loopSound()
     }
 }
 
-void RoutineDetection::sonGrave()
+void RoutineDetection::sonGrave(uint8_t note)
 {
     SoundPlayer sp;
     sp.init();
-
-    sp.playSound(1); // 1 = grave, 2 = aigu
-    _delay_ms(1000);
-    sp.reset();
-
-    sp.playSound(2); // 1 = grave, 2 = aigu
+    sp.playSound(note);
     _delay_ms(1000);
     sp.reset();
 }
@@ -131,7 +126,7 @@ void RoutineDetection::executeRoutine()
             break;
 
         case RoutineSteps::NO_STICK:
-            sonGrave();
+            sonGrave(45);
             flashRed();
             break;
     }
