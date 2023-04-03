@@ -105,6 +105,7 @@ void RoutineDetection::executeRoutine()
 
             else if (ExternInterrupt::getInterruptCount(Button::SECOND) > 0)
             {
+                Logger::log(Priority::INFO, "else if");
                 ExternInterrupt::resetInterruptCount(Button::SECOND);
                 routineSteps = RoutineSteps::WHITE_CLICKED;
             }
