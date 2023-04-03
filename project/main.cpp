@@ -18,25 +18,26 @@
 #include <util/delay.h>
 #include "Routine/detection.hpp"
 
-//LightManager light                  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
-// WheelManager wheels                 = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
-// static const uint16_t STARTUP_DELAY = 2000;
-// const uint8_t SPEED = 50;
+// LightManager light                  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
+//  WheelManager wheels                 = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+//  static const uint16_t STARTUP_DELAY = 2000;
+//  const uint8_t SPEED = 50;
 
-void init() {
+void init()
+{
     _delay_ms(2000);
     DDRA &= ~(1 << PORTA2);
     Logger::log(Priority::INFO, "Le programme est lancé.");
 }
 
-int main() {
+int main()
+{
 
     init();
     RoutineDetection routine;
 
     // Clock clock;
     // clock.init();
-
 
     // uint32_t timestamp = 0;
     // uint16_t lowestValue = 65535;
@@ -99,16 +100,17 @@ int main() {
     // wheels.setDirection(Direction::FORWARD);
     // wheels.update();
 
-
     // while(true) {
     //     if(sensor.readValue() < 15) break;
     // }
 
     // wheels.setSpeed(0);
     // wheels.update();
-    
-    routine.executeRoutine();
-    //routine.executeRoutine();
+    while (true)
+    {
+        routine.executeRoutine();
+    }
+    // routine.executeRoutine();
 
     return 0;
 }
