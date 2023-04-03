@@ -12,6 +12,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <ExternInterrupt/ExternInterrupt.hpp>
+#include <Logger/Logger.hpp>
 
 // Selon les types définis à la page 68 de la documentation.
 enum class InterruptType { ANY, FALLING_EDGE, RISING_EDGE };
