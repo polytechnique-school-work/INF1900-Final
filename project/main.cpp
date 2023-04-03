@@ -107,7 +107,7 @@ int main() {
     // wheels.setSpeed(0);
     // wheels.update();
     
-    routine.sonGrave(60);
+    routine.executeRoutine;
     //routine.executeRoutine();
 
     return 0;

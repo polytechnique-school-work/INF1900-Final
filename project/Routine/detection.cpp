@@ -85,6 +85,7 @@ void RoutineDetection::flashAmber()
 void RoutineDetection::executeRoutine()
 {
     RoutineSteps routineSteps;
+    ExternInterrupt bouton;
 
     switch(routineSteps)
     {
@@ -93,20 +94,27 @@ void RoutineDetection::executeRoutine()
             while (true)
             {
             lm.setLight(Color::AMBER);
-            }
-            break;
 
-            //2.Checker si l'orientation est haut ou droite
+            if (bouton.getInterruptCount(Button::FIRST)>0)
+            {
+                bouton.getInterruptCount(Button::FIRST)=0;
+                routineSteps = INT_CLICKED;
+            }
+
+            else if (bouton.getInterruptCount(Button::SECOND)>0)
+            {
+                bouton.getInterruptCount(Button::SECOND);
+                routineSteps = WHITE_CLICKED;
+            }
+            }
 
         case RoutineSteps::INT_CLICKED:
             //orienté vers le haut
             lm.setLight(Color::GREEN);
-            break;
 
         case RoutineSteps::WHITE_CLICKED:
             //orienté vers la droite
             lm.setLight(Color::RED);
-            break;
 
         case RoutineSteps::FIND_STICK:
             //fonction de Gab
