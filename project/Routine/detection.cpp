@@ -121,19 +121,37 @@ void RoutineDetection::executeRoutine() {
 
         case RoutineSteps::FIND_STICK:
             // fonction de Gab
+            // Quand on trouve:
+            routineSteps = RoutineSteps::FOUND_STICK;
+
+            // Si on trouve pas:
+            routineSteps = RoutineSteps::NO_STICK;
 
         case RoutineSteps::FOUND_STICK:
             // 5. 3 sons aigus: son (300 ms), pause(300ms) 3x
             loopSound();
             // se dirige vers
 
+            routineSteps = RoutineSteps::WAIT;
+
         case RoutineSteps::WAIT:
             // 6.clignoter led ambrée à 2Hz -> 2 tours par seconde
-            flashAmber();
-            // Jusqu'à temps qu'on pèse sur interrupt
+            while (true) {
+                flashAmber();
+                
+                // Jusqu'à temps qu'on pèse sur interrupt
+                if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
+                    ExternInterrupt::resetInterruptCount(Button::FIRST);
+                    routineSteps = RoutineSteps::INT_CLICKED;
+                    break;
+                }
+            }
+
 
         case RoutineSteps::NO_STICK:
             sonGrave(10);
+            _delay_ms(2000);
+
             flashRed();
             // fin du switch case
     }
