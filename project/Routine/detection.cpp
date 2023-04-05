@@ -105,7 +105,6 @@ void RoutineDetection::executeRoutine() {
                     break;
                 }
             }
-            break;
 
         case RoutineSteps::INT_CLICKED:
             // orienté vers le haut
