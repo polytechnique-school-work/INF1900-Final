@@ -85,8 +85,8 @@ void RoutineDetection::flashAmber() {
 void RoutineDetection::executeRoutine() {
     LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
     RoutineSteps routineSteps;
-    ExternInterrupt::interrupt1(InterruptType::RISING_EDGE, Button::FIRST);
-    ExternInterrupt::interrupt2(InterruptType::RISING_EDGE, Button::FIRST);
+    ExternInterrupt::init(InterruptType::RISING_EDGE, Button::FIRST);
+    ExternInterrupt::init(InterruptType::RISING_EDGE, Button::FIRST);
 
     switch (routineSteps) {
         case RoutineSteps::START:
