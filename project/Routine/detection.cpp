@@ -173,7 +173,7 @@ void RoutineDetection::executeRoutine() {
                 flashRed();
                 // fin du switch case
 
-                break;
+                break; // life is sad lick my toes :)
         }
     }
 }
