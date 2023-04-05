@@ -1,21 +1,24 @@
 #pragma once
-#include <ExternInterrupt/ExternInterrupt.hpp>
 #include <Light/LightManager.hpp>
 #include <Logger/Logger.hpp>
-#include <Wheel/WheelManager.hpp>
-#include <PWM/Pwm.hpp>
-#include <SoundPlayer/SoundPlayer.hpp>
+#include <Memory/memoire_24.h>
+#include <Clock/Clock.hpp>
 #include <avr/io.h> 
-#include <avr/interrupt.h>
 #include <util/delay.h>
 
-enum class TransmissionSteps {START,WAIT,START_TEXTE,END_TEXTE,END}
-
-class RoutineTransmission 
+class Emetteur 
 {
 public :
+    Emetteur(LightManager &lm, Memoire24CXXX memory, Clock &clock)
+    {
+        this-> light = &lm;
+        this-> memory = &memory;
+        this-> clock = &clock;
+    };
     void ExecuteRoutine(); 
 
 private :
-    void flashGreen();
+    LightManager* light  = nullptr;
+    Memoire24CXXX* memory = nullptr;
+    Clock* clock = nullptr;
 };
