@@ -16,7 +16,7 @@ void Emetteur::ExecuteRoutine()
         Logger::transmitUSART(octet);
     }
 
-    for(uint16_t i = 0; i < tailleTotale; i++){
+    for(uint16_t i = 0; i < svg->getTailleTotale(); i++){
         memory->lecture(i, &byte);
         crc = crc ^ byte;
         for ( int k = 8; k; k-- ) {
@@ -51,6 +51,7 @@ void Emetteur::ExecuteRoutine()
     crc32[1] = uint8_t(crc >> 8);
     crc32[2] = uint8_t(crc >> 16);
     crc32[3] = uint8_t(crc >> 24);  
+
     for (char octet: crc32){
         Logger::transmitUSART(octet);
     }
