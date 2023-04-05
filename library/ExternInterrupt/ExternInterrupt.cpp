@@ -29,13 +29,13 @@ void ExternInterrupt::init(InterruptType interruptType, Button button) {
     button == Button::FIRST ? interruptFirst = interruptType : interruptSecond = interruptType;
     switch (interruptType) {
         case InterruptType::ANY:
-            EICRA |= (1 << ISC00);
+            EICRA |= (1 << (button == Button::FIRST ? ISC00 : ISC10)) ;
             break;
         case InterruptType::FALLING_EDGE:
-            EICRA |= (1 << ISC01);
+            EICRA |= (1 << (button == Button::FIRST ? ISC01 : ISC11));
             break;
         case InterruptType::RISING_EDGE:
-            EICRA |= (1 << ISC00) | (1 << ISC01);
+            EICRA |= (1 << (button== Button::FIRST ? (1 << ISC00) | (1 << ISC01) : (1 << ISC10) | (1 << ISC11)));
             break;
         default:
             break;
