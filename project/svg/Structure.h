@@ -1,4 +1,6 @@
 #include <math.h>
+#include <avr/io.h>
+#include "stdio.h"
 
 class Point
 {
@@ -78,3 +80,31 @@ private:
 	float cos_;
 };
 
+class SVG
+{
+public:
+    SVG(){
+        taille = 0;
+        tailleTotale = 0;
+        adresse = 0;
+        for(int8_t i = 3; i > -1; i--){
+            for (uint8_t j = 0; j < 8; j++){           
+                uint8_t x = 19 + 11 * j;
+                uint8_t y = 12 + 11 * i;
+                points[nbPoints++] = Point(j+ (3-i)*8 + 1, x, y);
+            }
+        }
+    }
+
+    void init();
+private:
+    Point points[32];
+    uint8_t nbPoints;
+
+    Point pointsVisites[8];
+    uint8_t nVisites;
+
+    uint8_t taille;
+    uint16_t tailleTotale;
+    uint16_t adresse;
+};

@@ -72,7 +72,6 @@ void init(uint16_t &adresse, uint16_t &tailleTotale, uint8_t &taille, Memoire24C
 }
 
 void ecrireRectangles(uint16_t &adresse, uint8_t& taille, uint16_t& tailleTotale, Point* points, uint8_t &nbPoints, Memoire24CXXX memory){
-    uint8_t index = 1;
     for(int8_t i = 3; i > -1; i--){
         for (uint8_t j = 0; j < 8; j++){
             if (i == 3 and j == 0) {
@@ -80,13 +79,12 @@ void ecrireRectangles(uint16_t &adresse, uint8_t& taille, uint16_t& tailleTotale
             }
             uint8_t x = 19 + 11 * j;
             uint8_t y = 12 + 11 * i;
-            points[nbPoints++] = Point(index+1, x, y);
+            points[nbPoints++] = Point(j+1 + (3-i) * 8, x, y);
             char rect[110];
             sprintf(rect, "<rect x = \"%d\" y = \"%d\" width = \"1\" height = \"1\" stroke = \"black\" stroke-width = \"1\" fill = \"black\"/>\n", x, y);
             ecrireMemoire(adresse, rect, taille, memory);
             tailleTotale += taille;
             adresse += taille;
-            index++;
         }
         _delay_ms(10);
     }
@@ -108,8 +106,7 @@ void makeCircles(Point points[], uint8_t& nbPoints, uint16_t& adresse, uint8_t& 
 
 void makePolygon(Point points[], int numPoints, uint16_t& adresse, uint8_t& taille, uint16_t& tailleTotale, Memoire24CXXX memory) {
    
-    char polygone[60];
-    strcat(polygone, "<polygon points= \"");
+    char polygone[60] = "<polygon points= \"";
     for (uint8_t i = 0; i < numPoints; i++) {
         Point point = points[i];
         uint8_t x = point.getX();
