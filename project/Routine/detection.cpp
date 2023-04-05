@@ -55,7 +55,7 @@ void RoutineDetection::sonGrave(uint8_t note) {
     sp.init();
 
     sp.playSound(note);
-    _delay_ms(500);
+    _delay_ms(1000);
     sp.reset();
 }
 
@@ -86,7 +86,7 @@ void RoutineDetection::executeRoutine() {
     LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
     RoutineSteps routineSteps;
     ExternInterrupt::init(InterruptType::FALLING_EDGE, Button::FIRST);
-    ExternInterrupt::init(InterruptType::RISING_EDGE, Button::SECOND);
+    ExternInterrupt::init(InterruptType::FALLING_EDGE, Button::SECOND);
 
     while (true) {
         switch (routineSteps) {
@@ -100,7 +100,6 @@ void RoutineDetection::executeRoutine() {
                         Logger::log(Priority::INFO, "On entre dans le if du bouton interrupt");
                         routineSteps = RoutineSteps::INT_CLICKED;
                         ExternInterrupt::resetInterruptCount(Button::FIRST);
-                        Logger::log(Priority::INFO, "lol");
                         break;
                     }
 
@@ -168,8 +167,7 @@ void RoutineDetection::executeRoutine() {
 
             case RoutineSteps::NO_STICK:
                 Logger::log(Priority::INFO, "Aucun poteau n'a été trouvé");
-
-                sonGrave(10);
+                sonGrave(70);
                 _delay_ms(2000);
 
                 flashRed();
