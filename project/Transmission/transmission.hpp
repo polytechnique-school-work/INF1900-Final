@@ -17,8 +17,21 @@ public :
     };
     void ExecuteRoutine(); 
 
+    void flashGreen();
+
+    void ecritureMemoire(uint8_t taille){
+        tailleTotale += taille;
+        adresse += taille;
+    }
+
+    uint16_t getAdresse(){
+        return adresse; 
+    }
+
 private :
     LightManager* light  = nullptr;
     Memoire24CXXX* memory = nullptr;
     Clock* clock = nullptr;
+    uint16_t adresse;
+    uint16_t tailleTotale;
 };
