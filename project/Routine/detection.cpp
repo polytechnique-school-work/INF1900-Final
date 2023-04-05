@@ -168,6 +168,7 @@ void RoutineDetection::executeRoutine() {
 
             case RoutineSteps::NO_STICK:
                 Logger::log(Priority::INFO, "Aucun poteau n'a été trouvé");
+
                 sonGrave(10);
                 _delay_ms(2000);
 
