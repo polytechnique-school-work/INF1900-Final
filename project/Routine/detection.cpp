@@ -106,6 +106,8 @@ void RoutineDetection::executeRoutine() {
                 }
             }
 
+            break;
+
         case RoutineSteps::INT_CLICKED:
             // orienté vers le haut
             Logger::log(Priority::INFO, "Le bouton interrupt a été clické");
