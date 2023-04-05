@@ -1,3 +1,4 @@
+
 /*
  * Utilité : Fichier de base du projet
  * Autheurs : Équipe 020304
@@ -17,6 +18,8 @@
 #include <Memory/memoire_24.h>
 #include <Wheel/WheelManager.hpp>
 #include <util/delay.h>
+
+#include "FetchRoutine.hpp"
 
 static const uint16_t STARTUP_DELAY = 2000;
 const uint8_t SPEED                 = 50;
@@ -116,4 +119,6 @@ int main() {
     // wheels.update();
 
     // return 0;
+
+    // FetchRoutine fetchRoutine = FetchRoutine();
 }
