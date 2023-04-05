@@ -38,13 +38,11 @@
 //  table pouvant être détectés. Dès qu’il arrive à cette conclusion, le robot arrête de bouger et
 //  émet un son grave pendant 2 secondes. Il fait ensuite clignoter sa DEL en rouge à 2 Hz.
 
-void RoutineDetection::loopSound()
-{
+void RoutineDetection::loopSound() {
     SoundPlayer sp;
     sp.init();
 
-    for (int i = 0; i < 3; i++)
-    {
+    for (int i = 0; i < 3; i++) {
         sp.playSound(45);
         _delay_ms(300);
         sp.reset();
@@ -52,8 +50,7 @@ void RoutineDetection::loopSound()
     }
 }
 
-void RoutineDetection::sonGrave(uint8_t note)
-{
+void RoutineDetection::sonGrave(uint8_t note) {
     SoundPlayer sp;
     sp.init();
 
@@ -62,12 +59,10 @@ void RoutineDetection::sonGrave(uint8_t note)
     sp.reset();
 }
 
-void RoutineDetection::flashRed()
-{
+void RoutineDetection::flashRed() {
     LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
 
-    while (true)
-    {
+    while (true) {
         lm.setLight(Color::AMBER);
         _delay_ms(250);
         lm.setLight(Color::OFF);
@@ -75,14 +70,11 @@ void RoutineDetection::flashRed()
     }
 }
 
-void RoutineDetection::flashAmber()
-{
+void RoutineDetection::flashAmber() {
     LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
 
-    while (true)
-    {
-        for (int k = 0; k < 12; k++)
-        {
+    while (true) {
+        for (int k = 0; k < 12; k++) {
             lm.setLight(Color::AMBER);
         }
         lm.setLight(Color::OFF);
@@ -90,91 +82,91 @@ void RoutineDetection::flashAmber()
     }
 }
 
-void RoutineDetection::executeRoutine()
-{
+void RoutineDetection::executeRoutine() {
     LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
     RoutineSteps routineSteps;
 
-    switch (routineSteps)
-    {
-    case RoutineSteps::START:
-        // 1.Light Amber
-        while (true)
-        {
-            lm.setLight(Color::AMBER);
+    switch (routineSteps) {
+        case RoutineSteps::START:
+            Logger::log(Priority::INFO, "La routine commence");
+            // 1.Light Amber
+            while (true) {
+                lm.setLight(Color::AMBER);
 
-            if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0)
-            {
-                ExternInterrupt::resetInterruptCount(Button::FIRST);
-                routineSteps = RoutineSteps::INT_CLICKED;
-                break;
+                if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
+                    ExternInterrupt::resetInterruptCount(Button::FIRST);
+                    routineSteps = RoutineSteps::INT_CLICKED;
+                    break;
+                }
+
+                else if (ExternInterrupt::getInterruptCount(Button::SECOND) > 0) {
+                    ExternInterrupt::resetInterruptCount(Button::SECOND);
+                    routineSteps = RoutineSteps::WHITE_CLICKED;
+                    break;
+                }
             }
+            break;
 
-            else if (ExternInterrupt::getInterruptCount(Button::SECOND) > 0)
-            {
-                ExternInterrupt::resetInterruptCount(Button::SECOND);
-                routineSteps = RoutineSteps::WHITE_CLICKED;
-                break;
+        case RoutineSteps::INT_CLICKED:
+            // orienté vers le haut
+            Logger::log(Priority::INFO, "Le bouton interrupt a été clické");
+            lm.setLight(Color::GREEN);
+            _delay_ms(2000);
+            // variable différente pour case suivant
+            routineSteps = RoutineSteps::FIND_STICK;
+            break;
+
+        case RoutineSteps::WHITE_CLICKED:
+            // orienté vers la droite
+            Logger::log(Priority::INFO, "Le bouton blanc a été clické");
+            lm.setLight(Color::RED);
+            _delay_ms(2000);
+            // variable différente pour case suivant
+            routineSteps = RoutineSteps::FIND_STICK;
+            break;
+
+        case RoutineSteps::FIND_STICK:
+            Logger::log(Priority::INFO, "Le robot essaie de trouver le poteau");
+            // fonction de Gab
+            // Quand on trouve:
+            routineSteps = RoutineSteps::FOUND_STICK;
+
+            // Si on trouve pas:
+            routineSteps = RoutineSteps::NO_STICK;
+            break;
+
+        case RoutineSteps::FOUND_STICK:
+            Logger::log(Priority::INFO, "Le robot a trouvé le poteau");
+            // 5. 3 sons aigus: son (300 ms), pause(300ms) 3x
+            loopSound();
+            // se dirige vers
+
+            routineSteps = RoutineSteps::WAIT;
+            break;
+
+        case RoutineSteps::WAIT:
+            Logger::log(Priority::INFO, "Le robot est en attente");
+            // 6.clignoter led ambrée à 2Hz -> 2 tours par seconde
+            while (true) {
+                flashAmber();
+
+                // Jusqu'à temps qu'on pèse sur interrupt
+                if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
+                    ExternInterrupt::resetInterruptCount(Button::FIRST);
+                    routineSteps = RoutineSteps::INT_CLICKED;
+                    break;
+                }
             }
-        }
-        break;
+            break;
 
-    case RoutineSteps::INT_CLICKED:
-        // orienté vers le haut
-        lm.setLight(Color::GREEN);
-        _delay_ms(2000);
-        // variable différente pour case suivant
-        routineSteps = RoutineSteps::FIND_STICK;
-        break;
+        case RoutineSteps::NO_STICK:
+            Logger::log(Priority::INFO, "Aucun poteau n'a été trouvé");
+            sonGrave(10);
+            _delay_ms(2000);
 
-    case RoutineSteps::WHITE_CLICKED:
-        // orienté vers la droite
-        lm.setLight(Color::RED);
-        _delay_ms(2000);
-        // variable différente pour case suivant
-        routineSteps = RoutineSteps::FIND_STICK;
-        break;
+            flashRed();
+            // fin du switch case
 
-    case RoutineSteps::FIND_STICK:
-        // fonction de Gab
-        // Quand on trouve:
-        routineSteps = RoutineSteps::FOUND_STICK;
-
-        // Si on trouve pas:
-        routineSteps = RoutineSteps::NO_STICK;
-        break;
-
-    case RoutineSteps::FOUND_STICK:
-        // 5. 3 sons aigus: son (300 ms), pause(300ms) 3x
-        loopSound();
-        // se dirige vers
-
-        routineSteps = RoutineSteps::WAIT;
-        break;
-
-    case RoutineSteps::WAIT:
-        // 6.clignoter led ambrée à 2Hz -> 2 tours par seconde
-        while (true)
-        {
-            flashAmber();
-
-            // Jusqu'à temps qu'on pèse sur interrupt
-            if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0)
-            {
-                ExternInterrupt::resetInterruptCount(Button::FIRST);
-                routineSteps = RoutineSteps::INT_CLICKED;
-                break;
-            }
-        }
-        break;
-
-    case RoutineSteps::NO_STICK:
-        sonGrave(10);
-        _delay_ms(2000);
-
-        flashRed();
-        // fin du switch case
-
-        break;
+            break;
     }
 }
