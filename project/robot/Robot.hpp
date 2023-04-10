@@ -16,16 +16,16 @@ enum class HeadDirection { NORTH, NORTHEAST, EAST, SOUTH_EAST, SOUTH, SOUTHWEST,
 
 class Robot {
 public:
-    Robot(WheelManager wm, LightManager lm, Sensor s, SoundPlayer sp)
+    Robot(WheelManager* wm, LightManager* lm, Sensor* s, SoundPlayer* sp)
         : wheelManager(wm), lightManager(lm), sensor(s), soundPlayer(sp) {}
 
-    WheelManager& getWheelManager();
+    WheelManager* getWheelManager();
 
-    LightManager& getLightManager();
+    LightManager* getLightManager();
 
-    Sensor& getSensor();
+    Sensor* getSensor();
 
-    SoundPlayer& getSoundPlayer();
+    SoundPlayer* getSoundPlayer();
 
     HeadDirection getHeadDirection();
     void setHeadDirection(HeadDirection head);
@@ -50,10 +50,10 @@ public:
     void calculateMove(uint32_t timestamp);
 
 private:
-    WheelManager wheelManager;
-    LightManager lightManager;
-    Sensor sensor;
-    SoundPlayer soundPlayer;
+    WheelManager* wheelManager;
+    LightManager* lightManager;
+    Sensor* sensor;
+    SoundPlayer* soundPlayer;
     uint16_t x;
     uint16_t y;
     const uint8_t speed           = 30;

@@ -5,8 +5,8 @@ class FetchRoutine {
 public:
     // Devra retourner les coordonnées.
     // Prend en paramètre la direction de départ.
-    void fetchBlock(Robot robot, Direction startDirection);
+    void fetchBlock(Robot robot);
     void findedBlock(Robot robot, FindedBlock findedBlock);
     void writeCoordonateInMemory(Robot robot, FindedBlock findedBlock);
-    void fetchBlocks();
+    void fetchBlocks(Robot robot, HeadDirection startDirection);
 };

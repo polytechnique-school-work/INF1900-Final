@@ -1,12 +1,12 @@
 #include "Robot.hpp"
 
-WheelManager& Robot::getWheelManager() { return wheelManager; }
+WheelManager* Robot::getWheelManager() { return wheelManager; }
 
-LightManager& Robot::getLightManager() { return lightManager; }
+LightManager* Robot::getLightManager() { return lightManager; }
 
-Sensor& Robot::getSensor() { return sensor; }
+Sensor* Robot::getSensor() { return sensor; }
 
-SoundPlayer& Robot::getSoundPlayer() { return soundPlayer; }
+SoundPlayer* Robot::getSoundPlayer() { return soundPlayer; }
 
 uint16_t Robot::getX() { return this->x; }
 

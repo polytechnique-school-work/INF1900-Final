@@ -5,8 +5,9 @@
 
 class Sensor {
 public:
+    // Sensor();
     uint16_t readValue();
 
 private:
-    Can can;
+    Can can = Can();
 };
