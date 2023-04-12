@@ -11,34 +11,56 @@ static ClickType lastClickTypeSecond         = ClickType::NONE;
 static InterruptType interruptSecond;
 
 void ExternInterrupt::init(InterruptType interruptType, Button button) {
+
     // cli est une routine qui bloque toutes les interruptions.
     // Il serait bien mauvais d'être interrompu alors que
     // le microcontrôleur n'est pas prêt...
     cli();
+    if (button == Button::FIRST) {
+        DDRD &= ~(1 << PORTD2);
+        EIMSK |= (1 << INT0);
+        interruptFirst = interruptType;
+        switch (interruptType) {
+            case InterruptType::ANY:
+                // EICRA |= (1 << (button == Button::FIRST ? ISC00 : ISC10));
+                EICRA |= (1 << ISC00);
+                break;
+            case InterruptType::FALLING_EDGE:
+                // EICRA |= (1 << (button == Button::FIRST ? ISC01 : ISC11));
+                EICRA |= (1 << ISC01);
+                break;
+            case InterruptType::RISING_EDGE:
+                // EICRA |= (1 << (button == Button::FIRST ? (1 << ISC00) | (1 << ISC01)
+                //                                         : (1 << ISC10) | (1 << ISC11)));
 
-    // Port D2 utilisé pour les interruptions.
-    DDRD &= ~(1 << (button == Button::FIRST ? PORTD2 : PORTD3));
+                EICRA |= (1 << ISC00) | (1 << ISC01);
+                break;
+            default:
+                break;
+        }
+    } else {
 
-    // cette procédure ajuste le registre EIMSK
-    // de l’ATmega324PA pour permettre les interruptions externes
-    EIMSK |= (1 << (button == Button::FIRST ? INT0 : INT1));
+        DDRD &= ~(1 << PORTD3);
+        EIMSK |= (1 << INT1);
+        interruptSecond = interruptType;
+        switch (interruptType) {
+            case InterruptType::ANY:
+                // EICRA |= (1 << (button == Button::FIRST ? ISC00 : ISC10));
+                EICRA |= (1 << ISC10);
+                break;
+            case InterruptType::FALLING_EDGE:
+                // EICRA |= (1 << (button == Button::FIRST ? ISC01 : ISC11));
+                EICRA |= (1 << ISC11);
+                break;
+            case InterruptType::RISING_EDGE:
+                // EICRA |= (1 << (button == Button::FIRST ? (1 << ISC00) | (1 << ISC01)
+                //                                         : (1 << ISC10) | (1 << ISC11)));
 
-    // il faut sensibiliser les interruptions externes aux
-    // changements de niveau du bouton-poussoir
-    // en ajustant le registre EICRA
-    button == Button::FIRST ? interruptFirst = interruptType : interruptSecond = interruptType;
-    switch (interruptType) {
-        case InterruptType::ANY:
-            EICRA |= (1 << (button == Button::FIRST ? ISC00 : ISC10)) ;
-            break;
-        case InterruptType::FALLING_EDGE:
-            EICRA |= (1 << (button == Button::FIRST ? ISC01 : ISC11));
-            break;
-        case InterruptType::RISING_EDGE:
-            EICRA |= (1 << (button== Button::FIRST ? (1 << ISC00) | (1 << ISC01) : (1 << ISC10) | (1 << ISC11)));
-            break;
-        default:
-            break;
+                EICRA |= (1 << ISC10) | (1 << ISC11);
+                break;
+            default:
+                break;
+        }
     }
 
     // sei permet de recevoir à nouveau des interruptions.

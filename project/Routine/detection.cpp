@@ -63,7 +63,7 @@ void RoutineDetection::flashRed() {
     LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
 
     while (true) {
-        lm.setLight(Color::AMBER);
+        lm.setLight(Color::RED);
         _delay_ms(250);
         lm.setLight(Color::OFF);
         _delay_ms(250);
@@ -84,8 +84,8 @@ void RoutineDetection::flashAmber() {
 
 void RoutineDetection::executeRoutine() {
     LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
-    RoutineSteps routineSteps;
-    ExternInterrupt::init(InterruptType::FALLING_EDGE, Button::FIRST);
+    RoutineSteps routineSteps = RoutineSteps::START;
+    ExternInterrupt::init(InterruptType::RISING_EDGE, Button::FIRST);
     ExternInterrupt::init(InterruptType::FALLING_EDGE, Button::SECOND);
 
     while (true) {
@@ -133,11 +133,12 @@ void RoutineDetection::executeRoutine() {
 
             case RoutineSteps::FIND_STICK:
                 Logger::log(Priority::INFO, "Le robot essaie de trouver le poteau");
-                // fonction de Gab
-                // Quand on trouve:
-                routineSteps = RoutineSteps::FOUND_STICK;
+                // // fonction de Gab
+                // // Quand on trouve:
+                // routineSteps = RoutineSteps::FOUND_STICK;
 
-                // Si on trouve pas:
+                // // Si on trouve pas:
+                // routineSteps = RoutineSteps::NO_STICK;
                 routineSteps = RoutineSteps::NO_STICK;
                 break;
 

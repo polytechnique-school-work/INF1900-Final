@@ -23,13 +23,15 @@
 //  static const uint16_t STARTUP_DELAY = 2000;
 //  const uint8_t SPEED = 50;
 
-void init() {
+void init()
+{
     _delay_ms(2000);
     DDRA &= ~(1 << PORTA2);
     Logger::log(Priority::INFO, "Le programme est lancé.");
 }
 
-int main() {
+int main()
+{
 
     init();
     RoutineDetection routine;
