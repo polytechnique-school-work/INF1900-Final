@@ -13,14 +13,15 @@ static const uint16_t SECOND_DISTANCE            = 700;
                 - Avance jusqu'à atteindre le bloc et s'arrête, lance la prochaine procédure.
 
 */
-void FetchRoutine::fetchBlock(Robot robot) {
+FindedBlock FetchRoutine::fetchBlock(Robot robot, uint8_t blockCount) {
 
     MagicalWheels magicWheels = MagicalWheels(robot);
 
     for (uint8_t i = 0; i < MAX_TURN; i++) {
-        // Set a left.
         // Au lieu de renvoyer un boolean, je vais devoir renvoyer un Enum si NON_TROUVÉ, PREMIER ou
         // DEUXIÈME à moins qu'on le récupère par après.
+
+        // Boucle jusqu'à temps qu'il trouve quelque chose.
         bool hasFind = magicWheels.turn(Direction::RIGHT);
         FindedBlock findedBlock;
         if (hasFind) {
@@ -36,6 +37,8 @@ void FetchRoutine::fetchBlock(Robot robot) {
                 actualDistance = robot.getSensor()->readValue();
             }
 
+            Logger::log(Priority::INFO, "Bloc trouvé à une distance de: ", actualDistance);
+
             magicWheels.stopMoves();
 
             if (distance < FIRST_DISTANCE)
@@ -49,6 +52,8 @@ void FetchRoutine::fetchBlock(Robot robot) {
         }
 
         this->findedBlock(robot, findedBlock);
+
+        return findedBlock;
     }
 }
 
@@ -75,15 +80,17 @@ void FetchRoutine::findedBlock(Robot robot, FindedBlock findedBlock) {
 
 void FetchRoutine::writeCoordonateInMemory(Robot robot, FindedBlock findedBlock) {}
 
+/*
+ *   Exécute la routine de recherche de bloc le nombre de fois nécessaire.
+ */
 void FetchRoutine::fetchBlocks(Robot robot, HeadDirection startDirection) {
-    // Je vais devoir savoir ou on est rendu dans notre recherche.
-
     // 8 correspond au nombre maximum de blocs à trouver.
     for (uint8_t i = 0; i < 8; i++) {
-
         // set la direction en fonction de soit c'est la première étape, soit c'est au north.
-        i == 0 ? robot.setHeadDirection(startDirection)
-               : robot.setHeadDirection(HeadDirection::NORTH);
-        fetchBlock(robot);
+
+        Logger::log(Priority::INFO, "Exécution de recherche", static_cast<uint16_t>(i));
+
+        if (i != 0) startDirection = HeadDirection::NORTH;
+        fetchBlock(robot, i);
     }
 }

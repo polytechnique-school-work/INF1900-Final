@@ -25,6 +25,7 @@ public:
     static void init();
     static void log(Priority priority, const char* message, bool skipLine = true);
     static void log(Priority priority, const uint16_t number, bool skipLine = true);
+    static void log(Priority priority, const char* message, const uint16_t number);
 };
 
 #ifdef DEBUG

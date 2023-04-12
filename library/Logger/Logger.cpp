@@ -31,8 +31,14 @@ void Logger::log(Priority priority, const char* message, bool skipLine) {
 
 void Logger::log(Priority priority, const uint16_t number, bool skipLine) {
     char message[5];
-    sprintf(message,  "%u", number);
+    sprintf(message, "%u", number);
     Logger::format(priority, message, skipLine);
+}
+
+void Logger::log(Priority priority, const char* message, const uint16_t number) {
+    char num[128];
+    sprintf(num, "%s: %u", message, number);
+    Logger::format(priority, num, true);
 }
 
 void Logger::format(Priority priority, const char* message, bool skipLine) {

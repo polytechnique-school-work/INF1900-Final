@@ -1,11 +1,12 @@
 #include "MagicalWheels.hpp"
 #include "utils/Utils.hpp"
 
-static const uint32_t TURN_DURATION = 50;
+static const uint32_t TURN_DURATION       = 50;
+static const uint16_t ACCEPTABLE_DISTANCE = 160;
 
 bool MagicalWheels::turn(Direction direction) {
 
-    DEBUG_PRINT(("Début du tour."));
+    DEBUG_PRINT(("Début du tour"));
 
     if (direction != Direction::LEFT && direction != Direction::RIGHT) {
         DEBUG_PRINT(("Impossible de faire tourner le robot avec cette direction.     sdsd"));
@@ -54,12 +55,14 @@ bool MagicalWheels::fetch(Direction direction) {
     /*
         TODO
         On doit faire en sorte de vérifier si y'a une valeur en bas d'une certaine valeur à chaque
-       fois. Soit qu'on définie une valeur par défaut et il se dirige vers un bloc en dessous d'une
-       certaine valeur.
-       Vérifier que le bloc est pas trop loin.
-       Retourner la distance.
+    fois. Soit qu'on définie une valeur par défaut et il se dirige vers un bloc en dessous d'une
+    certaine valeur.
+    Vérifier que le bloc est pas trop loin.
+    Retourner la distance.
     */
-    return true; // Permettre la compilation.
+    uint16_t value = this->robot.getSensor()->readValue();
+    DEBUG_PRINT(value);
+    return value < ACCEPTABLE_DISTANCE;
 }
 
 void MagicalWheels::changeDirection(Direction direction) {

@@ -43,16 +43,9 @@ int main() {
     Robot robot = Robot(&wheels, &light, &sensor, &sound);
 
     while (true) {
-
-        DEBUG_PRINT((robot.getSensor()->readValue()));
+        DEBUG_PRINT((sensor.readValue()));
+        _delay_ms(50);
     }
-
-    DEBUG_PRINT(("IS LOCKED"));
-
-    // while (true) {
-    //     DEBUG_PRINT(("hi"));
-    //     DEBUG_PRINT((sensor.readValue()));
-    // }
 
     // while (true) {
     //     DEBUG_PRINT(robot.getClock().getTimestamp());
@@ -130,8 +123,8 @@ int main() {
 
     // return 0;
 
-    // FetchRoutine fetchRoutine = FetchRoutine();
+    FetchRoutine fetchRoutine = FetchRoutine();
 
     // Elle sert a rien la headDirection non?
-    // fetchRoutine.fetchBlocks(robot, HeadDirection::NORTH);
+    fetchRoutine.fetchBlocks(robot, HeadDirection::NORTH);
 }
