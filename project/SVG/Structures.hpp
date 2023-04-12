@@ -104,6 +104,8 @@ public:
         }
     }
 
+    uint16_t calculAire();
+
     void ecrireMemoire(char message[]);
 
     void sortArray(Cosinus cosinus[], uint8_t& nCosinus);
