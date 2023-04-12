@@ -8,6 +8,8 @@
  * */
 #pragma once
 #define F_CPU 8000000UL
+#include <ExternInterrupt/ExternInterrupt.hpp>
+#include <Logger/Logger.hpp>
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
@@ -16,6 +18,7 @@
 enum class InterruptType { ANY, FALLING_EDGE, RISING_EDGE };
 enum class Button { FIRST, SECOND };
 enum class ClickType { CLICK, UNCLICK, NONE };
+
 class ExternInterrupt {
 public:
     static void init(InterruptType interruptType, Button button);

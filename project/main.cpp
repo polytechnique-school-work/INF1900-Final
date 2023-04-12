@@ -7,9 +7,10 @@
  *  Entrée:
  *  Sortie:
  * */
-#define F_CPU 8000000UL
 
+#define F_CPU 8000000UL
 #include "Clock/Clock.hpp"
+#include "Routine/detection.hpp"
 #include "Sensor/Sensor.hpp"
 #include "robot/Robot.hpp"
 #include <Can/Can.hpp>
@@ -58,19 +59,35 @@ int main() {
     // uint32_t FULL_CIRCLE = 500;
 
     // uint32_t initialTimestamp = clock.getTimestamp();
+    // uint32_t initialTimestamp = clock.getTimestamp();
 
+    // wheels.setDirection(Direction::RIGHT);
+    // wheels.setSpeed(SPEED);
+    // wheels.update();
     // wheels.setDirection(Direction::RIGHT);
     // wheels.setSpeed(SPEED);
     // wheels.update();
 
     // DEBUG_PRINT(("Test"));
+    // DEBUG_PRINT(("Test"));
 
+    // Sensor sensor;
     // Sensor sensor;
 
     // /*
     //     Vérification pour faire le 360 degrés
     // */
+    // /*
+    //     Vérification pour faire le 360 degrés
+    // */
 
+    // while (true) {
+    //     uint16_t value = sensor.readValue();
+    //     uint32_t nowTimestamp = clock.getTimestamp();
+    //     if(value < lowestValue) {
+    //         lowestValue = value;
+    //         timestamp = nowTimestamp;
+    //     }
     // while (true) {
     //     uint16_t value = sensor.readValue();
     //     uint32_t nowTimestamp = clock.getTimestamp();
@@ -84,20 +101,36 @@ int main() {
     //         break;
     //     }
     // }
+    //     if(initialTimestamp + FULL_CIRCLE < nowTimestamp) {
+    //         DEBUG_PRINT(("STOPED"));
+    //         break;
+    //     }
+    // }
 
+    // wheels.setSpeed(0);
+    // wheels.update();
     // wheels.setSpeed(0);
     // wheels.update();
 
     // uint32_t deplacementNeeded = timestamp - initialTimestamp;
+    // uint32_t deplacementNeeded = timestamp - initialTimestamp;
 
+    // _delay_ms(500);
     // _delay_ms(500);
 
     // /*
     //     Tourner pour voir le bloc
     // */
+    // /*
+    //     Tourner pour voir le bloc
+    // */
 
     // uint32_t turnTime = clock.getTimestamp();
+    // uint32_t turnTime = clock.getTimestamp();
 
+    // wheels.setSpeed(SPEED);
+    // wheels.setDirection(Direction::LEFT);
+    // wheels.update();
     // wheels.setSpeed(SPEED);
     // wheels.setDirection(Direction::LEFT);
     // wheels.update();
@@ -105,7 +138,13 @@ int main() {
     // while(true) {
     //     if(clock.getTimestamp() > turnTime + deplacementNeeded) break;
     // }
+    // while(true) {
+    //     if(clock.getTimestamp() > turnTime + deplacementNeeded) break;
+    // }
 
+    // wheels.setSpeed(0);
+    // wheels.update();
+    // _delay_ms(500);
     // wheels.setSpeed(0);
     // wheels.update();
     // _delay_ms(500);
@@ -113,7 +152,13 @@ int main() {
     // wheels.setSpeed(SPEED);
     // wheels.setDirection(Direction::FORWARD);
     // wheels.update();
+    // wheels.setSpeed(SPEED);
+    // wheels.setDirection(Direction::FORWARD);
+    // wheels.update();
 
+    // while(true) {
+    //     if(sensor.readValue() < 15) break;
+    // }
     // while(true) {
     //     if(sensor.readValue() < 15) break;
     // }
