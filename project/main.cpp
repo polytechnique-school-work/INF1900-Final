@@ -42,10 +42,10 @@ int main() {
 
     Robot robot = Robot(&wheels, &light, &sensor, &sound);
 
-    while (true) {
-        DEBUG_PRINT((sensor.readValue()));
-        _delay_ms(50);
-    }
+    // while (true) {
+    //     DEBUG_PRINT((sensor.readValue()));
+    //     _delay_ms(50);
+    // }
 
     // while (true) {
     //     DEBUG_PRINT(robot.getClock().getTimestamp());
