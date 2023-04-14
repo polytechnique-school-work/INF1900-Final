@@ -1,4 +1,6 @@
 #include "detection.hpp"
+#include "FetchRoutine.hpp"
+#include "robot/Robot.hpp"
 
 void RoutineDetection::loopSound() {
     SoundPlayer sp;
@@ -44,29 +46,31 @@ void RoutineDetection::flashAmber() {
     }
 }
 
-void RoutineDetection::executeRoutine() {
+void RoutineDetection::executeRoutine(Robot& robot) {
     LightManager lm(&DDRA, &PORTA, PORTA0, PORTA1);
     RoutineSteps routineSteps = RoutineSteps::START;
     ExternInterrupt::init(InterruptType::RISING_EDGE, Button::FIRST);
     ExternInterrupt::init(InterruptType::FALLING_EDGE, Button::SECOND);
+    HeadDirection headDirection = HeadDirection::NORTH; // Temporairement set, pas la vraie value
+    FetchRoutine fetchRoutine   = FetchRoutine();
 
     while (true) {
         switch (routineSteps) {
             case RoutineSteps::START:
-                Logger::log(Priority::INFO, "La routine commence");
+                Logger::log(Priority::INFO, "Début de la routine");
                 // 1.Light Amber
                 while (true) {
                     lm.setLight(Color::AMBER);
 
                     if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
-                        Logger::log(Priority::INFO, "On entre dans le if du bouton interrupt");
+                        Logger::log(Priority::INFO, "Choix du robot: Haut de la table");
                         routineSteps = RoutineSteps::INT_CLICKED;
                         ExternInterrupt::resetInterruptCount(Button::FIRST);
                         break;
                     }
 
                     else if (ExternInterrupt::getInterruptCount(Button::SECOND) > 0) {
-                        Logger::log(Priority::INFO, "On entre dans le if du bouton blanc");
+                        Logger::log(Priority::INFO, "Choix du robot: Droite de la table");
                         routineSteps = RoutineSteps::WHITE_CLICKED;
                         ExternInterrupt::resetInterruptCount(Button::SECOND);
                         break;
@@ -77,34 +81,41 @@ void RoutineDetection::executeRoutine() {
 
             case RoutineSteps::INT_CLICKED:
                 // orienté vers le haut
-                Logger::log(Priority::INFO, "Le bouton interrupt a été clické");
+                Logger::log(Priority::INFO, "Changement vers le haut de la table");
                 lm.setLight(Color::GREEN);
                 _delay_ms(2000);
+                headDirection = HeadDirection::NORTH; // Set la direction choisie.
                 // variable différente pour case suivant
                 routineSteps = RoutineSteps::FIND_STICK;
                 break;
 
             case RoutineSteps::WHITE_CLICKED:
                 // orienté vers la droite
-                Logger::log(Priority::INFO, "Le bouton blanc a été clické");
+                Logger::log(Priority::INFO, "Changement vers la droite de la table");
                 lm.setLight(Color::RED);
                 _delay_ms(2000);
+                headDirection = HeadDirection::EAST; // Set la direction chsoisie
                 // variable différente pour case suivant
                 routineSteps = RoutineSteps::FIND_STICK;
                 break;
 
             case RoutineSteps::FIND_STICK:
-                Logger::log(Priority::INFO, "Le robot essaie de trouver le poteau");
-                // // fonction de Gab
-                // // Quand on trouve:
-                // routineSteps = RoutineSteps::FOUND_STICK;
+                Logger::log(Priority::INFO, "Lancement de la recherche globale");
 
-                // // Si on trouve pas:
-                // routineSteps = RoutineSteps::NO_STICK;
-                routineSteps = RoutineSteps::NO_STICK;
+                /*
+                 *   Lancement de la routine de recherche
+                 */
+                fetchRoutine.fetchBlocks(robot, headDirection);
+
+                routineSteps = RoutineSteps::WAIT;
                 break;
 
             case RoutineSteps::FOUND_STICK:
+
+                /*
+                 *   TODO: Probablement pas vraiment utile
+                 */
+
                 Logger::log(Priority::INFO, "Le robot a trouvé le poteau");
                 // 5. 3 sons aigus: son (300 ms), pause(300ms) 3x
                 loopSound();

@@ -2,7 +2,7 @@
 #include "utils/Utils.hpp"
 
 static const uint32_t TURN_DURATION       = 50;
-static const uint16_t ACCEPTABLE_DISTANCE = 160;
+static const uint16_t ACCEPTABLE_DISTANCE = 60;
 
 bool MagicalWheels::turn(Direction direction) {
 
@@ -43,11 +43,8 @@ bool MagicalWheels::turn(Direction direction) {
 
 void MagicalWheels::stopMoves() {
     this->robot.getWheelManager()->setSpeed(0);
+    this->robot.getWheelManager()->update();
     Utils::wait(this->robot.getWaitTurnDuration());
-
-    // Calculer le déplacement.
-    // Pas certain du truc par contre... ça me parait deg comme façon de faire.
-    this->robot.calculateMove(this->moveTimestamp);
 }
 
 bool MagicalWheels::fetch(Direction direction) {

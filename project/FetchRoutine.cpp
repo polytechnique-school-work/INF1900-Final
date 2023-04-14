@@ -1,7 +1,7 @@
 #include "FetchRoutine.hpp"
 // On obtiens 360 degrés en faisant 8 tours de 45 degrés.
 static const uint8_t MAX_TURN                    = 8;
-static const uint16_t MAXMIMAL_DISTANCE_ACCEPTED = 15;
+static const uint16_t MAXMIMAL_DISTANCE_ACCEPTED = 25;
 static const uint16_t FIRST_DISTANCE             = 30;
 static const uint16_t SECOND_DISTANCE            = 700;
 
@@ -40,6 +40,7 @@ FindedBlock FetchRoutine::fetchBlock(Robot robot, uint8_t blockCount) {
             Logger::log(Priority::INFO, "Bloc trouvé à une distance de: ", actualDistance);
 
             magicWheels.stopMoves();
+            _delay_ms(5000);
 
             if (distance < FIRST_DISTANCE)
                 findedBlock = FindedBlock::FIRST;

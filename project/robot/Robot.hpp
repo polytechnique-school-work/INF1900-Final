@@ -56,7 +56,7 @@ private:
     SoundPlayer* soundPlayer;
     uint16_t x;
     uint16_t y;
-    const uint8_t speed           = 30;
+    const uint8_t speed           = 40;
     const double waitTurnDuration = 1000;
     HeadDirection headDirection   = HeadDirection::NORTH; // Valeur par défaut à changer.
 };
