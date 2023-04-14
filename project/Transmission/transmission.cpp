@@ -12,6 +12,8 @@ void Emetteur::ExecuteRoutine()
     uint8_t byte;
     uint32_t crc = 0xFFFFFFFF; 
 
+    Logger::init();
+
     for(char octet : "0x02"){
         Logger::transmitUSART(octet);
     }

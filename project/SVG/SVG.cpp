@@ -1,6 +1,6 @@
 #include "Structures.hpp"
 
-void SVG::ecrireMemoire(char message[]) {
+void SVG::ecrireMemoire(char* message) {
     taille = strlen(message);
     memory->ecriture(adresse, (uint8_t*)message, taille);
     adresse += taille;
@@ -38,20 +38,23 @@ uint16_t SVG::calculAire(){
 void SVG::init(){
 
     _delay_ms(500);
-    char message[] = "<svg width=\"100%\" height=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 115 58\">\n";
-    ecrireMemoire(message);
+    {
+        char* message = "<svg width=\"100%\" height=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 115 58\">\n";
+        ecrireMemoire(message);
+    }
+    
 
-    char style[] = "<style> .small { font: 2px sans-serif; }</style>";
-    ecrireMemoire(style);
+    {constexpr char* style = "<style> .small { font: 2px sans-serif; }</style>";
+    ecrireMemoire(style);}
 
-    char equipe[] = "<text x=\"10\" y=\"4\" fill=\"blue\" class = \"small\"> section01 -- équipe 020304 -- Crazy Frog </text>";
-    ecrireMemoire(equipe);
+    {char* equipe = "<text x=\"10\" y=\"4\" fill=\"blue\" class = \"small\"> section01 -- équipe 020304 -- Crazy Frog </text>";
+    ecrireMemoire(equipe);}
 
-    char messageRect[] = "<rect x = \"10\" y = \"5\" width = \"96\" height = \"48\" stroke = \"black\" stroke-width = \".2\" fill = \"white\" />\n";
-    ecrireMemoire(messageRect);
+    {char* messageRect = "<rect x = \"10\" y = \"5\" width = \"96\" height = \"48\" stroke = \"black\" stroke-width = \".2\" fill = \"white\" />\n";
+    ecrireMemoire(messageRect);}
 
-    char messageRouge[] = "<rect x = \"19\" y = \"45\" width = \"1\" height = \"1\" stroke = \"red\" stroke-width = \".2\" fill = \"red\"/>\n";
-    ecrireMemoire(messageRouge);
+    {char* messageRouge = "<rect x = \"19\" y = \"45\" width = \"1\" height = \"1\" stroke = \"red\" stroke-width = \".2\" fill = \"red\"/>\n";
+    ecrireMemoire(messageRouge);}
 }
 
 void SVG::ecrireRectangles(){
@@ -74,21 +77,21 @@ void SVG::makeCircles() {
 }
 
 void SVG::makePolygon() {
-    char polygone[60] = "<polygon points= \"";
+    {char polygone[60] = "<polygon points= \"";
     for(uint8_t i = 0; i < nContour; i++){
         char coordonnees[10];
         sprintf(coordonnees, "%d, %d ", pointsContour[i].getX(), pointsContour[i].getY());
         strcat(polygone, coordonnees);
     }
-    ecrireMemoire(polygone);
+    ecrireMemoire(polygone);}
 
-    char polyParams[] ="\" fill = \"rgba(0, 255, 0, 0.25)\" stroke = \"black\" stroke-width = \".2\" />\n";
-    ecrireMemoire(polyParams);
+    {char* polyParams ="\" fill = \"rgba(0, 255, 0, 0.25)\" stroke = \"black\" stroke-width = \".2\" />\n";
+    ecrireMemoire(polyParams);}
 
-    char polyText[85]; 
+    {char polyText[85]; 
     uint16_t area = calculAire();
     sprintf(polyText, "<text x=\"10\" y=\"56\" fill=\"blue\" class=\"small\" > Aire: %d pouces carrés </text>", area);
-    ecrireMemoire(polyText);
+    ecrireMemoire(polyText);}
 }
 
 void SVG::trouverPointsVisites()
@@ -206,7 +209,7 @@ void SVG::ecrireSVGMemoire(){
 
     makePolygon();
 
-    char messageFin[] = "</svg>";
-    ecrireMemoire(messageFin);
+    {char* messageFin = "</svg>";
+    ecrireMemoire(messageFin);}
 
 }
