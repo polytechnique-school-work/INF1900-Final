@@ -20,21 +20,8 @@ static const uint16_t STARTUP_DELAY = 2000;
 
 int main() {
     _delay_ms(5000);
-    LightManager light = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
-    Memoire24CXXX memory = Memoire24CXXX();
-    uint8_t indices[6] = {8, 9, 26, 30, 16, 13};
-    SVG svg = SVG(memory);
 
-    for(uint8_t i : indices){
-        svg.visiterPoint(i);
-    }
-
-    Logger::log(Priority::INFO, "Le programme est lancé.");
-    _delay_ms(500);
-    Clock clock;
-    clock.init();
-    Emetteur emetteur = Emetteur(light, memory, clock, svg);
-    svg.ecrireSVGMemoire();
+    Emetteur emetteur = Emetteur();
 
     emetteur.ExecuteRoutine();   
 }

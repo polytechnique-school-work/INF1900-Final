@@ -4,6 +4,8 @@
 #include <avr/io.h>
 #include <string.h>
 #include "Logger/Logger.hpp"
+#include "Clock/Clock.hpp"
+#include "Light/LightManager.hpp"
 #include <stdio.h>
 #include "Memory/memoire_24.h"
 #include <util/delay.h>
@@ -89,28 +91,27 @@ private:
 class SVG
 {
 public:
-    SVG(Memoire24CXXX &memory){
-        this->memory = &memory;
+    SVG(Clock &clock, LightManager &light){
+        this->clock = &clock;
+        this->light = &light;
+
+        previousTimestamp = clock.getTimestamp();
+        color = Color::OFF;
+
         nVisites = 0;
-        taille = 0;
-        tailleTotale = 0;
-        adresse = 0;
-        for(int8_t i = 3; i > -1; i--){
-            for (uint8_t j = 0; j < 8; j++){           
-                uint8_t x = 19 + 11 * j;
-                uint8_t y = 12 + 11 * i;
-                points[nbPoints++] = Point(j + (3-i)*8+1, x, y);
-            }
-        }
+        nbPoints = 0;
+        nContour = 0;
+
+        crc = 0xFFFFFFFF;
     }
+
+    void transmettreMessage(const char* message);
 
     uint16_t calculAire();
 
-    void ecrireMemoire(char message[]);
+    void transmitSVG();
 
     void sortArray(Cosinus cosinus[], uint8_t& nCosinus);
-
-    void ecrireSVGMemoire();
 
     void init();
 
@@ -124,18 +125,20 @@ public:
 
     void makePolygon();
 
-    uint16_t getTailleTotale(){
-        return tailleTotale;
-    }
-
     void visiterPoint(uint8_t indice){
         if (indice!=0){
             indicesVisites[nVisites++] = indice;
         }
     }
 
+    uint32_t crc; 
 private:
-    Memoire24CXXX* memory = nullptr;
+    Clock* clock = nullptr;
+    uint32_t previousTimestamp;
+
+    LightManager* light = nullptr;
+    Color color;
+
     Point points[32];
     uint8_t nbPoints;
 
@@ -145,9 +148,6 @@ private:
     Point pointsContour[8];
     uint8_t nContour;
 
-    uint8_t taille;
-    uint16_t tailleTotale;
-    uint16_t adresse;
-
     uint8_t indicesVisites[8];
+
 };
