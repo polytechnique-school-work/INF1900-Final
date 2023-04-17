@@ -82,9 +82,10 @@ void RoutineDetection::executeRoutine(Robot& robot) {
             case RoutineSteps::INT_CLICKED:
                 // orienté vers le haut
                 Logger::log(Priority::INFO, "Changement vers le haut de la table");
+                headDirection = HeadDirection::NORTH; // Set la direction choisie.
                 lm.setLight(Color::GREEN);
                 _delay_ms(2000);
-                headDirection = HeadDirection::NORTH; // Set la direction choisie.
+                lm.setLight(Color::OFF);
                 // variable différente pour case suivant
                 routineSteps = RoutineSteps::FIND_STICK;
                 break;
@@ -92,9 +93,10 @@ void RoutineDetection::executeRoutine(Robot& robot) {
             case RoutineSteps::WHITE_CLICKED:
                 // orienté vers la droite
                 Logger::log(Priority::INFO, "Changement vers la droite de la table");
+                headDirection = HeadDirection::EAST; // Set la direction chsoisie
                 lm.setLight(Color::RED);
                 _delay_ms(2000);
-                headDirection = HeadDirection::EAST; // Set la direction chsoisie
+                lm.setLight(Color::OFF);
                 // variable différente pour case suivant
                 routineSteps = RoutineSteps::FIND_STICK;
                 break;

@@ -1,10 +1,10 @@
 #include "FetchRoutine.hpp"
 #include <ExternInterrupt/ExternInterrupt.hpp>
 // On obtiens 360 degrés en faisant 8 tours de 45 degrés.
-static const uint8_t MAX_TURN                    = 8;
-static const uint16_t MAXMIMAL_DISTANCE_ACCEPTED = 150;
-static const uint16_t FIRST_DISTANCE             = 220;
-static const uint16_t SECOND_DISTANCE            = 247;
+static const uint8_t MAX_TURN                   = 8;
+static const uint16_t MINIMAL_DISTANCE_ACCEPTED = 150;
+static const uint16_t FIRST_DISTANCE            = 220;
+static const uint16_t SECOND_DISTANCE           = 250;
 
 /*
     On souhaite que cette routine permette de trouver un bloc (les blocs sont les poteaux).
@@ -29,35 +29,50 @@ FindedBlock FetchRoutine::fetchBlock(Robot robot, uint8_t blockCount) {
 
             magicWheels.stopMoves();
 
+            _delay_ms(1000);
+
             magicWheels.moveForward();
             uint16_t actualDistance = hasFind;
 
             Direction direction = Direction::RIGHT;
 
             // Avance jusqu'à temps qu'il soit suffisamment près.
-            while (actualDistance > MAXMIMAL_DISTANCE_ACCEPTED) {
+            while (actualDistance > MINIMAL_DISTANCE_ACCEPTED) {
+
+                // Actualiser la distance actuelle
+                actualDistance = robot.getSensor()->readValue();
+
+                /*
+                 *   Retrouver la valeur si elle est perdue
+                 */
+                // Si la distance est rendu plus grande que celle anciennement trouvée.
                 if (actualDistance > hasFind) {
+
+                    // Faire changer la direction pour retrouver le hasFind.
                     direction =
                         (direction == Direction::RIGHT ? Direction::LEFT : Direction::RIGHT);
+
                     robot.getWheelManager()->setDirection(direction);
+                    robot.getWheelManager()->setSpeed(robot.getSpeed());
                     robot.getWheelManager()->update();
+
                     while (actualDistance > hasFind) {
+
+                        // Actualiser la valeur pour pouvoir effectuer la comparaison.
                         actualDistance = robot.getSensor()->readValue();
                     }
                 }
 
+                // Continuer à avancer jusqu'à quitter le while.
                 robot.getWheelManager()->setDirection(Direction::FORWARD);
+                robot.getWheelManager()->setSpeed(robot.getSpeed());
                 robot.getWheelManager()->update();
-
-                actualDistance = robot.getSensor()->readValue();
             }
-
-            DEBUG_PRINT("BugIsProbablyHere 3");
 
             Logger::log(Priority::INFO, "Bloc trouvé à une distance de: ", actualDistance);
 
             magicWheels.stopMoves();
-            _delay_ms(5000);
+            _delay_ms(1000);
 
             if (hasFind < FIRST_DISTANCE)
                 findedBlock = FindedBlock::FIRST;
@@ -66,6 +81,7 @@ FindedBlock FetchRoutine::fetchBlock(Robot robot, uint8_t blockCount) {
 
             // TODO : Trouver un moyen d'envoyer les coordonnées du bloc trouvé.
         } else {
+            DEBUG_PRINT("UNDEFINED");
             findedBlock = FindedBlock::UNDEFINED;
         }
 
@@ -83,16 +99,34 @@ void FetchRoutine::findedBlock(Robot robot, FindedBlock findedBlock) {
         - Écriture en mémoire de la coordonnée.
         - Lancement de la procédure de fin.
     */
-    if (findedBlock == FindedBlock::UNDEFINED)
+    if (findedBlock == FindedBlock::UNDEFINED) {
         return; // Faire quelque chose de spécial si rien de trouvé.
+    }
 
     this->writeCoordonateInMemory(robot, findedBlock);
 
     for (uint8_t i = 0; i < 3; i++) {
-        robot.getSoundPlayer()->playSound(22);
+        robot.getSoundPlayer()->playSound(30);
         _delay_ms(300);
         robot.getSoundPlayer()->reset();
         _delay_ms(300);
+    }
+
+    /*
+     *   Bloquer le robot d'avancer, attente du click
+     */
+
+    ExternInterrupt::init(InterruptType::RISING_EDGE, Button::FIRST);
+    ExternInterrupt::resetInterruptCount(Button::FIRST);
+    while (true) {
+
+        robot.getLightManager()->setLight(Color::AMBER);
+
+        // Cliquer sur le bouton interrupt
+        if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
+            Logger::log(Priority::INFO, "Prochain poteau");
+            break;
+        }
     }
 }
 
@@ -111,22 +145,5 @@ void FetchRoutine::fetchBlocks(Robot robot, HeadDirection startDirection) {
 
         if (i != 0) startDirection = HeadDirection::NORTH;
         fetchBlock(robot, i);
-
-        /*
-         *   Bloquer le robot d'avancer, attente du click
-         */
-
-        ExternInterrupt::init(InterruptType::RISING_EDGE, Button::FIRST);
-        ExternInterrupt::resetInterruptCount(Button::FIRST);
-        while (true) {
-
-            robot.getLightManager()->setLight(Color::AMBER);
-
-            // Cliquer sur le bouton interrupt
-            if (ExternInterrupt::getInterruptCount(Button::FIRST) > 0) {
-                Logger::log(Priority::INFO, "Prochain poteau");
-                break;
-            }
-        }
     }
 }

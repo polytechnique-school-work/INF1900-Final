@@ -41,13 +41,14 @@ int main() {
     WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
     SoundPlayer sound   = SoundPlayer();
     Sensor sensor       = Sensor();
+    sound.init();
 
     Robot robot = Robot(&wheels, &light, &sensor, &sound);
 
-    while (true) {
-        DEBUG_PRINT((sensor.readValue()));
-        _delay_ms(50);
-    }
+    // while (true) {
+    //     DEBUG_PRINT((sensor.readValue()));
+    //     _delay_ms(50);
+    // }
 
     Executer execute = Executer();
     execute.executeRoutine(robot);
