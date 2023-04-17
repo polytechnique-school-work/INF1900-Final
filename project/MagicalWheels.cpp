@@ -1,16 +1,16 @@
 #include "MagicalWheels.hpp"
 #include "utils/Utils.hpp"
 
-static const uint32_t TURN_DURATION       = 50;
-static const uint16_t ACCEPTABLE_DISTANCE = 60;
+static const uint32_t TURN_DURATION       = 137;
+static const uint16_t ACCEPTABLE_DISTANCE = 250;
 
-bool MagicalWheels::turn(Direction direction) {
+uint16_t MagicalWheels::turn(Direction direction) {
 
     DEBUG_PRINT(("Début du tour"));
 
     if (direction != Direction::LEFT && direction != Direction::RIGHT) {
-        DEBUG_PRINT(("Impossible de faire tourner le robot avec cette direction.     sdsd"));
-        return false;
+        DEBUG_PRINT(("Impossible de faire tourner le robot avec cette direction."));
+        return 0;
     }
 
     // On met un arrêt avec un delay pour éviter les problèmes d'inerties.
@@ -26,10 +26,10 @@ bool MagicalWheels::turn(Direction direction) {
     while (Clock::getTimestamp() < stopTime) {
         // Faire en sorte que si le fetch a une certaine valeur de retour, on skip le while (et on
         // effectue pas le change direction).
-        bool hasFindSomething = this->fetch(direction);
-        if (hasFindSomething) {
+        uint16_t hasFindSomething = this->fetch(direction);
+        if (hasFindSomething != 0) {
             DEBUG_PRINT(("Fin de la rotation (45) : trouvé."));
-            return true;
+            return hasFindSomething;
         }
     }
 
@@ -38,7 +38,7 @@ bool MagicalWheels::turn(Direction direction) {
     changeDirection(direction);
 
     DEBUG_PRINT(("Fin de la rotation (45) : non trouvé."));
-    return false;
+    return 0;
 }
 
 void MagicalWheels::stopMoves() {
@@ -47,7 +47,7 @@ void MagicalWheels::stopMoves() {
     Utils::wait(this->robot.getWaitTurnDuration());
 }
 
-bool MagicalWheels::fetch(Direction direction) {
+uint16_t MagicalWheels::fetch(Direction direction) {
 
     /*
         TODO
@@ -58,8 +58,8 @@ bool MagicalWheels::fetch(Direction direction) {
     Retourner la distance.
     */
     uint16_t value = this->robot.getSensor()->readValue();
-    DEBUG_PRINT(value);
-    return value < ACCEPTABLE_DISTANCE;
+    // DEBUG_PRINT(value);
+    return (value < ACCEPTABLE_DISTANCE ? value : 0);
 }
 
 void MagicalWheels::changeDirection(Direction direction) {

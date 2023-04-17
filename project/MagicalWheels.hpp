@@ -10,7 +10,7 @@ private:
     /*
         Fonction de vérification appelée en boucle lorsqu'il tourne.
     */
-    bool fetch(Direction direction);
+    uint16_t fetch(Direction direction);
 
 public:
     MagicalWheels(Robot r) : robot(r) {}
@@ -55,5 +55,5 @@ public:
         - Arrête tous les mouvements x temps.
         - Change la direction (incrémente ou décrémente).
     */
-    bool turn(Direction direction);
+    uint16_t turn(Direction direction);
 };

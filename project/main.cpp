@@ -1,3 +1,4 @@
+
 /*
  * Utilité : Fichier de base du projet
  * Autheurs : Équipe 020304
@@ -17,7 +18,10 @@
 #include <Light/LightManager.hpp>
 #include <Logger/Logger.hpp>
 #include <Memory/memoire_24.h>
+#include <Wheel/WheelManager.hpp>
 #include <util/delay.h>
+
+#include "FetchRoutine.hpp"
 
 static const uint16_t STARTUP_DELAY = 2000;
 
@@ -26,24 +30,25 @@ void init() {
     // Pourquoi est-ce qu'on met un set ici? Il sert vraiment à quelque chose?
     DDRA &= ~(1 << PORTA2);
     Logger::log(Priority::INFO, "Le programme est lancé.");
-    _delay_ms(500);
-    Clock clock;
-    clock.init();
-    Emetteur emetteur = Emetteur(light, memory, clock, svg);
-    svg.ecrireSVGMemoire();
+}
 
-    int main() {
+int main() {
 
-        init();
+    init();
 
-        // Initialisation du robot, donc les roues, etc.
-        LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
-        WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
-        SoundPlayer sound   = SoundPlayer();
-        Sensor sensor       = Sensor();
+    // Initialisation du robot, donc les roues, etc.
+    LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
+    WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+    SoundPlayer sound   = SoundPlayer();
+    Sensor sensor       = Sensor();
 
-        Robot robot = Robot(&wheels, &light, &sensor, &sound);
+    Robot robot = Robot(&wheels, &light, &sensor, &sound);
 
-        Executer execute = Executer();
-        execute.executeRoutine(robot);
+    while (true) {
+        DEBUG_PRINT((sensor.readValue()));
+        _delay_ms(50);
     }
+
+    Executer execute = Executer();
+    execute.executeRoutine(robot);
+}
