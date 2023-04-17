@@ -24,11 +24,13 @@ uint16_t MagicalWheels::turn(Direction direction) {
     uint32_t stopTime = Clock::getTimestamp() + TURN_DURATION;
 
     while (Clock::getTimestamp() < stopTime) {
+        DEBUG_PRINT(("modifications"));
         // Faire en sorte que si le fetch a une certaine valeur de retour, on skip le while (et on
         // effectue pas le change direction).
         uint16_t hasFindSomething = this->fetch(direction);
-        if (hasFindSomething != 0) {
+        if (hasFindSomething <= ACCEPTABLE_DISTANCE) {
             DEBUG_PRINT(("Fin de la rotation (45) : trouvé."));
+            DEBUG_PRINT((hasFindSomething));
             return hasFindSomething;
         }
     }
@@ -59,7 +61,7 @@ uint16_t MagicalWheels::fetch(Direction direction) {
     */
     uint16_t value = this->robot.getSensor()->readValue();
     // DEBUG_PRINT(value);
-    return (value < ACCEPTABLE_DISTANCE ? value : 0);
+    return value;
 }
 
 void MagicalWheels::changeDirection(Direction direction) {

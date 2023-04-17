@@ -33,13 +33,10 @@ public:
     const uint8_t getSpeed();
     const uint16_t getWaitTurnDuration();
 
-    /*
-        On aura peut être pas besoin de ces elements.
-    */
-    uint16_t getX();
-    uint16_t getY();
-    void setX(uint16_t value);
-    void setY(uint16_t value);
+    uint8_t getX();
+    uint8_t getY();
+    void setX(uint8_t value);
+    void setY(uint8_t value);
 
     /*
         Faire le calcul de déplacement ici.
@@ -49,13 +46,17 @@ public:
     */
     void calculateMove(uint32_t timestamp);
 
+    void incrementMemoryCount();
+    uint8_t getMemoryCount();
+
 private:
     WheelManager* wheelManager;
     LightManager* lightManager;
     Sensor* sensor;
     SoundPlayer* soundPlayer;
-    uint16_t x;
-    uint16_t y;
+    uint8_t x                     = 0;
+    uint8_t y                     = 0;
+    uint8_t memoryCount           = 0;
     const uint8_t speed           = 40;
     const double waitTurnDuration = 1000;
     HeadDirection headDirection   = HeadDirection::NORTH; // Valeur par défaut à changer.

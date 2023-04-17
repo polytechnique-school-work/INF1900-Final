@@ -9,4 +9,5 @@ public:
     void findedBlock(Robot robot, FindedBlock findedBlock);
     void writeCoordonateInMemory(Robot robot, FindedBlock findedBlock);
     void fetchBlocks(Robot robot, HeadDirection startDirection);
+    void resetMemory();
 };
