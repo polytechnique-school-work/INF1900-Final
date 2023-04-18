@@ -4,7 +4,7 @@
 
 void Emetteur::ExecuteRoutine()
 {
-    Memoire24CXXX memory;
+    
 
     LightManager light = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
     light.setLight(Color::GREEN);
@@ -18,7 +18,9 @@ void Emetteur::ExecuteRoutine()
     uint8_t y[8];
     uint8_t iteration = 0;
 
-    {uint8_t buffer;
+    {
+        Memoire24CXXX memory;
+        uint8_t buffer;
     
     for(; iteration < 8; iteration++)
     {
