@@ -16,9 +16,9 @@ void Robot::setX(uint8_t value) { this->x = value; }
 
 void Robot::setY(uint8_t value) { this->y = value; }
 
-HeadDirection Robot::getHeadDirection() { return this->headDirection; }
+uint8_t Robot::getHeadDirection() { return this->headDirection; }
 
-void Robot::setHeadDirection(HeadDirection head) { this->headDirection = head; }
+void Robot::setHeadDirection(uint8_t head) { this->headDirection = head; }
 
 void Robot::incrementMemoryCount() { this->memoryCount++; }
 uint8_t Robot::getMemoryCount() { return memoryCount; };

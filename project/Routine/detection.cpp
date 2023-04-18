@@ -51,8 +51,8 @@ void RoutineDetection::executeRoutine(Robot& robot) {
     RoutineSteps routineSteps = RoutineSteps::START;
     ExternInterrupt::init(InterruptType::RISING_EDGE, Button::FIRST);
     ExternInterrupt::init(InterruptType::FALLING_EDGE, Button::SECOND);
-    HeadDirection headDirection = HeadDirection::NORTH; // Temporairement set, pas la vraie value
-    FetchRoutine fetchRoutine   = FetchRoutine();
+    uint8_t headDirection     = 0; // Temporairement set, pas la vraie value
+    FetchRoutine fetchRoutine = FetchRoutine();
 
     while (true) {
         switch (routineSteps) {
@@ -82,7 +82,7 @@ void RoutineDetection::executeRoutine(Robot& robot) {
             case RoutineSteps::INT_CLICKED:
                 // orienté vers le haut
                 Logger::log(Priority::INFO, "Changement vers le haut de la table");
-                headDirection = HeadDirection::NORTH; // Set la direction choisie.
+                headDirection = 0; // Set la direction choisie.
                 lm.setLight(Color::GREEN);
                 _delay_ms(2000);
                 lm.setLight(Color::OFF);
@@ -93,7 +93,7 @@ void RoutineDetection::executeRoutine(Robot& robot) {
             case RoutineSteps::WHITE_CLICKED:
                 // orienté vers la droite
                 Logger::log(Priority::INFO, "Changement vers la droite de la table");
-                headDirection = HeadDirection::EAST; // Set la direction chsoisie
+                headDirection = 2; // Set la direction chsoisie
                 lm.setLight(Color::RED);
                 _delay_ms(2000);
                 lm.setLight(Color::OFF);

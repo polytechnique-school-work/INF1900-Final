@@ -11,8 +11,9 @@
     Le NORD pointe vers le haut de la table.
 
 */
-
-enum class HeadDirection { NORTH, NORTHEAST, EAST, SOUTH_EAST, SOUTH, SOUTHWEST, WEAST, NORTHWEST };
+//                              0       1         2        3        4        5        6        7
+// enum class HeadDirection { NORTH, NORTHEAST, EAST, SOUTH_EAST, SOUTH, SOUTHWEST, WEAST, NORTHWEST
+// };
 
 class Robot {
 public:
@@ -27,8 +28,8 @@ public:
 
     SoundPlayer* getSoundPlayer();
 
-    HeadDirection getHeadDirection();
-    void setHeadDirection(HeadDirection head);
+    uint8_t getHeadDirection();
+    void setHeadDirection(uint8_t head);
 
     uint8_t getX();
     uint8_t getY();
@@ -43,8 +44,8 @@ private:
     LightManager* lightManager;
     Sensor* sensor;
     SoundPlayer* soundPlayer;
-    uint8_t x                   = 0;
-    uint8_t y                   = 0;
-    uint8_t memoryCount         = 0;
-    HeadDirection headDirection = HeadDirection::NORTH; // Valeur par défaut à changer.
+    uint8_t x             = 0;
+    uint8_t y             = 0;
+    uint8_t memoryCount   = 0;
+    uint8_t headDirection = 0; // Valeur par défaut à changer.
 };

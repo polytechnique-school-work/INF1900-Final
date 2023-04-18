@@ -155,35 +155,35 @@ void FetchRoutine::writeCoordonateInMemory(Robot& robot, FindedBlock findedBlock
     int8_t relatives[2] = {0, 0};
 
     switch (robot.getHeadDirection()) {
-        case HeadDirection::NORTH:
+        case 0:
             relatives[0] = 0;
             relatives[1] = 1;
             break;
-        case HeadDirection::NORTHEAST:
+        case 1:
             relatives[0] = 1;
             relatives[1] = 1;
             break;
-        case HeadDirection::EAST:
+        case 2:
             relatives[0] = 1;
             relatives[1] = 0;
             break;
-        case HeadDirection::SOUTH_EAST:
+        case 3:
             relatives[0] = 1;
             relatives[1] = -1;
             break;
-        case HeadDirection::SOUTH:
+        case 4:
             relatives[0] = 0;
             relatives[1] = -1;
             break;
-        case HeadDirection::SOUTHWEST:
+        case 5:
             relatives[0] = -1;
             relatives[1] = -1;
             break;
-        case HeadDirection::WEAST:
+        case 6:
             relatives[0] = -1;
             relatives[1] = 0;
             break;
-        case HeadDirection::NORTHWEST:
+        case 7:
             relatives[0] = -1;
             relatives[1] = 1;
             break;
@@ -236,13 +236,13 @@ void FetchRoutine::resetMemory() {
 /*
  *   Exécute la routine un maximum de 8 fois.
  */
-void FetchRoutine::fetchBlocks(Robot& robot, HeadDirection startDirection) {
+void FetchRoutine::fetchBlocks(Robot& robot, uint8_t startDirection) {
 
     resetMemory();
 
     for (uint8_t i = 0; i < 8; i++) {
         Logger::log(Priority::INFO, "Exécution de recherche");
-        if (i != 0) startDirection = HeadDirection::NORTH;
+        if (i != 0) startDirection = 0;
         fetchBlock(robot, i);
     }
 }

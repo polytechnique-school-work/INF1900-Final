@@ -8,7 +8,7 @@ public:
     FindedBlock fetchBlock(Robot& robot, uint8_t blockCount);
     void findedBlock(Robot& robot, FindedBlock findedBlock);
     void writeCoordonateInMemory(Robot& robot, FindedBlock findedBlock);
-    void fetchBlocks(Robot& robot, HeadDirection startDirection);
+    void fetchBlocks(Robot& robot, uint8_t startDirection);
     void recalibrateDirection(Robot& robot, uint16_t distance, Direction& direction);
     void resetMemory();
 };

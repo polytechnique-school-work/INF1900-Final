@@ -15,6 +15,8 @@ private:
 public:
     MagicalWheels(Robot& r) : robot(r) {}
 
+    uint8_t changeHeadDirection(uint8_t actualHeadDirection, Direction direction);
+
     /*
         En gros, cette classe doit permettre de calculer le temps qui s'est passé
         entre le début du déplacement des roues et la fin. Il doit aussi permettre

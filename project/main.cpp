@@ -61,7 +61,7 @@ int main() {
     // fetchRoutine.recalibrateDirection(robot, 223, direction);
 
     // MagicalWheels magicWheels = MagicalWheels(robot);
-    // DEBUG_PRINT((magicWheels.turn(direction)));
+    // DEBUG_PRINT((magicWheels.changeHeadDirection(0, Direction::LEFT)));
 
     // magicWheels.stopMoves();
 }

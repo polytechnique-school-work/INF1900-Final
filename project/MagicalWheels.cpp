@@ -70,6 +70,24 @@ uint16_t MagicalWheels::fetch(Direction direction) {
     return value;
 }
 
+uint8_t MagicalWheels::changeHeadDirection(uint8_t actualHeadDirection, Direction direction) {
+
+    uint8_t newHeadDirection;
+    if (actualHeadDirection == 7 && direction == Direction::RIGHT) {
+        newHeadDirection = 0;
+    } else if (actualHeadDirection == 0 && direction == Direction::LEFT) {
+        newHeadDirection = 7;
+    } else {
+        if (direction == Direction::RIGHT) {
+            newHeadDirection = ++actualHeadDirection;
+        } else {
+            newHeadDirection = --actualHeadDirection;
+        }
+    }
+
+    return newHeadDirection;
+}
+
 void MagicalWheels::changeDirection(Direction direction) {
     if (direction != Direction::LEFT && direction != Direction::RIGHT) {
         DEBUG_PRINT(("Impossible de faire tourner le robot avec cette direction."));
@@ -83,6 +101,12 @@ void MagicalWheels::changeDirection(Direction direction) {
     //                                      decrementHeadDirection(this->robot.getHeadDirection());
 
     // this->robot.setHeadDirection(newHeadDirection);
+
+    uint8_t actualHeadDirection = this->robot.getHeadDirection();
+    uint8_t newHeadDirection;
+
+    this->robot.setHeadDirection(newHeadDirection);
+
     DEBUG_PRINT(("Changement de la direction"));
 }
 
