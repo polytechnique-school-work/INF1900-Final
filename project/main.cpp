@@ -21,6 +21,11 @@ static const uint16_t STARTUP_DELAY = 2000;
 int main() {
     _delay_ms(5000);
 
+    Memoire24CXXX memory;
+
+    uint8_t coordonnees[16] = {1, 0, 2, 1, 3, 1, 2, 2, 3, 2, 1, 2, 255, 255, 255, 255};
+    memory.ecriture(0, coordonnees, 16);
+
     Emetteur emetteur = Emetteur();
 
     emetteur.ExecuteRoutine();   
