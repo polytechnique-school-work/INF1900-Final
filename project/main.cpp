@@ -8,25 +8,25 @@
  * */
 #define F_CPU 8000000UL
 
-#include "Translator/Translator.hpp"
+#include "Clock/Clock.hpp"
+#include "Transmission/transmission.hpp"
 #include <Light/LightManager.hpp>
 #include <Logger/Logger.hpp>
 #include <Memory/memoire_24.h>
-#include <Wheel/WheelManager.hpp>
 #include <util/delay.h>
 
-LightManager light                  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
-WheelManager wheels                 = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+
 static const uint16_t STARTUP_DELAY = 2000;
 
-void init() {
-    _delay_ms(STARTUP_DELAY);
-    Logger::log(Priority::INFO, "Le programme est lancé.");
-}
-
 int main() {
-    init();
-    Translator translator = Translator();
-    translator.translate(wheels, light);
-    return 0;
+    _delay_ms(5000);
+
+    {Memoire24CXXX memory;
+
+    uint8_t coordonnees[16] = {1, 0, 2, 1, 3, 1, 2, 2, 3, 2, 1, 2, 255, 255, 255, 255};
+    memory.ecriture(0, coordonnees, 16);}
+
+    Emetteur emetteur = Emetteur();
+
+    emetteur.ExecuteRoutine();   
 }

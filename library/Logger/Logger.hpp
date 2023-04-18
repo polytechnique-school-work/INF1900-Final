@@ -16,12 +16,13 @@
 enum class Priority { INFO, ERROR };
 class Logger {
 private:
-    static void transmitUSART(uint8_t data);
-    static void transmitMessage(const char* message);
+   
     static void format(Priority priority, const char* message, bool skipLine = true);
     static bool isInit;
 
 public:
+    static void transmitUSART(uint8_t data);
+    static void transmitMessage(const char* message);
     static void init();
     static void log(Priority priority, const char* message, bool skipLine = true);
     static void log(Priority priority, const uint16_t number, bool skipLine = true);
