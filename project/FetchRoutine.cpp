@@ -1,11 +1,8 @@
 #include "FetchRoutine.hpp"
+#include "Constantes.hpp"
 #include <ExternInterrupt/ExternInterrupt.hpp>
 #include <Memory/memoire_24.h>
 // On obtiens 360 degrés en faisant 8 tours de 45 degrés.
-static const uint8_t MAX_TURN                   = 8;
-static const uint16_t MINIMAL_DISTANCE_ACCEPTED = 150;
-static const uint16_t FIRST_DISTANCE            = 220;
-static const uint16_t SECOND_DISTANCE           = 250;
 
 /*
     On souhaite que cette routine permette de trouver un bloc (les blocs sont les poteaux).
@@ -19,19 +16,21 @@ FindedBlock FetchRoutine::fetchBlock(Robot robot, uint8_t blockCount) {
 
     MagicalWheels magicWheels = MagicalWheels(robot);
 
+    FindedBlock blockFinded = FindedBlock::UNDEFINED;
+
     for (uint8_t i = 0; i < MAX_TURN; i++) {
         // Au lieu de renvoyer un boolean, je vais devoir renvoyer un Enum si NON_TROUVÉ, PREMIER ou
         // DEUXIÈME à moins qu'on le récupère par après.
 
         // Boucle jusqu'à temps qu'il trouve quelque chose.
-        uint16_t hasFind = magicWheels.turn(Direction::RIGHT);
-        FindedBlock findedBlock;
-        if (hasFind != 0) {
+        uint16_t distanceFound = magicWheels.turn(Direction::RIGHT);
+        if (distanceFound != 0 && distanceFound != 255) {
 
             magicWheels.stopMoves();
 
             magicWheels.moveForward();
-            uint16_t actualDistance = hasFind;
+
+            uint16_t actualDistance = distanceFound;
 
             Direction direction = Direction::RIGHT;
 
@@ -41,52 +40,49 @@ FindedBlock FetchRoutine::fetchBlock(Robot robot, uint8_t blockCount) {
                 // Actualiser la distance actuelle
                 actualDistance = robot.getSensor()->readValue();
 
-                /*
-                 *   Retrouver la valeur si elle est perdue
-                 */
-                // Si la distance est rendu plus grande que celle anciennement trouvée.
-                if (actualDistance > hasFind) {
+                // Recalibrer la direction, si jamais il a trop tourné.
+                recalibrateDirection(robot, distanceFound, direction);
 
-                    // Faire changer la direction pour retrouver le hasFind.
-                    direction =
-                        (direction == Direction::RIGHT ? Direction::LEFT : Direction::RIGHT);
+                magicWheels.moveForward();
 
-                    robot.getWheelManager()->setDirection(direction);
-                    robot.getWheelManager()->setSpeed(robot.getSpeed());
-                    robot.getWheelManager()->update();
-
-                    while (actualDistance > hasFind) {
-
-                        // Actualiser la valeur pour pouvoir effectuer la comparaison.
-                        actualDistance = robot.getSensor()->readValue();
-                    }
-                }
-
-                // Continuer à avancer jusqu'à quitter le while.
-                robot.getWheelManager()->setDirection(Direction::FORWARD);
-                robot.getWheelManager()->setSpeed(robot.getSpeed());
-                robot.getWheelManager()->update();
+                DEBUG_PRINT((actualDistance));
             }
 
             Logger::log(Priority::INFO, "Bloc trouvé à une distance de: ", actualDistance);
 
             magicWheels.stopMoves();
-            _delay_ms(1000);
 
-            if (hasFind < FIRST_DISTANCE)
-                findedBlock = FindedBlock::FIRST;
-            else if (hasFind < SECOND_DISTANCE)
-                findedBlock = FindedBlock::SECOND;
+            if (distanceFound < FIRST_DISTANCE)
+                blockFinded = FindedBlock::FIRST;
+            else if (distanceFound < SECOND_DISTANCE)
+                blockFinded = FindedBlock::SECOND;
+        }
+        this->findedBlock(robot, blockFinded);
+    }
 
-            // TODO : Trouver un moyen d'envoyer les coordonnées du bloc trouvé.
-        } else {
-            DEBUG_PRINT("UNDEFINED");
-            findedBlock = FindedBlock::UNDEFINED;
+    return blockFinded;
+}
+
+void FetchRoutine::recalibrateDirection(Robot robot, uint16_t distance, Direction& direction) {
+    uint8_t actualDistance = robot.getSensor()->readValue();
+
+    if (actualDistance >= (distance + 10)) {
+        // Inverser la direction
+        direction = (direction == Direction::RIGHT ? Direction::LEFT : Direction::RIGHT);
+        robot.getWheelManager()->setDirection(direction);
+        robot.getWheelManager()->setSpeed(ROBOT_SPEED - 10);
+        robot.getWheelManager()->update();
+
+        // Le + 10 c'est une valeur un peu aléatoire pour permettre d'accepter une valeur légèrement
+        // plus grande si jamais y'a eu un léger déplacement qui l'a décallé du poteau.
+        while (actualDistance >= (distance + 10)) {
+            // Actualiser la valeur pour pouvoir effectuer la comparaison.
+            actualDistance = robot.getSensor()->readValue();
         }
 
-        this->findedBlock(robot, findedBlock);
-
-        return findedBlock;
+        robot.getWheelManager()->setSpeed(0);
+        robot.getWheelManager()->update();
+        _delay_ms(WAITING_DURATION_BETWEEN_MOVES);
     }
 }
 
@@ -99,7 +95,17 @@ void FetchRoutine::findedBlock(Robot robot, FindedBlock findedBlock) {
         - Lancement de la procédure de fin.
     */
     if (findedBlock == FindedBlock::UNDEFINED) {
-        return; // Faire quelque chose de spécial si rien de trouvé.
+
+        // son grave 2 secondes
+        // Clignoter led en rouge 2 Hz
+
+        robot.getSoundPlayer()->playSound(0);
+        _delay_ms(2000);
+        robot.getSoundPlayer()->reset();
+
+        while (true) {
+
+        } // Faire quelque chose de spécial si rien de trouvé.
     }
 
     this->writeCoordonateInMemory(robot, findedBlock);
@@ -210,18 +216,14 @@ void FetchRoutine::resetMemory() {
 }
 
 /*
- *   Exécute la routine de recherche de bloc le nombre de fois nécessaire.
+ *   Exécute la routine un maximum de 8 fois.
  */
 void FetchRoutine::fetchBlocks(Robot robot, HeadDirection startDirection) {
 
     resetMemory();
 
-    // 8 correspond au nombre maximum de blocs à trouver.
     for (uint8_t i = 0; i < 8; i++) {
-        // set la direction en fonction de soit c'est la première étape, soit c'est au north.
-
         Logger::log(Priority::INFO, "Exécution de recherche");
-
         if (i != 0) startDirection = HeadDirection::NORTH;
         fetchBlock(robot, i);
     }

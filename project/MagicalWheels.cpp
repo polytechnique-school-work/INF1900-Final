@@ -1,8 +1,6 @@
 #include "MagicalWheels.hpp"
+#include "Constantes.hpp"
 #include "utils/Utils.hpp"
-
-static const uint32_t TURN_DURATION       = 137;
-static const uint16_t ACCEPTABLE_DISTANCE = 250;
 
 uint16_t MagicalWheels::turn(Direction direction) {
 
@@ -18,17 +16,16 @@ uint16_t MagicalWheels::turn(Direction direction) {
 
     WheelManager* wheelManager = this->robot.getWheelManager();
     wheelManager->setDirection(direction);
-    wheelManager->setSpeed(this->robot.getSpeed());
+    wheelManager->setSpeed(ROBOT_SPEED);
     wheelManager->update();
 
     uint32_t stopTime = Clock::getTimestamp() + TURN_DURATION;
 
     while (Clock::getTimestamp() < stopTime) {
-        DEBUG_PRINT(("modifications"));
         // Faire en sorte que si le fetch a une certaine valeur de retour, on skip le while (et on
         // effectue pas le change direction).
         uint16_t hasFindSomething = this->fetch(direction);
-        if (hasFindSomething <= ACCEPTABLE_DISTANCE) {
+        if (hasFindSomething <= SECOND_DISTANCE) {
             DEBUG_PRINT(("Fin de la rotation (45) : trouvé."));
             DEBUG_PRINT((hasFindSomething));
             return hasFindSomething;
@@ -36,6 +33,8 @@ uint16_t MagicalWheels::turn(Direction direction) {
     }
 
     this->stopMoves();
+
+    _delay_ms(1000);
 
     changeDirection(direction);
 
@@ -46,7 +45,7 @@ uint16_t MagicalWheels::turn(Direction direction) {
 void MagicalWheels::stopMoves() {
     this->robot.getWheelManager()->setSpeed(0);
     this->robot.getWheelManager()->update();
-    Utils::wait(this->robot.getWaitTurnDuration());
+    _delay_ms(WAITING_DURATION_BETWEEN_MOVES);
 }
 
 uint16_t MagicalWheels::fetch(Direction direction) {
@@ -79,8 +78,7 @@ void MagicalWheels::changeDirection(Direction direction) {
 }
 
 void MagicalWheels::moveForward() {
-    this->stopMoves();
     this->robot.getWheelManager()->setDirection(Direction::FORWARD);
-    this->robot.getWheelManager()->setSpeed(this->robot.getSpeed());
+    this->robot.getWheelManager()->setSpeed(ROBOT_SPEED);
     this->robot.getWheelManager()->update();
 }

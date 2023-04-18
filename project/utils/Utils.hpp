@@ -5,7 +5,7 @@
 namespace Utils {
     void wait(uint16_t value) {
         for (uint16_t i = 0; i < value; i++) {
-            _delay_ms(1);
+            _delay_ms(100);
         }
     }
 }

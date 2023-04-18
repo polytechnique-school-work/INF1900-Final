@@ -21,9 +21,8 @@
 #include <Wheel/WheelManager.hpp>
 #include <util/delay.h>
 
+#include "Constantes.hpp"
 #include "FetchRoutine.hpp"
-
-static const uint16_t STARTUP_DELAY = 2000;
 
 void init() {
     _delay_ms(STARTUP_DELAY);
@@ -42,6 +41,7 @@ int main() {
     SoundPlayer sound   = SoundPlayer();
     Sensor sensor       = Sensor();
     sound.init();
+    Clock::init();
 
     Robot robot = Robot(&wheels, &light, &sensor, &sound);
 
@@ -50,6 +50,18 @@ int main() {
     //     _delay_ms(50);
     // }
 
-    Executer execute = Executer();
-    execute.executeRoutine(robot);
+    // Executer execute = Executer();
+    // execute.executeRoutine(robot);
+
+    FetchRoutine fetchRoutine = FetchRoutine();
+    Direction direction       = Direction::RIGHT;
+
+    fetchRoutine.fetchBlock(robot, 1);
+
+    // fetchRoutine.recalibrateDirection(robot, 223, direction);
+
+    // MagicalWheels magicWheels = MagicalWheels(robot);
+    // DEBUG_PRINT((magicWheels.turn(direction)));
+
+    // magicWheels.stopMoves();
 }
