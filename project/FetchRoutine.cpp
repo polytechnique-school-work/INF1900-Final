@@ -12,7 +12,7 @@
                 - Avance jusqu'à atteindre le bloc et s'arrête, lance la prochaine procédure.
 
 */
-FindedBlock FetchRoutine::fetchBlock(Robot robot, uint8_t blockCount) {
+FindedBlock FetchRoutine::fetchBlock(Robot& robot, uint8_t blockCount) {
 
     MagicalWheels magicWheels = MagicalWheels(robot);
 
@@ -52,18 +52,21 @@ FindedBlock FetchRoutine::fetchBlock(Robot robot, uint8_t blockCount) {
 
             magicWheels.stopMoves();
 
-            if (distanceFound < FIRST_DISTANCE)
+            if (distanceFound < FIRST_DISTANCE) {
                 blockFinded = FindedBlock::FIRST;
-            else if (distanceFound < SECOND_DISTANCE)
+                break;
+            } else if (distanceFound < SECOND_DISTANCE) {
                 blockFinded = FindedBlock::SECOND;
+                break;
+            }
         }
-        this->findedBlock(robot, blockFinded);
     }
 
+    this->findedBlock(robot, blockFinded);
     return blockFinded;
 }
 
-void FetchRoutine::recalibrateDirection(Robot robot, uint16_t distance, Direction& direction) {
+void FetchRoutine::recalibrateDirection(Robot& robot, uint16_t distance, Direction& direction) {
     uint8_t actualDistance = robot.getSensor()->readValue();
 
     if (actualDistance >= (distance + 10)) {
@@ -73,8 +76,9 @@ void FetchRoutine::recalibrateDirection(Robot robot, uint16_t distance, Directio
         robot.getWheelManager()->setSpeed(ROBOT_SPEED - 10);
         robot.getWheelManager()->update();
 
-        // Le + 10 c'est une valeur un peu aléatoire pour permettre d'accepter une valeur légèrement
-        // plus grande si jamais y'a eu un léger déplacement qui l'a décallé du poteau.
+        // Le + 10 c'est une valeur un peu aléatoire pour permettre d'accepter une valeur
+        // légèrement plus grande si jamais y'a eu un léger déplacement qui l'a décallé du
+        // poteau.
         while (actualDistance >= (distance + 10)) {
             // Actualiser la valeur pour pouvoir effectuer la comparaison.
             actualDistance = robot.getSensor()->readValue();
@@ -89,7 +93,7 @@ void FetchRoutine::recalibrateDirection(Robot robot, uint16_t distance, Directio
 /*
     Fait toute l'opération pour dire que le block est trouvé.
 */
-void FetchRoutine::findedBlock(Robot robot, FindedBlock findedBlock) {
+void FetchRoutine::findedBlock(Robot& robot, FindedBlock findedBlock) {
     /*
         - Écriture en mémoire de la coordonnée.
         - Lancement de la procédure de fin.
@@ -99,13 +103,18 @@ void FetchRoutine::findedBlock(Robot robot, FindedBlock findedBlock) {
         // son grave 2 secondes
         // Clignoter led en rouge 2 Hz
 
-        robot.getSoundPlayer()->playSound(0);
+        DEBUG_PRINT(("Impossible de trouver un block, arrêt du programme."));
+
+        robot.getSoundPlayer()->playSound(45);
         _delay_ms(2000);
         robot.getSoundPlayer()->reset();
 
         while (true) {
-
-        } // Faire quelque chose de spécial si rien de trouvé.
+            robot.getLightManager()->setLight(Color::RED);
+            _delay_ms(250);
+            robot.getLightManager()->setLight(Color::OFF);
+            _delay_ms(250);
+        }
     }
 
     this->writeCoordonateInMemory(robot, findedBlock);
@@ -135,7 +144,7 @@ void FetchRoutine::findedBlock(Robot robot, FindedBlock findedBlock) {
     }
 }
 
-void FetchRoutine::writeCoordonateInMemory(Robot robot, FindedBlock findedBlock) {
+void FetchRoutine::writeCoordonateInMemory(Robot& robot, FindedBlock findedBlock) {
 
     /*
      *   Changer la position du robot.
@@ -180,6 +189,7 @@ void FetchRoutine::writeCoordonateInMemory(Robot robot, FindedBlock findedBlock)
             break;
 
         default:
+            DEBUG_PRINT("DEFAULT CASE");
             break;
     }
 
@@ -187,6 +197,14 @@ void FetchRoutine::writeCoordonateInMemory(Robot robot, FindedBlock findedBlock)
 
     relatives[0] *= multValue;
     relatives[1] *= multValue;
+
+    DEBUG_PRINT(("Coordonnées du robot avant"));
+    DEBUG_PRINT((robot.getX()));
+    DEBUG_PRINT((robot.getY()));
+
+    DEBUG_PRINT(("Coordonnées relatives"));
+    DEBUG_PRINT((relatives[0]));
+    DEBUG_PRINT((relatives[1]));
 
     // Changement des coordonnées du robots.
     robot.setX(robot.getX() + relatives[0]);
@@ -198,7 +216,7 @@ void FetchRoutine::writeCoordonateInMemory(Robot robot, FindedBlock findedBlock)
     memoire.ecriture(robot.getMemoryCount(), robot.getX());
     memoire.ecriture(robot.getMemoryCount() + 1, robot.getY());
 
-    DEBUG_PRINT(("Coordonnées du robot"));
+    DEBUG_PRINT(("Coordonnées du robot après"));
     DEBUG_PRINT((robot.getX()));
     DEBUG_PRINT((robot.getY()));
 
@@ -218,7 +236,7 @@ void FetchRoutine::resetMemory() {
 /*
  *   Exécute la routine un maximum de 8 fois.
  */
-void FetchRoutine::fetchBlocks(Robot robot, HeadDirection startDirection) {
+void FetchRoutine::fetchBlocks(Robot& robot, HeadDirection startDirection) {
 
     resetMemory();
 

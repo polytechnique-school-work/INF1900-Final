@@ -2,6 +2,16 @@
 #include "Constantes.hpp"
 #include "utils/Utils.hpp"
 
+// HeadDirection incrementHeadDirection(HeadDirection newHeadDirection) {
+//     newHeadDirection = static_cast<HeadDirection>((static_cast<int>(newHeadDirection) + 1) % 8);
+//     return newHeadDirection;
+// }
+
+// HeadDirection decrementHeadDirection(HeadDirection newHeadDirection) {
+//     newHeadDirection = static_cast<HeadDirection>((static_cast<int>(newHeadDirection) + 7) % 8);
+//     return newHeadDirection;
+// }
+
 uint16_t MagicalWheels::turn(Direction direction) {
 
     DEBUG_PRINT(("Début du tour"));
@@ -11,6 +21,7 @@ uint16_t MagicalWheels::turn(Direction direction) {
         return 0;
     }
 
+    changeDirection(direction);
     // On met un arrêt avec un delay pour éviter les problèmes d'inerties.
     stopMoves();
 
@@ -33,10 +44,6 @@ uint16_t MagicalWheels::turn(Direction direction) {
     }
 
     this->stopMoves();
-
-    _delay_ms(1000);
-
-    changeDirection(direction);
 
     DEBUG_PRINT(("Fin de la rotation (45) : non trouvé."));
     return 0;
@@ -70,10 +77,12 @@ void MagicalWheels::changeDirection(Direction direction) {
     }
 
     // Incrémente ou décrémente notre enum
-    HeadDirection newHeadDirection =
-        static_cast<HeadDirection>(static_cast<uint8_t>(this->robot.getHeadDirection()) +
-                                   (direction == Direction::RIGHT ? -1 : 1));
-    this->robot.setHeadDirection(newHeadDirection);
+    // HeadDirection newHeadDirection = direction == Direction::LEFT
+    //                                      ? incrementHeadDirection(this->robot.getHeadDirection())
+    //                                      :
+    //                                      decrementHeadDirection(this->robot.getHeadDirection());
+
+    // this->robot.setHeadDirection(newHeadDirection);
     DEBUG_PRINT(("Changement de la direction"));
 }
 

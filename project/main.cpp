@@ -50,13 +50,13 @@ int main() {
     //     _delay_ms(50);
     // }
 
-    // Executer execute = Executer();
-    // execute.executeRoutine(robot);
+    Executer execute = Executer();
+    execute.executeRoutine(robot);
 
-    FetchRoutine fetchRoutine = FetchRoutine();
-    Direction direction       = Direction::RIGHT;
+    // FetchRoutine fetchRoutine = FetchRoutine();
+    // Direction direction       = Direction::RIGHT;
 
-    fetchRoutine.fetchBlock(robot, 1);
+    // fetchRoutine.fetchBlock(robot, 1);
 
     // fetchRoutine.recalibrateDirection(robot, 223, direction);
 

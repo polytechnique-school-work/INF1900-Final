@@ -6,14 +6,14 @@ class MagicalWheels {
 private:
     // Timestamp qui sera changé à chaque déplacement. Et set à 0 si pas en train de se déplacer.
     uint32_t moveTimestamp;
-    Robot robot;
+    Robot& robot;
     /*
         Fonction de vérification appelée en boucle lorsqu'il tourne.
     */
     uint16_t fetch(Direction direction);
 
 public:
-    MagicalWheels(Robot r) : robot(r) {}
+    MagicalWheels(Robot& r) : robot(r) {}
 
     /*
         En gros, cette classe doit permettre de calculer le temps qui s'est passé
