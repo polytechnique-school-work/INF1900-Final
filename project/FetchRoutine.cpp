@@ -156,6 +156,8 @@ void FetchRoutine::writeCoordonateInMemory(Robot& robot, FindedBlock findedBlock
 
     int8_t relatives[2] = {0, 0};
 
+    // Logger::log(Priority::ERROR, robot.getHeadDirection());
+
     switch (robot.getHeadDirection()) {
         case 0:
             relatives[0] = 0;
