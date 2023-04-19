@@ -37,7 +37,7 @@ int main() {
 
      Memoire24CXXX memory = Memoire24CXXX();
 
-    uint8_t coordonnees[16] = {2, 2, 3, 3, 5, 3, 7, 1, 6, 0, 2, 0, 255, 255, 255, 255};
+    uint8_t coordonnees[16] = {2, 2, 7, 3, 5, 3, 7, 1, 6, 0, 2, 0, 4, 1, 5, 2};
     memory.ecriture(0, coordonnees, 16);
 
     _delay_ms(1000);
