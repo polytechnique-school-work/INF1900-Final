@@ -146,7 +146,7 @@ void SVG::trouverPointsVisites() {
 
 void SVG::sortArray(Cosinus cosinus[], uint8_t& nCosinus) {
     for (uint8_t i = 1; i < nCosinus - 1; i++) {
-        for (uint8_t j = 0; j < nCosinus - 1; j++) {
+        for (uint8_t j = 1; j < nCosinus - 1; j++) {
             if (cosinus[j + 1].getCos() < cosinus[j].getCos()) {
                 Cosinus temp   = cosinus[j + 1];
                 cosinus[j + 1] = cosinus[j];
@@ -156,7 +156,7 @@ void SVG::sortArray(Cosinus cosinus[], uint8_t& nCosinus) {
     }
 
     for (uint8_t i = 1; i < nCosinus - 1; i++) {
-        for (uint8_t j = 0; j < nCosinus - 1; j++) {
+        for (uint8_t j = 1; j < nCosinus - 1; j++) {
             if (cosinus[j + 1].getCos() == cosinus[j].getCos()) {
                 float longueur1 = Vector(points[cosinus[j].getIndex() + 1].getX(),
                                          450 - points[cosinus[j].getIndex() + 1].getY())
@@ -187,25 +187,21 @@ void SVG::algorithmeGraham() {
     }
 
     Cosinus cosinus[8];
-    uint8_t nCosinus = 0;
+    uint8_t nCosinus = 1;
 
     Vector vecteurs[8];
-    uint8_t nVecteurs = 0;
+    uint8_t nVecteurs = 1;
 
     for (uint8_t i = 0; i < nVisites; i++) {
         Point point = pointsVisites[i];
         if (point == pointMinimum) {
-            cosinus[nCosinus] = Cosinus(point.getIndex(), 0.0);
-            nCosinus++;
-            vecteurs[nVecteurs] = Vector();
-            nVecteurs++;
+            cosinus[0] = Cosinus(point.getIndex(), 0.0);
+            vecteurs[0] = Vector();
             continue;
         }
         Vector vecteur(point.getX() - pointMinimum.getX(), point.getY() - pointMinimum.getY());
-        vecteurs[nVecteurs] = vecteur;
-        nVecteurs++;
-        cosinus[nCosinus] = Cosinus(point.getIndex(), vecteur.getACos());
-        nCosinus++;
+        vecteurs[nVecteurs++] = vecteur;
+        cosinus[nCosinus++] = Cosinus(point.getIndex(), vecteur.getACos());
     }
 
     sortArray(cosinus, nCosinus);
