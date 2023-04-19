@@ -2,16 +2,6 @@
 #include "Constantes.hpp"
 #include "utils/Utils.hpp"
 
-// HeadDirection incrementHeadDirection(HeadDirection newHeadDirection) {
-//     newHeadDirection = static_cast<HeadDirection>((static_cast<int>(newHeadDirection) + 1) % 8);
-//     return newHeadDirection;
-// }
-
-// HeadDirection decrementHeadDirection(HeadDirection newHeadDirection) {
-//     newHeadDirection = static_cast<HeadDirection>((static_cast<int>(newHeadDirection) + 7) % 8);
-//     return newHeadDirection;
-// }
-
 uint16_t MagicalWheels::turn(Direction direction) {
 
     DEBUG_PRINT(("Début du tour"));
@@ -25,14 +15,29 @@ uint16_t MagicalWheels::turn(Direction direction) {
     // On met un arrêt avec un delay pour éviter les problèmes d'inerties.
     stopMoves();
 
-    WheelManager* wheelManager = this->robot.getWheelManager();
-    wheelManager->setDirection(direction);
-    wheelManager->setSpeed(ROBOT_SPEED);
-    wheelManager->update();
-
     uint32_t stopTime = Clock::getTimestamp() + TURN_DURATION;
 
+    // uint8_t counter = 0;
+
     while (Clock::getTimestamp() < stopTime) {
+
+        // WheelManager* wheelManager = this->robot.getWheelManager();
+        // uint32_t moveDuration      = Clock::getTimestamp() + START_DURATION;
+        // wheelManager->setDirection(direction);
+        // wheelManager->setSpeed(80);
+        // wheelManager->update();
+        // while (Clock::getTimestamp() < moveDuration) {
+        //     Logger::log(Priority::INFO, "Start loop");
+        // }
+
+        // uint32_t stopDuration = Clock::getTimestamp() + STOP_DURATION;
+        // wheelManager->setDirection(direction);
+        // wheelManager->setSpeed(0);
+        // wheelManager->update();
+        // while (Clock::getTimestamp() < stopDuration) {
+        //     Logger::log(Priority::INFO, "Stop loop");
+        // }
+
         // Faire en sorte que si le fetch a une certaine valeur de retour, on skip le while (et on
         // effectue pas le change direction).
         uint16_t hasFindSomething = this->fetch(direction);
@@ -41,6 +46,47 @@ uint16_t MagicalWheels::turn(Direction direction) {
             DEBUG_PRINT((hasFindSomething));
             return hasFindSomething;
         }
+
+        wheelManager->setDirection(direction);
+        wheelManager->setSpeed(0);
+        wheelManager->update();
+
+        /*
+         *   Vérification si on voit un poteau ou pas.
+         */
+        // Vers la même direction
+        uint32_t duration = Clock::getTimestamp() + CHECK_BLOCK_DURATION;
+        wheelManager->setDirection(direction);
+        wheelManager->setSpeed(ROBOT_SPEED);
+        wheelManager->update();
+        while (Clock::getTimestamp() < duration) {
+            if (hasFindSomething <= SECOND_DISTANCE) {
+                DEBUG_PRINT(("Fin de la rotation (45) : trouvé."));
+                DEBUG_PRINT((hasFindSomething));
+                return hasFindSomething;
+            }
+        }
+
+        // Vers la direction inverse
+        Direction directionInverse =
+            direction == Direction::RIGHT ? Direction::RIGHT : Direction::LEFT;
+        duration = Clock::getTimestamp() + CHECK_BLOCK_DURATION;
+        wheelManager->setDirection(directionInverse);
+        wheelManager->setSpeed(ROBOT_SPEED);
+        wheelManager->update();
+        while (Clock::getTimestamp() < duration) {
+            if (hasFindSomething <= SECOND_DISTANCE) {
+                DEBUG_PRINT(("Fin de la rotation (45) : trouvé."));
+                DEBUG_PRINT((hasFindSomething));
+                // counter++;
+                return hasFindSomething;
+            }
+        }
+
+        return 0;
+        // Retour
+
+        // counter++;
     }
 
     this->stopMoves();

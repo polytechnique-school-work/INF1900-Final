@@ -33,8 +33,7 @@ void init() {
 
 int main() {
 
-    _delay_ms(5000);
-
+    //_delay_ms(5000);
     // Emetteur emetteur = Emetteur();
 
     // emetteur.ExecuteRoutine();
@@ -51,13 +50,13 @@ int main() {
 
     Robot robot = Robot(&wheels, &light, &sensor, &sound);
 
-    Memoire24CXXX memory = Memoire24CXXX();
+    // Memoire24CXXX memory = Memoire24CXXX();
 
-    uint8_t coordonnees[16] = {2, 2, 3, 3, 5, 3, 7, 1, 6, 0, 2, 0, 255, 255, 255, 255};
-    memory.ecriture(0, coordonnees, 16);
+    // uint8_t coordonnees[16] = {2, 2, 3, 3, 5, 3, 7, 1, 6, 0, 2, 0, 255, 255, 255, 255};
+    // memory.ecriture(0, coordonnees, 16);
 
     // while (true) {
-    //     DEBUG_PRINT((sensor.readValue()));
+    //     Logger::log(Priority::INFO, sensor.readValue());
     //     _delay_ms(50);
     // }
 
