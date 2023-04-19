@@ -12,7 +12,7 @@
                 - Avance jusqu'à atteindre le bloc et s'arrête, lance la prochaine procédure.
 
 */
-FindedBlock FetchRoutine::fetchBlock(Robot& robot, uint8_t blockCount) {
+FindedBlock FetchRoutine::fetchBlock(Robot& robot, Direction direction) {
 
     MagicalWheels magicWheels = MagicalWheels(robot);
 
@@ -23,7 +23,9 @@ FindedBlock FetchRoutine::fetchBlock(Robot& robot, uint8_t blockCount) {
         // DEUXIÈME à moins qu'on le récupère par après.
 
         // Boucle jusqu'à temps qu'il trouve quelque chose.
-        uint16_t distanceFound = magicWheels.turn(Direction::RIGHT);
+
+        uint16_t distanceFound = magicWheels.turn(direction);
+
         if (distanceFound != 0 && distanceFound != 255) {
 
             magicWheels.stopMoves();
@@ -228,21 +230,21 @@ void FetchRoutine::writeCoordonateInMemory(Robot& robot, FindedBlock findedBlock
 void FetchRoutine::resetMemory() {
     Memoire24CXXX memory = Memoire24CXXX();
 
-    for (uint8_t i = 0; i < 16; i++) {
-        memory.ecriture(i, 255);
-    }
+    uint8_t coordonnees[16] = {1, 0, 2, 1, 3, 1, 2, 2, 3, 2, 1, 2, 255, 255, 255, 255};
+    memory.ecriture(0, coordonnees, 16);
 }
 
 /*
  *   Exécute la routine un maximum de 8 fois.
  */
-void FetchRoutine::fetchBlocks(Robot& robot, uint8_t startDirection) {
+void FetchRoutine::fetchBlocks(Robot& robot, Direction startDirection) {
 
     resetMemory();
 
     for (uint8_t i = 0; i < 8; i++) {
         Logger::log(Priority::INFO, "Exécution de recherche");
-        if (i != 0) startDirection = 0;
-        fetchBlock(robot, i);
+
+        Direction direction = i == 0 ? startDirection : Direction::RIGHT;
+        fetchBlock(robot, direction);
     }
 }

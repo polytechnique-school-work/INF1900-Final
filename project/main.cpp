@@ -10,9 +10,9 @@
 
 #define F_CPU 8000000UL
 #include "Clock/Clock.hpp"
-#include "Transmission/transmission.hpp"
 #include "Routine/detection.hpp"
 #include "Sensor/Sensor.hpp"
+#include "Transmission/transmission.hpp"
 #include "robot/Robot.hpp"
 #include "structure/Executer.hpp"
 #include <Can/Can.hpp>
@@ -35,34 +35,34 @@ int main() {
 
     _delay_ms(5000);
 
-    {Memoire24CXXX memory;
+    // Emetteur emetteur = Emetteur();
 
-    uint8_t coordonnees[16] = {1, 0, 2, 1, 3, 1, 2, 2, 3, 2, 1, 2, 255, 255, 255, 255};
-    memory.ecriture(0, coordonnees, 16);}
+    // emetteur.ExecuteRoutine();
 
-    Emetteur emetteur = Emetteur();
+    init();
 
-    emetteur.ExecuteRoutine(); 
+    // Initialisation du robot, donc les roues, etc.
+    LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
+    WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+    SoundPlayer sound   = SoundPlayer();
+    Sensor sensor       = Sensor();
+    sound.init();
+    Clock::init();
 
-    // init();
+    Robot robot = Robot(&wheels, &light, &sensor, &sound);
 
-    // // Initialisation du robot, donc les roues, etc.
-    // LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
-    // WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
-    // SoundPlayer sound   = SoundPlayer();
-    // Sensor sensor       = Sensor();
-    // sound.init();
-    // Clock::init();
+    Memoire24CXXX memory = Memoire24CXXX();
 
-    // Robot robot = Robot(&wheels, &light, &sensor, &sound);
+    uint8_t coordonnees[16] = {2, 2, 3, 3, 5, 3, 7, 1, 6, 0, 2, 0, 255, 255, 255, 255};
+    memory.ecriture(0, coordonnees, 16);
 
-    // // while (true) {
-    // //     DEBUG_PRINT((sensor.readValue()));
-    // //     _delay_ms(50);
-    // // }
+    // while (true) {
+    //     DEBUG_PRINT((sensor.readValue()));
+    //     _delay_ms(50);
+    // }
 
-    // Executer execute = Executer();
-    // execute.executeRoutine(robot);
+    Executer execute = Executer();
+    execute.executeRoutine(robot);
 
     // // FetchRoutine fetchRoutine = FetchRoutine();
     // // Direction direction       = Direction::RIGHT;
@@ -75,6 +75,4 @@ int main() {
     // // DEBUG_PRINT((magicWheels.changeHeadDirection(0, Direction::LEFT)));
 
     // // magicWheels.stopMoves();
-
-
 }

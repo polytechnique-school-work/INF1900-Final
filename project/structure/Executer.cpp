@@ -1,5 +1,6 @@
 #include "Executer.hpp"
 #include "Routine/detection.hpp"
+#include "Transmission/transmission.hpp"
 
 void Executer::executeRoutine(Robot& robot) {
 
@@ -23,6 +24,8 @@ void Executer::executeRoutine(Robot& robot) {
             /*
              * TODO : Exécution transmission
              */
+            Emetteur emetteur = Emetteur();
+            emetteur.ExecuteRoutine();
 
             break;
         }
