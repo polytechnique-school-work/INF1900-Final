@@ -11,4 +11,4 @@ static const uint16_t WAITING_DURATION_BETWEEN_MOVES = 1000;
 static const uint8_t STOP_DURATION                   = 2;
 static const uint8_t START_DURATION                  = 4;
 
-static const uint8_t CHECK_BLOCK_DURATION = 10;
+static const uint8_t CHECK_BLOCK_DURATION = 70;

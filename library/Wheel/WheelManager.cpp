@@ -1,11 +1,10 @@
 #include "WheelManager.hpp"
 #include "../PWM/Pwm.hpp"
-#include <avr/io.h> 
+#include <avr/io.h>
 
-
-WheelManager::WheelManager(volatile uint8_t* registre, volatile uint8_t* port, uint8_t pinLeft, uint8_t pinRight) : 
-registre(registre), port(port), pinLeft(pinLeft), pinRight(pinRight)
-{
+WheelManager::WheelManager(volatile uint8_t* registre, volatile uint8_t* port, uint8_t pinLeft,
+                           uint8_t pinRight)
+    : registre(registre), port(port), pinLeft(pinLeft), pinRight(pinRight) {
     *this->registre |= (1 << PORTD6) | (1 << PORTD7) | (1 << pinLeft) | (1 << pinRight);
 }
 
@@ -45,9 +44,7 @@ WheelManager WheelManager::setSpeed(uint8_t speed) {
     return *this;
 }
 
-Direction WheelManager::getDirection() const {
-    return this->direction;
-}
+Direction WheelManager::getDirection() const { return this->direction; }
 
 void WheelManager::setWheel(Wheel wheel, Direction direction) {
     switch (wheel) {
@@ -77,4 +74,3 @@ void WheelManager::setWheel(Wheel wheel, Direction direction) {
             break;
     }
 };
-

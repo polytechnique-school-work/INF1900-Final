@@ -58,4 +58,7 @@ public:
         - Change la direction (incrémente ou décrémente).
     */
     uint16_t turn(Direction direction);
+
+    uint16_t verification(Direction direction);
+    uint16_t bothVerification(Direction direction);
 };
