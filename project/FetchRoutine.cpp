@@ -34,7 +34,7 @@ FindedBlock FetchRoutine::fetchBlock(Robot& robot, Direction direction) {
 
             uint16_t actualDistance = distanceFound;
 
-            Direction direction = Direction::RIGHT;
+            Direction direction = Direction::LEFT;
 
             // Avance jusqu'à temps qu'il soit suffisamment près.
             while (actualDistance > MINIMAL_DISTANCE_ACCEPTED) {

@@ -19,7 +19,7 @@ void Pwm::editValue(PwmValue pwmValue, uint8_t value, bool update) {
 }
 
 void Pwm::editValues(uint8_t first, uint8_t second) {
-    Pwm::editValue(PwmValue::FIRST, first, false);
-    Pwm::editValue(PwmValue::SECOND, second, false);
+    Pwm::editValue(PwmValue::FIRST, first * 1.05, false); // Droite
+    Pwm::editValue(PwmValue::SECOND, second, false);      // Gauche
     this->update();
 }
