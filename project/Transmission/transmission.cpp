@@ -39,6 +39,18 @@ void Emetteur::ExecuteRoutine() {
     uint8_t indices[iteration];
 
     for (uint8_t i = 0; i < iteration; i++) {
+        if (0 > x[i]) {
+            x[i] = 0;
+        }
+        if (7 < x[i]) {
+            x[i] = 7;
+        }
+        if (0 > y[i]) {
+            y[i] = 0;
+        }
+        if (3 < y[i]) {
+            y[i] = 3;
+        }
         indices[i] = x[i] + y[i] * 8 + 1;
     }
 

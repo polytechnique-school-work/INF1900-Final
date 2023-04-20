@@ -194,13 +194,14 @@ void SVG::algorithmeGraham() {
 
     for (uint8_t i = 0; i < nVisites; i++) {
         if (pointsVisites[i] == pointMinimum) {
-            cosinus[0] = Cosinus(pointsVisites[i].getIndex(), 0.0);
+            cosinus[0]  = Cosinus(pointsVisites[i].getIndex(), 0.0);
             vecteurs[0] = Vector();
             continue;
         }
-        Vector vecteur(pointsVisites[i].getX() - pointMinimum.getX(), pointsVisites[i].getY() - pointMinimum.getY());
+        Vector vecteur(pointsVisites[i].getX() - pointMinimum.getX(),
+                       pointsVisites[i].getY() - pointMinimum.getY());
         vecteurs[nVecteurs++] = vecteur;
-        cosinus[nCosinus++] = Cosinus(pointsVisites[i].getIndex(), vecteur.getACos());
+        cosinus[nCosinus++]   = Cosinus(pointsVisites[i].getIndex(), vecteur.getACos());
     }
 
     sortArray(cosinus, nCosinus);

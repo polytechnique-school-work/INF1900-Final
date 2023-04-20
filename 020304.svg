@@ -34,11 +34,11 @@
 <rect x = "74" y = "12" width = "1" height = "1" stroke = "black" stroke-width = ".2" fill = "black"/>
 <rect x = "85" y = "12" width = "1" height = "1" stroke = "black" stroke-width = ".2" fill = "black"/>
 <rect x = "96" y = "12" width = "1" height = "1" stroke = "black" stroke-width = ".2" fill = "black"/>
-<circle cx = "41" cy = "23" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
-<circle cx = "52" cy = "12" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
-<circle cx = "74" cy = "12" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
+<circle cx = "19" cy = "23" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
+<circle cx = "30" cy = "23" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
+<circle cx = "41" cy = "12" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
+<circle cx = "63" cy = "12" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
+<circle cx = "85" cy = "12" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
 <circle cx = "96" cy = "34" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
-<circle cx = "85" cy = "45" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
-<circle cx = "41" cy = "45" r = "1.5" stroke = "black" stroke-width = ".2" fill = "gray" />
-<polygon points= "85, 45 96, 34 74, 12 52, 12 41, 23 " fill = "rgba(0, 255, 0, 0.25)" stroke = "black" stroke-width = ".2" />
-<text x="10" y="56" fill="blue" class="small" > Aire: 968 pouces carres </text></svg>
+<polygon points= "96, 34 85, 12 63, 12 41, 12 19, 23 " fill = "rgba(0, 255, 0, 0.25)" stroke = "black" stroke-width = ".2" />
+<text x="10" y="56" fill="blue" class="small" > Aire: 1028 pouces carres </text></svg>
