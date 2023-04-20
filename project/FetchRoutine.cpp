@@ -197,18 +197,18 @@ void FetchRoutine::writeCoordonateInMemory(Robot& robot, FindedBlock findedBlock
             break;
     }
 
-    int8_t multValue = (findedBlock == FindedBlock::FIRST ? 1 : 2);
+    uint8_t multValue = (findedBlock == FindedBlock::FIRST ? 1 : 2);
 
     relatives[0] *= multValue;
     relatives[1] *= multValue;
 
-    DEBUG_PRINT(("Coordonnées du robot avant"));
-    DEBUG_PRINT((robot.getX()));
-    DEBUG_PRINT((robot.getY()));
+    Logger::log(Priority::INFO, "Coordonnées du robot avant");
+    Logger::log(Priority::INFO, (robot.getX()));
+    Logger::log(Priority::INFO, (robot.getY()));
 
-    DEBUG_PRINT(("Coordonnées relatives"));
-    DEBUG_PRINT((relatives[0]));
-    DEBUG_PRINT((relatives[1]));
+    Logger::log(Priority::INFO, "Coordonnées relatives");
+    Logger::log(Priority::INFO, (relatives[0]));
+    Logger::log(Priority::INFO, (relatives[1]));
 
     // Changement des coordonnées du robots.
     robot.setX(robot.getX() + relatives[0]);
@@ -218,11 +218,12 @@ void FetchRoutine::writeCoordonateInMemory(Robot& robot, FindedBlock findedBlock
     Memoire24CXXX memoire = Memoire24CXXX();
 
     memoire.ecriture(robot.getMemoryCount(), robot.getX());
-    memoire.ecriture(robot.getMemoryCount() + 1, robot.getY());
+    robot.incrementMemoryCount();
+    memoire.ecriture(robot.getMemoryCount(), robot.getY());
 
-    DEBUG_PRINT(("Coordonnées du robot après"));
-    DEBUG_PRINT((robot.getX()));
-    DEBUG_PRINT((robot.getY()));
+    // Logger::log(Priority::INFO, "Coordonnées du robot après");
+    // Logger::log(Priority::INFO, (robot.getX()));
+    // Logger::log(Priority::INFO, (robot.getY()));
 
     robot.incrementMemoryCount();
 
@@ -245,8 +246,17 @@ void FetchRoutine::fetchBlocks(Robot& robot, Direction startDirection) {
 
     for (uint8_t i = 0; i < 8; i++) {
         Logger::log(Priority::INFO, "Exécution de recherche");
+        Direction direction;
+        if (i == 0) {
+            direction   = startDirection;
+            uint8_t val = startDirection == Direction::RIGHT ? 0 : 2;
+            robot.setHeadDirection(val);
+        } else {
+            direction = Direction::RIGHT;
+            robot.setHeadDirection(0);
+        }
 
-        Direction direction = i == 0 ? startDirection : Direction::RIGHT;
+        // Direction direction = i == 0 ? startDirection : Direction::RIGHT;
         fetchBlock(robot, direction);
     }
 }

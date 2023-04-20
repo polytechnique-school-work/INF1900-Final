@@ -22,12 +22,12 @@ void WheelManager::update() {
             this->setWheel(Wheel::RIGHT, Direction::BACKWARD);
             break;
         case Direction::LEFT:
-            this->setWheel(Wheel::LEFT, Direction::FORWARD);
-            this->setWheel(Wheel::RIGHT, Direction::BACKWARD);
-            break;
-        case Direction::RIGHT:
             this->setWheel(Wheel::LEFT, Direction::BACKWARD);
             this->setWheel(Wheel::RIGHT, Direction::FORWARD);
+            break;
+        case Direction::RIGHT:
+            this->setWheel(Wheel::LEFT, Direction::FORWARD);
+            this->setWheel(Wheel::RIGHT, Direction::BACKWARD);
             break;
         default:
             break;

@@ -33,40 +33,47 @@ void init() {
 
 int main() {
 
-    _delay_ms(5000);
+    // _delay_ms(5000);
 
-     Memoire24CXXX memory = Memoire24CXXX();
+    //  Memoire24CXXX memory = Memoire24CXXX();
 
-    uint8_t coordonnees[16] = {2, 2, 7, 3, 5, 3, 7, 1, 6, 0, 2, 0, 4, 1, 5, 2};
-    memory.ecriture(0, coordonnees, 16);
+    // uint8_t coordonnees[16] = {2, 2, 7, 3, 5, 3, 7, 1, 6, 0, 2, 0, 4, 1, 5, 2};
+    // memory.ecriture(0, coordonnees, 16);
 
-    _delay_ms(1000);
+    // _delay_ms(1000);
 
-    Emetteur emetteur = Emetteur();
+    // Emetteur emetteur = Emetteur();
 
-    emetteur.ExecuteRoutine();
+    // emetteur.ExecuteRoutine();
 
-    // init();
+    init();
 
     // // Initialisation du robot, donc les roues, etc.
-    // LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
-    // WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
-    // SoundPlayer sound   = SoundPlayer();
-    // Sensor sensor       = Sensor();
-    // sound.init();
-    // Clock::init();
+    LightManager light  = LightManager(&DDRA, &PORTA, PORTA0, PORTA1);
+    WheelManager wheels = WheelManager(&DDRD, &PORTD, PORTD4, PORTD5);
+    SoundPlayer sound   = SoundPlayer();
+    Sensor sensor       = Sensor();
+    sound.init();
+    Clock::init();
 
-    // Robot robot = Robot(&wheels, &light, &sensor, &sound);
-
-   
+    Robot robot = Robot(&wheels, &light, &sensor, &sound);
 
     // while (true) {
     //     Logger::log(Priority::INFO, sensor.readValue());
     //     _delay_ms(50);
     // }
 
-    // Executer execute = Executer();
-    // execute.executeRoutine(robot);
+    Executer execute = Executer();
+    execute.executeRoutine(robot);
+
+    // Memoire24CXXX val = Memoire24CXXX();
+    // uint8_t values[16];
+    // val.lecture(0, values, 16);
+    // for (uint8_t i = 0; i < 16; i++) {
+    //     DEBUG_PRINT((values[i]));
+    // }
+
+    // DEBUG_PRINT(("Done"));
 
     // // FetchRoutine fetchRoutine = FetchRoutine();
     // // Direction direction       = Direction::RIGHT;

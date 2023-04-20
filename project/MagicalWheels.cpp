@@ -5,7 +5,7 @@ uint16_t MagicalWheels::bothVerification(Direction direction) {
 
     // Première vérification
     uint16_t valueFinded = this->verification(direction);
-    Logger::log(Priority::INFO, valueFinded);
+    // Logger::log(Priority::INFO, valueFinded);
     if (valueFinded != 0) return valueFinded;
 
     this->stopMoves();
@@ -48,7 +48,6 @@ uint16_t MagicalWheels::turn(Direction direction) {
         return 0;
     }
 
-    changeDirection(direction);
     // On met un arrêt avec un delay pour éviter les problèmes d'inerties.
     stopMoves();
 
@@ -57,11 +56,20 @@ uint16_t MagicalWheels::turn(Direction direction) {
     wheelManager->setSpeed(ROBOT_SPEED);
     wheelManager->update();
 
-    uint32_t stopTime = Clock::getTimestamp() + TURN_DURATION;
+    uint32_t stopTime     = Clock::getTimestamp() + TURN_DURATION;
+    uint32_t middleTime   = Clock::getTimestamp() + TURN_DURATION / 2;
+    bool isAlreadyChanged = false;
 
     while (Clock::getTimestamp() < stopTime) {
         // Faire en sorte que si le fetch a une certaine valeur de retour, on skip le while (et on
         // effectue pas le change direction).
+
+        if (Clock::getTimestamp() >= middleTime && !isAlreadyChanged) {
+            isAlreadyChanged = true;
+            // Logger::log(Priority::INFO, "CHANGED");
+            robot.setHeadDirection(changeHeadDirection(robot.getHeadDirection(), direction));
+        }
+
         uint16_t hasFindSomething = this->fetch(direction);
         if (hasFindSomething <= SECOND_DISTANCE) {
             DEBUG_PRINT(("Fin de la rotation (45) : trouvé."));
@@ -76,6 +84,7 @@ uint16_t MagicalWheels::turn(Direction direction) {
     uint16_t valu = bothVerification(direction);
     if (valu != 0) {
         DEBUG_PRINT(("Fin de la rotation (45) : trouvé."));
+        stopMoves();
         return valu;
     }
 
@@ -108,22 +117,9 @@ uint8_t MagicalWheels::changeHeadDirection(uint8_t actualHeadDirection, Directio
             newHeadDirection = --actualHeadDirection;
         }
     }
-
+    // Logger::log(Priority::INFO, "HeadDirection");
+    // Logger::log(Priority::INFO, newHeadDirection);
     return newHeadDirection;
-}
-
-void MagicalWheels::changeDirection(Direction direction) {
-    if (direction != Direction::LEFT && direction != Direction::RIGHT) {
-        DEBUG_PRINT(("Impossible de faire tourner le robot avec cette direction."));
-        return;
-    }
-
-    uint8_t actualHeadDirection = this->robot.getHeadDirection();
-    uint8_t newHeadDirection;
-
-    this->robot.setHeadDirection(newHeadDirection);
-
-    DEBUG_PRINT(("Changement de la direction"));
 }
 
 void MagicalWheels::moveForward() {

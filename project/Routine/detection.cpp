@@ -83,7 +83,7 @@ void RoutineDetection::executeRoutine(Robot& robot) {
                 // orienté vers le haut
                 Logger::log(Priority::INFO, "Changement vers le haut de la table");
                 robot.setHeadDirection(0);
-                direction = Direction::LEFT; // Set la direction choisie.
+                direction = Direction::RIGHT; // Set la direction choisie.
                 lm.setLight(Color::GREEN);
                 _delay_ms(2000);
                 lm.setLight(Color::OFF);
@@ -95,7 +95,7 @@ void RoutineDetection::executeRoutine(Robot& robot) {
                 // orienté vers la droite
                 Logger::log(Priority::INFO, "Changement vers la droite de la table");
                 robot.setHeadDirection(2);
-                direction = Direction::RIGHT; // Set la direction chsoisie
+                direction = Direction::LEFT; // Set la direction chsoisie
                 lm.setLight(Color::RED);
                 _delay_ms(2000);
                 lm.setLight(Color::OFF);
