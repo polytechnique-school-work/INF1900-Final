@@ -66,10 +66,6 @@ int main() {
     Executer execute = Executer();
     execute.executeRoutine(robot);
 
-    // robot.getWheelManager()->setSpeed(50);
-    // robot.getWheelManager()->setDirection(Direction::FORWARD);
-    // robot.getWheelManager()->update();
-
     // Memoire24CXXX val = Memoire24CXXX();
     // uint8_t values[16];
     // val.lecture(0, values, 16);
